@@ -1,8 +1,17 @@
 <!DOCTYPE html>
 <head>
   <meta charset="utf-8">
-  <script src="https://d3js.org/d3.v3.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/noframework.waypoints.js"></script>
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.js"></script>
+
+ 
+
   <style>
     @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,600');
   *{
@@ -145,13 +154,20 @@
   <script>
 
 
-    var data;
+    
+
+
+
+ $(window).load(function(){
+
+var data;
     d3.json("./data/hashtagsTidy.json", function(d) {
+      console.log("loaded")
     data = d;
 
     data = data.map((i) => (new Array(i.num_points)).fill(i, 0, i.num_points)).reduce((acc, i) => acc.concat(i))
 
-    console.log("entire data" +  data);
+    //console.log("entire data" +  data);
 
     //svg
     let svg = d3.select("svg");
@@ -180,7 +196,7 @@
     }));
 
 
-    console.log(our_data);
+    //console.log(our_data);
 
 
     //create group and join our data to that group
@@ -235,7 +251,6 @@
         .transition()
         .delay((d, i) => 5 * i)
         .duration(600)
-        .ease("elastic")
         .attr("width", size)
         .attr("height", size)
         .attr("rx", 2)
@@ -254,7 +269,7 @@
         .transition()
         .delay((d, i) => 10 * i)
         .duration(600)
-        .ease("elastic")
+        //.ease("elastic")
         .attr("width", size)
         .attr("height", size)
         .attr("rx", "50%")
@@ -265,13 +280,123 @@
     }
 
 
+    //force layout
+    let maytheforce = () => {
+
+// var simulation = d3.forceSimulation(data)
+//   .force('charge', d3.forceManyBody().strength(5))
+//   .force('x', d3.forceX().x(function(d) {
+//     return xCenter(d['country']);
+//   }))
+//   .force('collision', d3.forceCollide().radius(function(d) {
+//     return 5;
+//   }))
+//   .on('tick', ticked);
+
+
+
+       var simulation = d3.forceSimulation(data)
+       .force('charge', d3.forceManyBody())
+       .force('center', d3.forceCenter(function(d) {
+    return xCenter(d['country']);
+  }))
+       .on('tick', ticked);
+
+
+      function ticked() {
+
+        rects
+        .transition()
+        .delay((d, i) => 5 * i)
+        .duration(200)
+        //.ease("elastic")
+        .attr("rx", "20%")
+        .attr("ry", "20%")
+        .attr("x", (d, i) => function(d) {
+            return xCenter(d['country']);
+          })  
+        .attr("y", (d, i) => 150);
+       
+      }
+    
+    var xCenter = d3.scaleLinear()
+   .domain(['US','UK'])
+   .range([50,120]);  
+
+simulation.force('y', d3.forceY().y(function(d) {
+  return xCenter(d['country']);
+}));
+      // var simulation = d3.layout.force()
+      //  .force("x", d3.forceX(function(d) {
+      //        if (parseFloat(d['country']) == 'US') {
+      //           return 120;
+      //        } else {
+      //           return 340;
+      //       }
+      //  }).strength(0.05))
+      //  .force("y", d3.forceY(150).strength(0.05))
+      //  .force("collide", d3.forceCollide()
+      //     //.radius(function(d) {
+      //     //  return radiusScale(d['num_points'])
+      //  //})
+      //  );
+       
+    // var bubbles = svg.selectAll("rects")
+    //   .attr("r", function(d) {
+    //      return radiusScale(d['num_points'])
+    //   })
+    //   .attr("fill", function(d) {
+    //     return colorScale(d['country']);
+    //   });
+      
+    
+    // simulation.nodes(data)
+    //   .on("tick", ticked) 
+     
+     
+    // function ticked() {
+
+    //   bubbles.attr("x", function(d) {
+    //     return d.x;
+    //   }).attr("y", function(d) {
+    //     return d.y;
+    //   })
+      
+      // labels.attr("x", function(d) {
+      //   return d.x;
+      // })
+      // .attr("y", function(d) {
+      //   return d.y + 5;
+      // })
+      
+    }
+
+    
+    // simulation
+    //   .alpha(0.5)
+    //   .alphaTarget(0.3)
+    //   .restart();
+      
+    // simulation.force("x").initialize(data);
+    // simulation.force("collide").initialize(data);
+
+    // bubbles.attr("r", function(d) { 
+    //     return radiusScale(d['country']);
+    //   }).attr("fill", function(d) {
+    //     return colorScale(d['country']);
+    //   })
+
+
+    //}
+
+
     //divide
     let divide = () =>{
       rects
         .transition()
         .delay((d, i) => 10 * i)
         .duration(400)
-        .ease("elastic")
+        //.ease("elastic")
         .attr("width", size)
         .attr("height", size)
         .attr("rx", 0)
@@ -286,7 +411,7 @@
           .transition()
           .delay( (d,i) => 40*i ) 
           .duration(900)
-          .ease('elastic')
+          //.ease('elastic')
           .attr("dx", -500)
 
 
@@ -295,16 +420,20 @@
           .transition()
           .delay( (d,i) => 40*i ) 
           .duration(900)
-          .ease('elastic')
+          //.ease('elastic')
           .attr("dx", -500)
+    
+
+
+
     }
 
 
 
-    let scale_x = d3.scale.linear().domain([0, 120])
+    let scale_x = d3.scaleLinear().domain([0, 120])
     .range([5, 700]);
     
-    let scale_y = d3.scale.linear().domain([0, 120])
+    let scale_y = d3.scaleLinear().domain([0, 120])
     .range([5, 480]);
 
     //bar cart
@@ -316,7 +445,7 @@
         .transition()
         .delay( (d,i) => 10*i ) 
         .duration(600)
-        .ease('elastic')//linear, quad, cubic, sin, exp, circle, elastic, back, bounce
+        //.ease('elastic')//linear, quad, cubic, sin, exp, circle, elastic, back, bounce
         .attr("x", (d,i) => 10 )
         .attr("y", (d,i) => i * 17)
         .attr("width", (d,i) => scale_x(d["num_points"]))
@@ -331,7 +460,7 @@
         .transition()
         .delay( (d,i) => 20*i ) 
         .duration(900)
-        .ease('elastic')
+        //.ease('elastic')
         //align text right
         .attr("text-anchor", "start")
         .attr("dx", 30)
@@ -343,7 +472,7 @@
         .transition()
         .delay( (d,i) => 20*i ) 
         .duration(900)
-        .ease('elastic')
+        //.ease('elastic')
         //align text left
         .attr("text-anchor", "end")
         .attr("dx", 25)
@@ -354,12 +483,17 @@
     }
 
 
+
+
+
     //waypoints scroll constructor
-    function scroll(n, offset, func1, func2, param){
+    function scrollD(n, offset, func1, func2, param){
+
+
       return new Waypoint({
         element: document.getElementById(n),
         handler: function(direction) {
-           direction == 'down' ? func1(param) : func2();
+           direction == 'down' ? func1(param) : func2(param);
         },
         //start 75% from the top of the div
         offset: offset
@@ -367,19 +501,26 @@
     };
 
     //triger these functions on page scroll
-    new scroll('div1', '75%', grid, grid2);
-    new scroll('div2', '75%', divide, grid);
-    new scroll('div4', '75%', grid2, grid);
+    //new scroll('div1', '75%', grid, maytheforce);
+    new scrollD('div1', '75%', grid, grid2);
+    new scrollD('div2', '75%', divide, grid);
+    new scrollD('div4', '75%', grid2, grid);
+    new scrollD('div6', '75%', maytheforce, divide, 'UK');
 
-
-    new scroll('div6', '75%', barChart, divide, 'US');
+    //new scrollD('div6', '75%', barChart, divide, 'US');
     //new scroll('div6', '75%', barChart, divide, 'UK');
     //start grid on page load
-    grid();
+
+      grid();
+    
 });
 
-		
- 
 
-  </script>
+
+
+
+  //your code here
+});
+
+	</script>
 </body>
