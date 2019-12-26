@@ -12,7 +12,6 @@
   html,
   body{
      height: 100%;
-     padding: 0;
      scroll-behavior: smooth;
      background: #f7f5f2;
      color: #666;
@@ -40,22 +39,22 @@
     height:  100%;
     position:  relative; 
     margin:auto;
+
   }
   .container {
     height: 100%;
     max-width: 440px;
     width: 100%;
-    margin: 0;
-    padding: 0;
     position: absolute;
     height: 100%;
     line-height: 1.5;
     left: 700px;
+    padding-top: 115px;
+
   }
   .container div {
     height: 100%;
     display: block;
-    padding: 0 45px;
   }
   .fixed {
     position: fixed;
@@ -63,12 +62,50 @@
     height: 500px;
     top: 50px;
   }
+
+  /* Style the header */
+.header {
+  padding: 10px 16px;
+  color: #394147;
+  z-index:1000;
+  font-family: 'Merriweather';
+  font-size: 2em;
+  background: #f7f5f2;
+}
+
+/* Page content */
+.content {
+
+}
+
+/* The sticky class is added to the header with JS when it reaches its scroll position */
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + .content {
+  padding-top: 102px;
+}
+
+.centered {
+  text-align: center;
+}
+
+
   </style>
+
 </head>
 
 <body>
+    <div class="header sticky centered" id="myHeader">
+  <h1><strong>Perception of migration on social media</strong><h1>
+</div>
   <div id="graphic">
   <div class="container">
+
     <div id="div1">
       <h2>1. With the objective of getting information about the <strong>Perception of migrants on social media</strong>, we gathered Twitter data during the months of August, September and October 2019.<h2>
       <h2>We looked for tweets in English, that were not re-tweets and that contained one of the following words: <strong>‘migrant’, ‘immigrant’, ‘refugee’ and ‘asylum seeker’.</strong></h2>
@@ -93,6 +130,9 @@
       <h2>6. Then we talk about hashtags and the general sentiment over them. Highlight the relevant things.</h2>
     </div>
     
+    <div id="div7">
+      <h2>7. Then we talk about hashtags and the general sentiment over them. Highlight the relevant things.</h2>
+    </div>
   </div>
 
 
@@ -104,21 +144,32 @@
   
   <script>
 
-		//svg
+
+    var data;
+    d3.json("./data/hashtagsTidy.json", function(d) {
+    data = d;
+
+    data = data.map((i) => (new Array(i.num_points)).fill(i, 0, i.num_points)).reduce((acc, i) => acc.concat(i))
+
+    console.log("entire data" +  data);
+
+    //svg
     let svg = d3.select("svg");
 
 
     //svg width and height
-    svg.attr('width',500)
-        .attr('height',500)
+    svg.attr('width',800)
+        .attr('height', 640)
 
 
     //set up grid spacing
-    let spacing = 40;
-    let rows = 10;
-    let column = 10;
+    let spacing = 14;
+    let rows = 40;
+    let column = 40;
+    let size = 8;
     let randnum = (min,max) => Math.round( Math.random() * (max-min) + min );
 
+    //.interpolate(d3.scaleLinear)
 
 
     //Create an array of objects
@@ -129,9 +180,12 @@
     }));
 
 
+    console.log(our_data);
+
+
     //create group and join our data to that group
     let group = svg.selectAll('g')
-      .data(our_data)
+      .data(data)
       .enter()
       .append("g")
 
@@ -139,46 +193,56 @@
     //create rectangles
     let rects = group.append("rect")
 
+  // {
+  //   "hashtag": "#refugee",
+  //   "num_points": 3221,
+  //   "category": "positive",
+  //   "country": "US"
+  // },
+
 
     //city data
     d3.selectAll('g')
       .append("text")
-      .text( (d) => d["city"])
+      .text( (d) => d["country"])
       .attr("fill", "gray")
-      .attr("class", "city")
-      .attr("dx", -500)
-
-
+      .attr("class", "country")
+      .attr("dx", -800)
 
     //age data
     d3.selectAll('g')
       .append("text")
-      .text( (d) => d["age"] )
+      .text( (d) => d["num_points"] )
       .attr("fill", "#fff")
-      .attr("class", "age")
-      .attr("dx", -500)
+      .attr("class", "num_points")
+      .attr("dx", -800)
 
 
-
-
-
-
-
+    let sentiment_color = (tweet) => {
+      if(tweet['category'] == 'negative')
+        return "red";
+      if(tweet['category'] == 'neutral')
+        return "gray";
+      if(tweet['category'] == 'positive')
+        return "green";
+      return "#99c125";
+      
+    }
 
     // square grid
     let grid = () =>{
       rects
         .transition()
-        .delay((d, i) => 10 * i)
+        .delay((d, i) => 5 * i)
         .duration(600)
         .ease("elastic")
-        .attr("width", 20)
-        .attr("height", 20)
-        .attr("rx", 5)
-        .attr("ry", 5)
+        .attr("width", size)
+        .attr("height", size)
+        .attr("rx", 2)
+        .attr("ry", 2)
         .attr("x", (d, i) => i % column * spacing)
-        .attr("y", (d, i) => Math.floor(i / 10) % rows * spacing)
-        .attr("fill", (d, i) => (i < 40 ? "#394147" : "#99c125"))
+        .attr("y", (d, i) => Math.floor(i / column) % rows * spacing)
+        .attr("fill", (d, i) => (d['country']=='US'? "#394147" : "#99c125"))
         .attr("opacity", "1")
     }
 
@@ -191,13 +255,13 @@
         .delay((d, i) => 10 * i)
         .duration(600)
         .ease("elastic")
-        .attr("width", 20)
-        .attr("height", 20)
+        .attr("width", size)
+        .attr("height", size)
         .attr("rx", "50%")
         .attr("ry", "50%")
         .attr("x", (d, i) => i % column * spacing)
-        .attr("y", (d, i) => Math.floor(i / 10) % rows * spacing)
-        .attr("fill", (d, i) => (i < 8 ? "none" : "#99c125"))
+        .attr("y", (d, i) => Math.floor(i / column) % rows * spacing)
+        .attr("fill", (d, i) => (sentiment_color(d)))
     }
 
 
@@ -206,21 +270,19 @@
       rects
         .transition()
         .delay((d, i) => 10 * i)
-        .duration(600)
+        .duration(400)
         .ease("elastic")
-        .attr("width", 10)
-        .attr("height", 10)
+        .attr("width", size)
+        .attr("height", size)
         .attr("rx", 0)
         .attr("ry", 0)
-        .attr("x", (d, i) => d['device'] == "ios" ? randnum(100, 150) :  randnum(300, 350))
-        .attr("y", (d, i) => i * 20)
-        .attr("fill", (d, i) => d['device'] == "ios" ? "#394147": "#99c125")
-        .attr("opacity", (d,i)=> i < 12 ? 1 : 0 )//only show 12 people
-
-
+        .attr("x", (d, i) => d['country'] == "US" ? randnum(20, 200) :  randnum(240, 460))
+        .attr("y", (d, i) => Math.floor(i / column) % rows * spacing)
+        .attr("fill", (d, i) => d['country'] == "US" ? "#394147": "#99c125")
+        .attr("opacity", 1 )//only show 12 people
 
         //age
-        d3.selectAll('text.age')
+        d3.selectAll('text.num_points')
           .transition()
           .delay( (d,i) => 40*i ) 
           .duration(900)
@@ -229,7 +291,7 @@
 
 
         //city
-        d3.selectAll('text.city')
+        d3.selectAll('text.country')
           .transition()
           .delay( (d,i) => 40*i ) 
           .duration(900)
@@ -239,82 +301,84 @@
 
 
 
-
+    let scale_x = d3.scale.linear().domain([0, 120])
+    .range([5, 700]);
+    
+    let scale_y = d3.scale.linear().domain([0, 120])
+    .range([5, 480]);
 
     //bar cart
-    let barChart = () => {
+    let barChart = function(country) {
+      console.log(country);
       rects
         .attr("rx", 0 )
         .attr("ry", 0 )
         .transition()
-        .delay( (d,i) => 20*i ) 
-        .duration(900)
+        .delay( (d,i) => 10*i ) 
+        .duration(600)
         .ease('elastic')//linear, quad, cubic, sin, exp, circle, elastic, back, bounce
-        .attr("x", (d,i) => 150 )
-        .attr("y", (d,i) => i * 17 )
-        .attr("width", (d,i) => d["age"])
+        .attr("x", (d,i) => 10 )
+        .attr("y", (d,i) => i * 17)
+        .attr("width", (d,i) => scale_x(d["num_points"]))
         .attr("height", (d,i) => 15)
-        .attr("fill", (d, i) => (i < 3 ? "#99c125" : "#394147"))
+        .attr("fill", (d, i) => (d['category']=="negative" ? "#99c125" : "#394147"))
         .attr("opacity", 1)
         .attr("transform", "translate(0,0) rotate(0)")
         .attr("opacity", (d,i)=> i < 12 ? 1 : 0 )//only show 12 people
 
-
       //age text
-      d3.selectAll('text.age')
+      d3.selectAll('text.num_points')
         .transition()
         .delay( (d,i) => 20*i ) 
         .duration(900)
         .ease('elastic')
         //align text right
         .attr("text-anchor", "start")
-        .attr("dx", 160)
+        .attr("dx", 30)
         .attr("dy", (d,i)=> (i * 17) + 12)
         .attr("opacity", (d,i)=> i < 12 ? 1 : 0 )//nly show 12 people
 
-
-
       //city text
-      d3.selectAll('text.city')
+      d3.selectAll('text.country')
         .transition()
         .delay( (d,i) => 20*i ) 
         .duration(900)
         .ease('elastic')
         //align text left
         .attr("text-anchor", "end")
-        .attr("dx", 140)
+        .attr("dx", 25)
         .attr("dy", (d,i)=> (i * 17) + 12)
-        .attr("opacity", (d,i)=> i < 12 ? 1 : 0 )//only show 12 people
+        .attr("opacity", (d,i)=> i <12 ? 1 : 0 )//only show 12 people
 
 
     }
 
 
-
-
     //waypoints scroll constructor
-    function scroll(n, offset, func1, func2){
+    function scroll(n, offset, func1, func2, param){
       return new Waypoint({
         element: document.getElementById(n),
         handler: function(direction) {
-           direction == 'down' ? func1() : func2();
+           direction == 'down' ? func1(param) : func2();
         },
         //start 75% from the top of the div
         offset: offset
       });
     };
 
-
-
     //triger these functions on page scroll
-    new scroll('div2', '75%', grid2, grid);
-    new scroll('div4', '75%', divide, grid);
-    new scroll('div6', '75%', barChart, divide);
+    new scroll('div1', '75%', grid, grid2);
+    new scroll('div2', '75%', divide, grid);
+    new scroll('div4', '75%', grid2, grid);
 
 
-
+    new scroll('div6', '75%', barChart, divide, 'US');
+    //new scroll('div6', '75%', barChart, divide, 'UK');
     //start grid on page load
     grid();
+});
+
+		
  
 
   </script>

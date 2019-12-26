@@ -1,0 +1,1220 @@
+[
+  {
+    "hashtag": "#refugee",
+    "num_tweets": 3221,
+    "category": "positive",
+    "country": "US",
+    "num_points": 115
+  },
+  {
+    "hashtag": "#migrant",
+    "num_tweets": 743,
+    "category": "positive",
+    "country": "US",
+    "num_points": 27
+  },
+  {
+    "hashtag": "#refugeewelcome",
+    "num_tweets": 737,
+    "category": "positive",
+    "country": "US",
+    "num_points": 26
+  },
+  {
+    "hashtag": "#immigration",
+    "num_tweets": 580,
+    "category": "positive",
+    "country": "US",
+    "num_points": 21
+  },
+  {
+    "hashtag": "#immigrant",
+    "num_tweets": 487,
+    "category": "positive",
+    "country": "US",
+    "num_points": 17
+  },
+  {
+    "hashtag": "#asylum",
+    "num_tweets": 300,
+    "category": "positive",
+    "country": "US",
+    "num_points": 11
+  },
+  {
+    "hashtag": "#trump",
+    "num_tweets": 262,
+    "category": "positive",
+    "country": "US",
+    "num_points": 9
+  },
+  {
+    "hashtag": "#rohingya",
+    "num_tweets": 249,
+    "category": "positive",
+    "country": "US",
+    "num_points": 9
+  },
+  {
+    "hashtag": "#maga",
+    "num_tweets": 217,
+    "category": "positive",
+    "country": "US",
+    "num_points": 8
+  },
+  {
+    "hashtag": "#welcome95k",
+    "num_tweets": 160,
+    "category": "positive",
+    "country": "US",
+    "num_points": 6
+  },
+  {
+    "hashtag": "#news",
+    "num_tweets": 142,
+    "category": "positive",
+    "country": "US",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#syria",
+    "num_tweets": 142,
+    "category": "positive",
+    "country": "US",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#migrants",
+    "num_tweets": 142,
+    "category": "positive",
+    "country": "US",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#withrefugees",
+    "num_tweets": 138,
+    "category": "positive",
+    "country": "US",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#closethecamps",
+    "num_tweets": 138,
+    "category": "positive",
+    "country": "US",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#turkey",
+    "num_tweets": 125,
+    "category": "positive",
+    "country": "US",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#aoc",
+    "num_tweets": 124,
+    "category": "positive",
+    "country": "US",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#smartnews",
+    "num_tweets": 122,
+    "category": "positive",
+    "country": "US",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#pragerforce",
+    "num_tweets": 121,
+    "category": "positive",
+    "country": "US",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#migration",
+    "num_tweets": 120,
+    "category": "positive",
+    "country": "US",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#humanrights",
+    "num_tweets": 120,
+    "category": "positive",
+    "country": "US",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#clearthelists",
+    "num_tweets": 108,
+    "category": "positive",
+    "country": "US",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#asylumseeker",
+    "num_tweets": 99,
+    "category": "positive",
+    "country": "US",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#buildthewall",
+    "num_tweets": 99,
+    "category": "positive",
+    "country": "US",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#clearthelist",
+    "num_tweets": 96,
+    "category": "positive",
+    "country": "US",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#climatechange",
+    "num_tweets": 94,
+    "category": "positive",
+    "country": "US",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#rt",
+    "num_tweets": 94,
+    "category": "positive",
+    "country": "US",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#usa",
+    "num_tweets": 90,
+    "category": "positive",
+    "country": "US",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#losangeles",
+    "num_tweets": 90,
+    "category": "positive",
+    "country": "US",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#refugee",
+    "num_tweets": 1628,
+    "category": "negative",
+    "country": "US",
+    "num_points": 58
+  },
+  {
+    "hashtag": "#migrant",
+    "num_tweets": 908,
+    "category": "negative",
+    "country": "US",
+    "num_points": 32
+  },
+  {
+    "hashtag": "#trump",
+    "num_tweets": 652,
+    "category": "negative",
+    "country": "US",
+    "num_points": 23
+  },
+  {
+    "hashtag": "#immigration",
+    "num_tweets": 628,
+    "category": "negative",
+    "country": "US",
+    "num_points": 22
+  },
+  {
+    "hashtag": "#smartnews",
+    "num_tweets": 522,
+    "category": "negative",
+    "country": "US",
+    "num_points": 19
+  },
+  {
+    "hashtag": "#refugeewelcome",
+    "num_tweets": 437,
+    "category": "negative",
+    "country": "US",
+    "num_points": 16
+  },
+  {
+    "hashtag": "#maga",
+    "num_tweets": 373,
+    "category": "negative",
+    "country": "US",
+    "num_points": 13
+  },
+  {
+    "hashtag": "#investigatenow",
+    "num_tweets": 339,
+    "category": "negative",
+    "country": "US",
+    "num_points": 12
+  },
+  {
+    "hashtag": "#wayfairwalkout",
+    "num_tweets": 315,
+    "category": "negative",
+    "country": "US",
+    "num_points": 11
+  },
+  {
+    "hashtag": "#news",
+    "num_tweets": 273,
+    "category": "negative",
+    "country": "US",
+    "num_points": 10
+  },
+  {
+    "hashtag": "#asylum",
+    "num_tweets": 250,
+    "category": "negative",
+    "country": "US",
+    "num_points": 9
+  },
+  {
+    "hashtag": "#closethecamps",
+    "num_tweets": 225,
+    "category": "negative",
+    "country": "US",
+    "num_points": 8
+  },
+  {
+    "hashtag": "#immigrant",
+    "num_tweets": 216,
+    "category": "negative",
+    "country": "US",
+    "num_points": 8
+  },
+  {
+    "hashtag": "#topbuzz",
+    "num_tweets": 211,
+    "category": "negative",
+    "country": "US",
+    "num_points": 8
+  },
+  {
+    "hashtag": "#rohingya",
+    "num_tweets": 196,
+    "category": "negative",
+    "country": "US",
+    "num_points": 7
+  },
+  {
+    "hashtag": "#buildthewall",
+    "num_tweets": 194,
+    "category": "negative",
+    "country": "US",
+    "num_points": 7
+  },
+  {
+    "hashtag": "#syria",
+    "num_tweets": 187,
+    "category": "negative",
+    "country": "US",
+    "num_points": 7
+  },
+  {
+    "hashtag": "#foxnews",
+    "num_tweets": 185,
+    "category": "negative",
+    "country": "US",
+    "num_points": 7
+  },
+  {
+    "hashtag": "#humanrights",
+    "num_tweets": 179,
+    "category": "negative",
+    "country": "US",
+    "num_points": 6
+  },
+  {
+    "hashtag": "#europe",
+    "num_tweets": 172,
+    "category": "negative",
+    "country": "US",
+    "num_points": 6
+  },
+  {
+    "hashtag": "#climatechange",
+    "num_tweets": 158,
+    "category": "negative",
+    "country": "US",
+    "num_points": 6
+  },
+  {
+    "hashtag": "#migrants",
+    "num_tweets": 157,
+    "category": "negative",
+    "country": "US",
+    "num_points": 6
+  },
+  {
+    "hashtag": "#ice",
+    "num_tweets": 156,
+    "category": "negative",
+    "country": "US",
+    "num_points": 6
+  },
+  {
+    "hashtag": "#mexico",
+    "num_tweets": 149,
+    "category": "negative",
+    "country": "US",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#usa",
+    "num_tweets": 146,
+    "category": "negative",
+    "country": "US",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#turkey",
+    "num_tweets": 137,
+    "category": "negative",
+    "country": "US",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#trump2020",
+    "num_tweets": 135,
+    "category": "negative",
+    "country": "US",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#asylumseeker",
+    "num_tweets": 132,
+    "category": "negative",
+    "country": "US",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#abolishice",
+    "num_tweets": 131,
+    "category": "negative",
+    "country": "US",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#refugee",
+    "num_tweets": 960,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 34
+  },
+  {
+    "hashtag": "#migrant",
+    "num_tweets": 554,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 20
+  },
+  {
+    "hashtag": "#immigration",
+    "num_tweets": 294,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 11
+  },
+  {
+    "hashtag": "#smartnews",
+    "num_tweets": 212,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 8
+  },
+  {
+    "hashtag": "#news",
+    "num_tweets": 193,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 7
+  },
+  {
+    "hashtag": "#immigrant",
+    "num_tweets": 150,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#trump",
+    "num_tweets": 149,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#buildthewall",
+    "num_tweets": 147,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#quiktake",
+    "num_tweets": 137,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#borderobserver",
+    "num_tweets": 137,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#refugeewelcome",
+    "num_tweets": 131,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#finishthewall",
+    "num_tweets": 115,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#neonnettle",
+    "num_tweets": 100,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#foxnews",
+    "num_tweets": 96,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#migrants",
+    "num_tweets": 94,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#maga",
+    "num_tweets": 85,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#greece",
+    "num_tweets": 80,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#asylum",
+    "num_tweets": 77,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#migration",
+    "num_tweets": 72,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#asylumseeker",
+    "num_tweets": 66,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#climatechange",
+    "num_tweets": 65,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#topbuzz",
+    "num_tweets": 64,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#refugeewelcomehere",
+    "num_tweets": 56,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#rohingya",
+    "num_tweets": 54,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#syria",
+    "num_tweets": 53,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#turkey",
+    "num_tweets": 51,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#mexico",
+    "num_tweets": 50,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#humanrights",
+    "num_tweets": 48,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#europe",
+    "num_tweets": 48,
+    "category": "neutral",
+    "country": "US",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#refugee",
+    "num_tweets": 1819,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 65
+  },
+  {
+    "hashtag": "#brokenpromises",
+    "num_tweets": 724,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 26
+  },
+  {
+    "hashtag": "#migrant",
+    "num_tweets": 532,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 19
+  },
+  {
+    "hashtag": "#refugeewelcome",
+    "num_tweets": 309,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 11
+  },
+  {
+    "hashtag": "#brexit",
+    "num_tweets": 293,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 10
+  },
+  {
+    "hashtag": "#europe",
+    "num_tweets": 188,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 7
+  },
+  {
+    "hashtag": "#asylumseeker",
+    "num_tweets": 132,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#migration",
+    "num_tweets": 119,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#immigration",
+    "num_tweets": 113,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#lab19",
+    "num_tweets": 113,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#asylum",
+    "num_tweets": 109,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#communitysponsorship",
+    "num_tweets": 108,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#familiestogether",
+    "num_tweets": 108,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#rohingya",
+    "num_tweets": 105,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#syria",
+    "num_tweets": 99,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#uk",
+    "num_tweets": 99,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#unhcr",
+    "num_tweets": 90,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#hostileenvironment",
+    "num_tweets": 88,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#migrantcrisis",
+    "num_tweets": 82,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#migrants",
+    "num_tweets": 80,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#syrian",
+    "num_tweets": 79,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#charity",
+    "num_tweets": 75,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#frontex",
+    "num_tweets": 70,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#libya",
+    "num_tweets": 70,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#italy",
+    "num_tweets": 70,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#seenotrettung",
+    "num_tweets": 69,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#backatsea",
+    "num_tweets": 67,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#eu",
+    "num_tweets": 67,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#milesforrefugees",
+    "num_tweets": 65,
+    "category": "positive",
+    "country": "UK",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#refugee",
+    "num_tweets": 903,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 32
+  },
+  {
+    "hashtag": "#europe",
+    "num_tweets": 427,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 15
+  },
+  {
+    "hashtag": "#migrant",
+    "num_tweets": 410,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 15
+  },
+  {
+    "hashtag": "#brexit",
+    "num_tweets": 403,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 14
+  },
+  {
+    "hashtag": "#news",
+    "num_tweets": 178,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 6
+  },
+  {
+    "hashtag": "#familiestogether",
+    "num_tweets": 176,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 6
+  },
+  {
+    "hashtag": "#refugeewelcome",
+    "num_tweets": 129,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#travel",
+    "num_tweets": 128,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#weather",
+    "num_tweets": 126,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#euwx",
+    "num_tweets": 126,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#wx",
+    "num_tweets": 126,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#severewx",
+    "num_tweets": 125,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#syria",
+    "num_tweets": 117,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#rohingya",
+    "num_tweets": 110,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#turkey",
+    "num_tweets": 108,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#trump",
+    "num_tweets": 102,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#uk",
+    "num_tweets": 100,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#immigration",
+    "num_tweets": 95,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#hostileenvironment",
+    "num_tweets": 93,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#world",
+    "num_tweets": 87,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#remain",
+    "num_tweets": 76,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#syrian",
+    "num_tweets": 74,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#migrants",
+    "num_tweets": 72,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#indyref2",
+    "num_tweets": 64,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#greece",
+    "num_tweets": 63,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#humanrights",
+    "num_tweets": 62,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#asylum",
+    "num_tweets": 62,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#snp",
+    "num_tweets": 61,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#nicolasturgeon",
+    "num_tweets": 61,
+    "category": "negative",
+    "country": "UK",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#refugee",
+    "num_tweets": 561,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 20
+  },
+  {
+    "hashtag": "#migrant",
+    "num_tweets": 213,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 8
+  },
+  {
+    "hashtag": "#illegalshow",
+    "num_tweets": 134,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 5
+  },
+  {
+    "hashtag": "#brexit",
+    "num_tweets": 106,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 4
+  },
+  {
+    "hashtag": "#europe",
+    "num_tweets": 90,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#care2",
+    "num_tweets": 70,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 3
+  },
+  {
+    "hashtag": "#immigration",
+    "num_tweets": 66,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#refugeewelcome",
+    "num_tweets": 63,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#syria",
+    "num_tweets": 62,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#muslims",
+    "num_tweets": 53,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#migration",
+    "num_tweets": 50,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#uk",
+    "num_tweets": 47,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#news",
+    "num_tweets": 46,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#migrants",
+    "num_tweets": 45,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#unhcr",
+    "num_tweets": 44,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#refugeecrisis",
+    "num_tweets": 44,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#libya",
+    "num_tweets": 43,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 2
+  },
+  {
+    "hashtag": "#migrantcrisis",
+    "num_tweets": 41,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 1
+  },
+  {
+    "hashtag": "#rohingya",
+    "num_tweets": 40,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 1
+  },
+  {
+    "hashtag": "#turkey",
+    "num_tweets": 39,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 1
+  },
+  {
+    "hashtag": "#frontex",
+    "num_tweets": 33,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 1
+  },
+  {
+    "hashtag": "#seenotrettung",
+    "num_tweets": 33,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 1
+  },
+  {
+    "hashtag": "#eu",
+    "num_tweets": 33,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 1
+  },
+  {
+    "hashtag": "#europol",
+    "num_tweets": 31,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 1
+  },
+  {
+    "hashtag": "#libyschek�_stenwache",
+    "num_tweets": 31,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 1
+  },
+  {
+    "hashtag": "#asylum",
+    "num_tweets": 29,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 1
+  },
+  {
+    "hashtag": "#asylumseeker",
+    "num_tweets": 29,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 1
+  },
+  {
+    "hashtag": "#trump",
+    "num_tweets": 29,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 1
+  },
+  {
+    "hashtag": "#backatsea",
+    "num_tweets": 28,
+    "category": "neutral",
+    "country": "UK",
+    "num_points": 1
+  }
+]
