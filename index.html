@@ -135,6 +135,10 @@
       We then estimated the sentiment for these tweets using Vader other libraries.
     </div>
 
+   <div id="div5">
+      <h2>5. This should be the fource layout. Delete all rects and barchart and then display the aggregated hashtags data</h2>
+    </div>
+
     <div id="div6">
       <h2>6. Then we talk about hashtags and the general sentiment over them. Highlight the relevant things.</h2>
     </div>
@@ -208,7 +212,7 @@
 
     //create rectangles
     let rects = group.append("rect")
-
+    let circles;
   // {
   //   "hashtag": "#refugee",
   //   "num_points": 3221,
@@ -232,6 +236,15 @@
 
     // square grid
     let grid = () =>{
+
+      if(circles){
+        circles
+          .transition()
+          .delay((d, i) => i*2)
+          .duration(300)
+          //.ease("elastic")
+          .attr("opacity", "0");
+      }
       rects
         .data(data)
         .transition()
@@ -252,6 +265,8 @@
     //circle grid
     let grid2 = () =>{
 
+
+
       //country name
       d3.selectAll('text.num_tweets')
         .transition()
@@ -259,6 +274,15 @@
         .duration(300)
         //.ease('elastic')
         .attr("dx", -500)
+
+        if(circles){
+          circles
+            .transition()
+            .delay((d, i) => i*2)
+            .duration(300)
+            //.ease("elastic")
+            .attr("opacity", "0");
+        }
 
 
       //number of tweets
@@ -291,12 +315,13 @@
     let maytheforce = () => {
 
 
-       rects
-        .transition()
-        .delay((d, i) => 2 * i)
-        .duration(100)
-        //.ease("elastic")
-        .attr("opacity", "0");
+     rects
+      .transition()
+      .delay((d, i) => 2 * i)
+      .duration(100)
+      //.ease("elastic")
+      .attr("opacity", "0");
+
     
     var ht_data;
     d3.json("./data/hashtags.json", 
@@ -304,7 +329,7 @@
           console.log("loaded")
           ht_data = d;
 
-          ht_data = data.map((i) => (new Array(i.num_points)).fill(i, 0, i.num_points)).reduce((acc, i) => acc.concat(i))
+          ht_data = ht_data.map((i) => (new Array(i.num_points)).fill(i, 0, i.num_points)).reduce((acc, i) => acc.concat(i))
           
           var width = 600, height = 400;
 
@@ -352,11 +377,12 @@
           .on('tick', ticked);
 
           function ticked() {
-            var u = d3.select('svg g')
+            circles = d3.select('svg g')
               .selectAll('circle')
-              .data(ht_data);
+              .data(ht_data)
+              .attr("opacity", 0);
 
-            u.enter()
+            circles.enter()
               .append('circle')
               .attr('r', function(d) {
                 return xCenter(d.num_tweets);
@@ -364,7 +390,7 @@
               .style('fill', function(d) {
                 return dictColor[d.country];
               })
-              .merge(u)
+              .merge(circles)
                   .attr('cx', function(d) {
                 return d.x;
               })
@@ -373,7 +399,7 @@
               })
               .attr("opacity", 1 )
 
-            u.exit().remove();
+            circles.exit().remove();
           }
           simulation.force('x', d3.forceX().x(function(d) {
             return dict[d.country];
@@ -425,6 +451,17 @@
         .duration(300)
         //.ease("elastic")
         .attr("opacity", "0");
+      
+      if(circles){
+        circles
+          .transition()
+          .delay((d, i) => i*2)
+          .duration(300)
+          //.ease("elastic")
+          .attr("opacity", "0");
+      }
+          
+
 
       //country name
       d3.selectAll('g')
@@ -488,9 +525,8 @@
     new scrollD('div1', '75%', grid, divide);
     new scrollD('div2', '75%', divide, grid);
     new scrollD('div3', '75%', grid2, divide);
-    //new scrollD('div4', '75%', maytheforce, divide, 'UK');
-
-    new scrollD('div6', '75%', barChart, grid2, 'US');
+    new scrollD('div5', '75%', maytheforce, grid2, 'UK');
+    new scrollD('div6', '75%', barChart, maytheforce, 'US');
     //new scroll('div6', '75%', barChart, divide, 'UK');
     //start grid on page load
 
@@ -504,5 +540,5 @@
   //your code here
 });
 
-	</script>
+  </script>
 </body>
