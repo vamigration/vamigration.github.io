@@ -153,7 +153,7 @@
 
 
   <!-- svg -->
-  <div class="fixed"><svg id="viz" width="700" height="400" ><g transform="translate(50, 200)"></g></svg></div>
+  <div class="fixed" style="padding-top: 50px;"><svg id="viz" width="700" height="780" ><g transform="translate(50, 200)"></g></svg></div>
 
 </div><!-- /graphic -->
   
@@ -163,7 +163,7 @@
   $(window).load(function(){
 
     var data;
-    d3.json("./data/hashtagsTidy.json", 
+    d3.json("./data/hashtags.json", 
       function(d) {
           console.log("loaded")
           data = d;
@@ -173,8 +173,19 @@
           var width = 600, height = 400;
 
           var colorScale = ['orange', 'lightblue', '#B19CD9'];
-          var xCenter = [10, 200, 400]
-
+          //var xCenter = [10, 200, 400]
+        var dictColor = {
+              'US': 'lightblue',
+              'UK': '#B19CD9'
+            };
+          var dict = {
+              'US': 80,
+              'UK': 420
+            };
+        var dictY = {
+              'US': 60,
+              'UK': 60
+            };
           var numNodes = 100;
           var nodes = d3.range(numNodes).map(function(d, i) {
             return {
@@ -182,32 +193,43 @@
               category: i % 3
             }
           });
+    var xCenter = d3.scaleLinear()
+   .domain([1,3230])
+   .range([5,50]);  
+              //set up grid spacing
+          let spacing = 14;
+          let rows = 40;
+          let column = 40;
+          let size = 8;
+          let randnum = (min,max) => Math.round( Math.random() * (max-min) + min );
+
+
           console.log(nodes)
-          var simulation = d3.forceSimulation(nodes)
-            .force('charge', d3.forceManyBody().strength(5))
-            .force('x', d3.forceX().x(function(d) {
-              return xCenter[d.category];
-            }))
-            .force('collision', d3.forceCollide().radius(function(d) {
-              return d.radius;
-            }))
-            .on('tick', ticked);
+          var simulation = d3.forceSimulation(data)
+          .force('charge', d3.forceManyBody().strength(0.5))
+          .force('x', d3.forceX().x(function(d) {
+            return dict[d.country];
+          }))
+          .force('collision', d3.forceCollide().radius(function(d) {
+            return xCenter(d.num_tweets);
+          }))
+          .on('tick', ticked);
 
           function ticked() {
             var u = d3.select('svg g')
               .selectAll('circle')
-              .data(nodes);
+              .data(data);
 
             u.enter()
               .append('circle')
               .attr('r', function(d) {
-                return d.radius;
+                return xCenter(d.num_tweets);
               })
               .style('fill', function(d) {
-                return colorScale[d.category];
+                return dictColor[d.country];
               })
               .merge(u)
-              .attr('cx', function(d) {
+                  .attr('cx', function(d) {
                 return d.x;
               })
               .attr('cy', function(d) {
@@ -216,7 +238,12 @@
 
             u.exit().remove();
           }
-
+          simulation.force('x', d3.forceX().x(function(d) {
+            return dict[d.country];
+          }))
+          simulation.force('y', d3.forceY().y(function(d) {
+            return dictY[d.country];
+          }))
        
       } //callback json loaded
     ); //json load
