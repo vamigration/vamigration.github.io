@@ -114,7 +114,13 @@
     <h1><strong>Perception of migration on social media</strong><h1>
   </div>
   <div id="graphic">
+
+
+
   <div class="container">
+
+
+
     <div id="div1">
       <h2>1. With the objective of getting information about the <strong>Perception of migrants on social media</strong>, we gathered Twitter data during the months of August, September and October 2019.<h2>
       <h2>We looked for tweets in English, that were not re-tweets and that contained one of the following words: <strong>‘migrant’, ‘immigrant’, ‘refugee’ and ‘asylum seeker’.</strong></h2>
@@ -145,382 +151,108 @@
   </div>
 
 
+
   <!-- svg -->
-  <div class="fixed"><svg id="viz" width="100%" height="100%"></svg></div>
+  <div class="fixed" style="padding-top: 50px;"><svg id="viz" width="700" height="780" ><g transform="translate(50, 200)"></g></svg></div>
 
 </div><!-- /graphic -->
   
   
-  <script>
+<script>
 
+  $(window).load(function(){
 
-    
+    var data;
+    d3.json("./data/hashtags.json", 
+      function(d) {
+          console.log("loaded")
+          data = d;
 
+          data = data.map((i) => (new Array(i.num_points)).fill(i, 0, i.num_points)).reduce((acc, i) => acc.concat(i))
+          
+          var width = 600, height = 400;
 
-
- $(window).load(function(){
-
-var data;
-    d3.json("./data/hashtagsTidy.json", function(d) {
-      console.log("loaded")
-    data = d;
-
-    data = data.map((i) => (new Array(i.num_points)).fill(i, 0, i.num_points)).reduce((acc, i) => acc.concat(i))
-
-    //console.log("entire data" +  data);
-
-    //svg
-    let svg = d3.select("svg");
-
-
-    //svg width and height
-    svg.attr('width',800)
-        .attr('height', 640)
-
-
-    //set up grid spacing
-    let spacing = 14;
-    let rows = 40;
-    let column = 40;
-    let size = 8;
-    let randnum = (min,max) => Math.round( Math.random() * (max-min) + min );
-
-    //.interpolate(d3.scaleLinear)
-
-
-    //Create an array of objects
-    let our_data = d3.range(20).map(i => 
-    ({ 'device': i < 5 ? 'ios' : 'android', 
-        'city': i < 3 ? 'San Diegan' : 'Out of towners', 
-        'age': randnum(25, 65)
-    }));
-
-
-    //console.log(our_data);
-
-
-    //create group and join our data to that group
-    let group = svg.selectAll('g')
-      .data(data)
-      .enter()
-      .append("g")
-
-
-    //create rectangles
-    let rects = group.append("rect")
-
-  // {
-  //   "hashtag": "#refugee",
-  //   "num_points": 3221,
-  //   "category": "positive",
-  //   "country": "US"
-  // },
-
-
-    //city data
-    d3.selectAll('g')
-      .append("text")
-      .text( (d) => d["country"])
-      .attr("fill", "gray")
-      .attr("class", "country")
-      .attr("dx", -800)
-
-    //age data
-    d3.selectAll('g')
-      .append("text")
-      .text( (d) => d["num_points"] )
-      .attr("fill", "#fff")
-      .attr("class", "num_points")
-      .attr("dx", -800)
-
-
-    let sentiment_color = (tweet) => {
-      if(tweet['category'] == 'negative')
-        return "red";
-      if(tweet['category'] == 'neutral')
-        return "gray";
-      if(tweet['category'] == 'positive')
-        return "green";
-      return "#99c125";
-      
-    }
-
-    // square grid
-    let grid = () =>{
-      rects
-        .transition()
-        .delay((d, i) => 5 * i)
-        .duration(600)
-        .attr("width", size)
-        .attr("height", size)
-        .attr("rx", 2)
-        .attr("ry", 2)
-        .attr("x", (d, i) => i % column * spacing)
-        .attr("y", (d, i) => Math.floor(i / column) % rows * spacing)
-        .attr("fill", (d, i) => (d['country']=='US'? "#394147" : "#99c125"))
-        .attr("opacity", "1")
-    }
-
-
-
-    //circle grid
-    let grid2 = () =>{
-      rects
-        .transition()
-        .delay((d, i) => 10 * i)
-        .duration(600)
-        //.ease("elastic")
-        .attr("width", size)
-        .attr("height", size)
-        .attr("rx", "50%")
-        .attr("ry", "50%")
-        .attr("x", (d, i) => i % column * spacing)
-        .attr("y", (d, i) => Math.floor(i / column) % rows * spacing)
-        .attr("fill", (d, i) => (sentiment_color(d)))
-    }
-
-
-    //force layout
-    let maytheforce = () => {
-
-// var simulation = d3.forceSimulation(data)
-//   .force('charge', d3.forceManyBody().strength(5))
-//   .force('x', d3.forceX().x(function(d) {
-//     return xCenter(d['country']);
-//   }))
-//   .force('collision', d3.forceCollide().radius(function(d) {
-//     return 5;
-//   }))
-//   .on('tick', ticked);
-
-
-
-       var simulation = d3.forceSimulation(data)
-       .force('charge', d3.forceManyBody())
-       .force('center', d3.forceCenter(function(d) {
-    return xCenter(d['country']);
-  }))
-       .on('tick', ticked);
-
-
-      function ticked() {
-
-        rects
-        .transition()
-        .delay((d, i) => 5 * i)
-        .duration(200)
-        //.ease("elastic")
-        .attr("rx", "20%")
-        .attr("ry", "20%")
-        .attr("x", (d, i) => function(d) {
-            return xCenter(d['country']);
-          })  
-        .attr("y", (d, i) => 150);
-       
-      }
-    
+          var colorScale = ['orange', 'lightblue', '#B19CD9'];
+          //var xCenter = [10, 200, 400]
+        var dictColor = {
+              'US': 'lightblue',
+              'UK': '#B19CD9'
+            };
+          var dict = {
+              'US': 80,
+              'UK': 420
+            };
+        var dictY = {
+              'US': 60,
+              'UK': 60
+            };
+          var numNodes = 100;
+          var nodes = d3.range(numNodes).map(function(d, i) {
+            return {
+              radius: Math.random() * 25,
+              category: i % 3
+            }
+          });
     var xCenter = d3.scaleLinear()
-   .domain(['US','UK'])
-   .range([50,120]);  
+   .domain([1,3250])
+   .range([5,50]);  
+              //set up grid spacing
+          let spacing = 14;
+          let rows = 40;
+          let column = 40;
+          let size = 8;
+          let randnum = (min,max) => Math.round( Math.random() * (max-min) + min );
 
-simulation.force('y', d3.forceY().y(function(d) {
-  return xCenter(d['country']);
-}));
-      // var simulation = d3.layout.force()
-      //  .force("x", d3.forceX(function(d) {
-      //        if (parseFloat(d['country']) == 'US') {
-      //           return 120;
-      //        } else {
-      //           return 340;
-      //       }
-      //  }).strength(0.05))
-      //  .force("y", d3.forceY(150).strength(0.05))
-      //  .force("collide", d3.forceCollide()
-      //     //.radius(function(d) {
-      //     //  return radiusScale(d['num_points'])
-      //  //})
-      //  );
+
+          console.log(nodes)
+          var simulation = d3.forceSimulation(data)
+          .force('charge', d3.forceManyBody().strength(0.5))
+          .force('x', d3.forceX().x(function(d) {
+            return dict[d.country];
+          }))
+          .force('collision', d3.forceCollide().radius(function(d) {
+            return xCenter(d.num_tweets);
+          }))
+          var u = d3.select('svg g')
+              .selectAll('circle')
+              .data(data);
+
+            u.enter()
+              .append('circle')
+          .on('tick', ticked);
+
+          function ticked() {
+            u
+            .transition()
+            .delay((d, i) => 5 * i)
+            .duration(600)
+              .attr('r', function(d) {
+                return xCenter(d.num_tweets);
+              })
+              .style('fill', function(d) {
+                return dictColor[d.country];
+              })
+              .merge(u)
+                  .attr('cx', function(d) {
+                return d.x;
+              })
+              .attr('cy', function(d) {
+                return d.y;
+              })
+
+            u.exit().remove();
+          }
+          simulation.force('x', d3.forceX().x(function(d) {
+            return dict[d.country];
+          }))
+          simulation.force('y', d3.forceY().y(function(d) {
+            return dictY[d.country];
+          }))
        
-    // var bubbles = svg.selectAll("rects")
-    //   .attr("r", function(d) {
-    //      return radiusScale(d['num_points'])
-    //   })
-    //   .attr("fill", function(d) {
-    //     return colorScale(d['country']);
-    //   });
-      
-    
-    // simulation.nodes(data)
-    //   .on("tick", ticked) 
-     
-     
-    // function ticked() {
-
-    //   bubbles.attr("x", function(d) {
-    //     return d.x;
-    //   }).attr("y", function(d) {
-    //     return d.y;
-    //   })
-      
-      // labels.attr("x", function(d) {
-      //   return d.x;
-      // })
-      // .attr("y", function(d) {
-      //   return d.y + 5;
-      // })
-      
-    }
-
-    
-    // simulation
-    //   .alpha(0.5)
-    //   .alphaTarget(0.3)
-    //   .restart();
-      
-    // simulation.force("x").initialize(data);
-    // simulation.force("collide").initialize(data);
-
-    // bubbles.attr("r", function(d) { 
-    //     return radiusScale(d['country']);
-    //   }).attr("fill", function(d) {
-    //     return colorScale(d['country']);
-    //   })
+      } //callback json loaded
+    ); //json load
+  });// Window load
+</script>
 
 
-    //}
-
-
-    //divide
-    let divide = () =>{
-      rects
-        .transition()
-        .delay((d, i) => 10 * i)
-        .duration(400)
-        //.ease("elastic")
-        .attr("width", size)
-        .attr("height", size)
-        .attr("rx", 0)
-        .attr("ry", 0)
-        .attr("x", (d, i) => d['country'] == "US" ? randnum(20, 200) :  randnum(240, 460))
-        .attr("y", (d, i) => Math.floor(i / column) % rows * spacing)
-        .attr("fill", (d, i) => d['country'] == "US" ? "#394147": "#99c125")
-        .attr("opacity", 1 )//only show 12 people
-
-        //age
-        d3.selectAll('text.num_points')
-          .transition()
-          .delay( (d,i) => 40*i ) 
-          .duration(900)
-          //.ease('elastic')
-          .attr("dx", -500)
-
-
-        //city
-        d3.selectAll('text.country')
-          .transition()
-          .delay( (d,i) => 40*i ) 
-          .duration(900)
-          //.ease('elastic')
-          .attr("dx", -500)
-    
-
-
-
-    }
-
-
-
-    let scale_x = d3.scaleLinear().domain([0, 120])
-    .range([5, 700]);
-    
-    let scale_y = d3.scaleLinear().domain([0, 120])
-    .range([5, 480]);
-
-    //bar cart
-    let barChart = function(country) {
-      console.log(country);
-      rects
-        .attr("rx", 0 )
-        .attr("ry", 0 )
-        .transition()
-        .delay( (d,i) => 10*i ) 
-        .duration(600)
-        //.ease('elastic')//linear, quad, cubic, sin, exp, circle, elastic, back, bounce
-        .attr("x", (d,i) => 10 )
-        .attr("y", (d,i) => i * 17)
-        .attr("width", (d,i) => scale_x(d["num_points"]))
-        .attr("height", (d,i) => 15)
-        .attr("fill", (d, i) => (d['category']=="negative" ? "#99c125" : "#394147"))
-        .attr("opacity", 1)
-        .attr("transform", "translate(0,0) rotate(0)")
-        .attr("opacity", (d,i)=> i < 12 ? 1 : 0 )//only show 12 people
-
-      //age text
-      d3.selectAll('text.num_points')
-        .transition()
-        .delay( (d,i) => 20*i ) 
-        .duration(900)
-        //.ease('elastic')
-        //align text right
-        .attr("text-anchor", "start")
-        .attr("dx", 30)
-        .attr("dy", (d,i)=> (i * 17) + 12)
-        .attr("opacity", (d,i)=> i < 12 ? 1 : 0 )//nly show 12 people
-
-      //city text
-      d3.selectAll('text.country')
-        .transition()
-        .delay( (d,i) => 20*i ) 
-        .duration(900)
-        //.ease('elastic')
-        //align text left
-        .attr("text-anchor", "end")
-        .attr("dx", 25)
-        .attr("dy", (d,i)=> (i * 17) + 12)
-        .attr("opacity", (d,i)=> i <12 ? 1 : 0 )//only show 12 people
-
-
-    }
-
-
-
-
-
-    //waypoints scroll constructor
-    function scrollD(n, offset, func1, func2, param){
-
-
-      return new Waypoint({
-        element: document.getElementById(n),
-        handler: function(direction) {
-           direction == 'down' ? func1(param) : func2(param);
-        },
-        //start 75% from the top of the div
-        offset: offset
-      });
-    };
-
-    //triger these functions on page scroll
-    //new scroll('div1', '75%', grid, maytheforce);
-    new scrollD('div1', '75%', grid, grid2);
-    new scrollD('div2', '75%', divide, grid);
-    new scrollD('div4', '75%', grid2, grid);
-    new scrollD('div6', '75%', maytheforce, divide, 'UK');
-
-    //new scrollD('div6', '75%', barChart, divide, 'US');
-    //new scroll('div6', '75%', barChart, divide, 'UK');
-    //start grid on page load
-
-      grid();
-    
-});
-
-
-
-
-
-  //your code here
-});
-
-	</script>
 </body>
