@@ -113,12 +113,6 @@ $(window).load(function() {
 
       //create rectangles
       let rects = group.append("rect")
-      // {
-      //   "hashtag": "#refugee",
-      //   "num_points": 3221,
-      //   "category": "positive",
-      //   "country": "US"
-      // },
 
 
       let sentiment_color = (tweet) => {
@@ -131,6 +125,17 @@ $(window).load(function() {
           return "#99c125";
 
       }
+
+      let country_color = (tweet) => {
+        //var colorScale = ['orange', 'lightblue', '#B19CD9'];
+        //"#99c125" : "#394147"
+          if (tweet['country'] == 'US')
+              return "#5b6871";
+          if (tweet['country'] == 'UK')
+              return "lightblue";
+          return "orange";
+      }
+
 
       // square grid
       let grid = () => {
@@ -146,7 +151,7 @@ $(window).load(function() {
               .attr("ry", 2)
               .attr("x", (d, i) => i % column * spacing)
               .attr("y", (d, i) => Math.floor(i / column) % rows * spacing)
-              .attr("fill", (d, i) => (d['country'] == 'US' ? "#394147" : "#99c125"))
+              .attr("fill", (d, i) => country_color(d))
               .attr("opacity", "1")
       }
 
@@ -234,8 +239,8 @@ $(window).load(function() {
         var colorScale = ['orange', 'lightblue', '#B19CD9'];
         //var xCenter = [10, 200, 400]
         var dictColor = {
-            'US': 'lightblue',
-            'UK': '#B19CD9'
+            'US': '#5b6871',
+            'UK': 'lightblue'
         };
         var dict = {
             'US': 140,
@@ -261,7 +266,7 @@ $(window).load(function() {
         var simulation = d3.forceSimulation(ht_data)
             .force('charge', d3.forceManyBody().strength(1))
             .force('x', d3.forceX().x(function(d) {
-                return dict[d.country];
+                return country_color(d);
             }))
             .force('collision', d3.forceCollide().radius(function(d) {
                 return xCenter(d.num_tweets);
@@ -282,7 +287,7 @@ $(window).load(function() {
                     return xCenter(d.num_tweets);
                 })
                 .style('fill', function(d) {
-                    return dictColor[d.country];
+                    return country_color(d);
                 })
                 .merge(circles)
                 .attr('cx', function(d) {
@@ -323,7 +328,7 @@ $(window).load(function() {
               .attr("ry", 0)
               .attr("x", (d, i) => d['country'] == "US" ? randnum(20, 200) : randnum(240, 460))
               .attr("y", (d, i) => Math.floor(i / column) % rows * spacing)
-              .attr("fill", (d, i) => d['country'] == "US" ? "#394147" : "#99c125")
+              .attr("fill", (d, i) => country_color(d))
               .attr("opacity", 1) //only show 12 people
 
       }
@@ -345,7 +350,7 @@ $(window).load(function() {
               .data(datos)
               .append("text")
               .text((d) => d["country"])
-              .attr("fill", "gray")
+              .attr("fill", "white")
               .attr("class", "country")
               .attr("text-anchor", "end")
               .attr("dx", 25)
@@ -376,7 +381,7 @@ $(window).load(function() {
               .attr("y", (d, i) => scale_y(i * 4))
               .attr("width", (d, i) => scale_x(d["num_tweets"]))
               .attr("height", (d, i) => 15)
-              .attr("fill", (d, i) => (d['category'] == "negative" ? "#99c125" : "#394147"))
+              .attr("fill", (d, i) => (d['category'] == "negative" ? "#99c125" : "#5b6871"))
               .attr("opacity", 1)
               .attr("transform", "translate(0,0) rotate(0)")
               .attr("opacity", (d, i) => i < 12 ? 1 : 0) //only show 12 people
