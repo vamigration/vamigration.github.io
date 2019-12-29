@@ -187,6 +187,23 @@ $(window).load(function() {
             //.ease("elastic")
             .attr("opacity", "0");
 
+        svg.selectAll('.UK')
+          .transition()
+          .delay((d, i) => 10 * i)
+          .duration(300)
+          //.ease("elastic")
+          .attr("opacity", "0")
+          .remove();
+
+        svg.selectAll('.US')
+          .transition()
+          .delay((d, i) => 10 * i)
+          .duration(300)
+          //.ease("elastic")
+          .attr("opacity", "0")
+          .remove();
+
+
       }
 
       function switchCircles(visible){
@@ -339,52 +356,68 @@ $(window).load(function() {
       let scale_y = d3.scaleLinear().domain([0, 120])
           .range([50, 600]);
 
-      //bar cart
-      let barChart = function(country) {
-          loadCircles = false //switch off the hashtags
 
-          clearRects(); // Clear the rects
+
+      function drawBars(data, itemClass, shift){
+
+      //create rectangles
+      let bars = group.append("rect")
 
           //country name
           d3.selectAll('g')
-              .data(datos)
+              .data(data)
               .append("text")
               .text((d) => d["country"])
-              .attr("fill", "white")
-              .attr("class", "country")
+              .attr("fill", "#000")
+              .attr("class", itemClass)
               .attr("text-anchor", "end")
               .attr("dx", 25)
-              .attr("dy", (d, i) => scale_y(i * 4) + 12)
+              .attr("dy", (d, i) => scale_y(i * 4) + 12 + shift)
               .attr("opacity", (d, i) => i < 12 ? 1 : 0) //only show 12 people
 
           //number of tweets data
           d3.selectAll('g')
-              .data(datos)
+              .data(data)
               .append("text")
               .text((d) => d["num_tweets"])
-              .attr("fill", "#fff")
-              .attr("class", "num_tweets")
+              .attr("fill", "#000")
+              .attr("class", itemClass)
               .attr("text-anchor", "start")
-              .attr("dx", 30)
-              .attr("dy", (d, i) => scale_y(i * 4) + 12)
+              .attr("dx", (d, i) => scale_x(d["num_tweets"]) + 12)
+              .attr("dy", (d, i) => scale_y(i * 4) + 11 + shift)
               .attr("opacity", (d, i) => i < 12 ? 1 : 0) //only show 12 people
 
-          rects
-              .data(datos)
+          bars
+              .data(data)
               .transition()
               .delay((d, i) => 10 * i)
               .duration(800)
               //.ease('elastic')//linear, quad, cubic, sin, exp, circle, elastic, back, bounce
+              .attr("class", itemClass)
               .attr("rx", 0)
               .attr("ry", 0)
               .attr("x", (d, i) => 10)
-              .attr("y", (d, i) => scale_y(i * 4))
+              .attr("y", (d, i) => scale_y(i * 4) + shift)
               .attr("width", (d, i) => scale_x(d["num_tweets"]))
               .attr("height", (d, i) => 15)
-              .attr("fill", (d, i) => (d['category'] == "negative" ? "#99c125" : "#5b6871"))
+              .attr("fill", (d, i) => country_color(d))
+                //(d['category'] == "negative" ? "#99c125" : "#5b6871"))
               .attr("opacity", 1)
               .attr("transform", "translate(0,0) rotate(0)")
               .attr("opacity", (d, i) => i < 12 ? 1 : 0) //only show 12 people
+
+      }
+
+      //bar cart
+      let barChart = function(country) {
+          loadCircles = false //switch off the hashtags
+
+          const dataUK = datos.filter(d => d.country == 'UK');
+          const dataUS = datos.filter(d=> d.country == 'US');
+          
+          drawBars(dataUK, 'UK', 250);
+          drawBars(dataUS, 'US', 0);
+          //drawBars(dataUK, 'UK', 200);
           //.exit().attr("opacity", 0);
       }
 
