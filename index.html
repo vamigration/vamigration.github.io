@@ -132,35 +132,108 @@ $(window).load(function() {
           if (tweet['country'] == 'US')
               return "#5b6871";
           if (tweet['country'] == 'UK')
-              return "lightblue";
+              return "#67a9cf";
           return "orange";
       }
 
 
+
+
+
       // square grid
       let grid = () => {
+        clearRects();
+
+        rects
+            .data(data)
+            .transition()
+            .delay((d, i) => 3 * i)
+            .duration(300)
+            .attr("width", size)
+            .attr("height", size)
+            .attr("rx", 2)
+            .attr("ry", 2)
+            .attr("x", (d, i) => i % column * spacing)
+            .attr("y", (d, i) => Math.floor(i / column) % rows * spacing)
+            .attr("fill", "#d8b365")
+            .attr("opacity", "1")
+      }
+
+
+
+
+      //divide
+      let divide2 = () => {
+          loadCircles = false //switch off the hashtags
+
+          const dataUK = data.filter(d => d.country == 'UK');
+          const dataUS = data.filter(d=> d.country == 'US');
+          
+          showGrids(dataUK, 'grids', 340);
+          showGrids(dataUS, 'grids', 60);
+          //drawBars(dataUK, 'UK', 200);
+          //.exit().attr("opacity", 0);
+          clearRects();
+
+
+      }
+
+      function showGrids(data, itemClass, shift){
+        let spacing = 10;
+        let rows = 50;
+        let column = 18;
+        let size = 7;
+        
+
+        loadCircles = false
+        let grids = group.append("rect")
+
+        grids
+            .data(data)
+            .transition()
+            .delay((d, i) => 3 * i)
+            .duration(300)
+            //.ease("elastic")
+            .attr("class", itemClass)
+            .attr("width", size)
+            .attr("height", size)
+            .attr("rx", 0)
+            .attr("ry", 0)
+            .attr("x", (d, i) => (i % column * spacing) + shift)
+            .attr("y", (d, i) => 500 - (Math.floor(i / column) % rows * spacing))
+            .attr("fill", (d, i) => country_color(d))
+            .attr("opacity", 1) //only show 12 people
+
+      }
+
+      //divide
+      let divide = () => {
+
+          loadCircles = false
 
           rects
               .data(data)
               .transition()
               .delay((d, i) => 3 * i)
               .duration(300)
+              //.ease("elastic")
               .attr("width", size)
               .attr("height", size)
-              .attr("rx", 2)
-              .attr("ry", 2)
-              .attr("x", (d, i) => i % column * spacing)
+              .attr("rx", 0)
+              .attr("ry", 0)
+              .attr("x", (d, i) => d['country'] == "US" ? randnum(20, 200) : randnum(240, 460))
               .attr("y", (d, i) => Math.floor(i / column) % rows * spacing)
               .attr("fill", (d, i) => country_color(d))
-              .attr("opacity", "1")
+              .attr("opacity", 1) //only show 12 people
+
       }
 
 
       //circle grid
       let grid2 = () => {
           loadCircles = false
-
-          clearText(); 
+          clearRects();
+          clearText();   
 
           rects
               .data(data)
@@ -186,6 +259,14 @@ $(window).load(function() {
             .duration(100)
             //.ease("elastic")
             .attr("opacity", "0");
+
+        svg.selectAll('.grids')
+          .transition()
+          .delay((d, i) => 2 * i)
+          .duration(100)
+          //.ease("elastic")
+          .attr("opacity", "0")
+          .remove();
 
         svg.selectAll('.UK')
           .transition()
@@ -326,30 +407,6 @@ $(window).load(function() {
 
       }
 
-
-
-      //divide
-      let divide = () => {
-
-          loadCircles = false
-
-          rects
-              .data(data)
-              .transition()
-              .delay((d, i) => 3 * i)
-              .duration(300)
-              //.ease("elastic")
-              .attr("width", size)
-              .attr("height", size)
-              .attr("rx", 0)
-              .attr("ry", 0)
-              .attr("x", (d, i) => d['country'] == "US" ? randnum(20, 200) : randnum(240, 460))
-              .attr("y", (d, i) => Math.floor(i / column) % rows * spacing)
-              .attr("fill", (d, i) => country_color(d))
-              .attr("opacity", 1) //only show 12 people
-
-      }
-
       let scale_x = d3.scaleLinear().domain([0, 3221])
           .range([5, 600]);
 
@@ -436,9 +493,9 @@ $(window).load(function() {
 
       //triger these functions on page scroll
       //new scroll('div1', '75%', grid, maytheforce);
-      new scrollD('div1', '75%', grid, divide);
-      new scrollD('div2', '75%', divide, grid);
-      new scrollD('div3', '75%', grid2, divide);
+      new scrollD('div1', '75%', grid, divide2);
+      new scrollD('div2', '75%', divide2, grid);
+      new scrollD('div3', '75%', grid2, divide2);
       new scrollD('div5', '75%', maytheforce, grid2, 'UK');
       new scrollD('div6', '75%', barChart, maytheforce, 'US');
       //new scroll('div6', '75%', barChart, divide, 'UK');
