@@ -42,7 +42,7 @@
      </div>
 
     <div id="div4">
-      <h2>4. And we could go back to a grid but with circles I don't know what for but anyway<h2>
+      <h2>4. And we could go back to a grid I don't know what for but anyway<h2>
     </div>
 
    <div id="div5">
@@ -157,8 +157,8 @@ $(window).load(function() {
             .duration(300)
             .attr("width", size)
             .attr("height", size)
-            .attr("rx", 2)
-            .attr("ry", 2)
+            .attr("rx", 4)
+            .attr("ry", 4)
             .attr("x", (d, i) => i % column * spacing)
             .attr("y", (d, i) => (Math.floor(i / column) % rows * spacing) + 50)
             .attr("fill", "steelblue")
@@ -201,8 +201,8 @@ $(window).load(function() {
             //.ease("elastic")
             .attr("width", size)
             .attr("height", size)
-            .attr("rx", 0)
-            .attr("ry", 0)
+            .attr("rx", 3)
+            .attr("ry", 3)
             .attr("x", function (d, i) {
               if(d['country'] == 'US'){
                 usX++;
@@ -260,8 +260,8 @@ $(window).load(function() {
             //.ease("elastic")
             .attr("width", size)
             .attr("height", size)
-            .attr("rx", 0)
-            .attr("ry", 0)
+            .attr("rx", 3)
+            .attr("ry", 3)
             .attr("x", function (d, i) {
               if(d['country'] == 'US'){
                 sentimentUSX[d['category']]++;
