@@ -142,7 +142,6 @@ $(window).load(function() {
 
       // square grid
       let grid = () => {
-        clearRects();
 
         rects
             .data(data)
@@ -155,7 +154,7 @@ $(window).load(function() {
             .attr("ry", 2)
             .attr("x", (d, i) => i % column * spacing)
             .attr("y", (d, i) => Math.floor(i / column) % rows * spacing)
-            .attr("fill", "#d8b365")
+            .attr("fill", "steelblue")
             .attr("opacity", "1")
       }
 
@@ -169,38 +168,54 @@ $(window).load(function() {
           const dataUK = data.filter(d => d.country == 'UK');
           const dataUS = data.filter(d=> d.country == 'US');
           
-          showGrids(dataUK, 'grids', 340);
-          showGrids(dataUS, 'grids', 60);
+          showGrids();
+          //showGrids(dataUS, 'grids', 60);
           //drawBars(dataUK, 'UK', 200);
           //.exit().attr("opacity", 0);
-          clearRects();
-
 
       }
 
-      function showGrids(data, itemClass, shift){
+      function showGrids(){
         let spacing = 10;
         let rows = 50;
         let column = 18;
         let size = 7;
-        
+        usX = 0;
+        ukX = 0;
+        usY = 0;
+        ukY = 0;
 
-        loadCircles = false
-        let grids = group.append("rect")
-
-        grids
-            .data(data)
+        rects
             .transition()
             .delay((d, i) => 3 * i)
             .duration(300)
             //.ease("elastic")
-            .attr("class", itemClass)
             .attr("width", size)
             .attr("height", size)
             .attr("rx", 0)
             .attr("ry", 0)
-            .attr("x", (d, i) => (i % column * spacing) + shift)
-            .attr("y", (d, i) => 500 - (Math.floor(i / column) % rows * spacing))
+            .attr("x", function (d, i) {
+              if(d['country'] == 'US'){
+                usX++;
+                return ((usX-1) % column * spacing) + 60
+              }
+              else{
+                ukX++;
+                return ((ukX-1) % column * spacing) + 340
+              }
+            })
+            .attr("y", function (d, i) {
+              pos = 0;
+              if(d['country']=='US'){
+                pos = usY;
+                usY++;
+              }
+              else{
+                pos = ukY;
+                ukY++;
+              }
+              return 500 - (Math.floor(pos / column) % rows * spacing)
+            })
             .attr("fill", (d, i) => country_color(d))
             .attr("opacity", 1) //only show 12 people
 
@@ -232,7 +247,6 @@ $(window).load(function() {
       //circle grid
       let grid2 = () => {
           loadCircles = false
-          clearRects();
           clearText();   
 
           rects
