@@ -88,3 +88,16 @@ strong{
 .centered {
   text-align: center;
 }
+
+
+.fab  {
+  font-size: 22px;
+}
+
+.fa {
+  font-size: 22px;
+}
+
+.svg_text {
+  font-size: 14px;
+}
