@@ -46,7 +46,7 @@
     </div>
 
    <div id="div5">
-      <h1>Hashstags</h1>
+      <h1>Hashtags</h1>
       <h2>5. We looked for tweets in English, that were not re-tweets and that contained one of the following words: <strong>‘migrant’, ‘immigrant’, ‘refugee’ and ‘asylum seeker’.</strong></h2>
       <h2>This should be the fource layout. Delete all rects and barchart and then display the aggregated hashtags data</h2>
     </div>
@@ -542,11 +542,11 @@ $(window).load(function() {
           d3.selectAll('g')
               .data(data)
               .append("text")
-              .text((d) => d["country"])
+              .text((d) => d["hashtag"])
               .attr("fill", "#000")
               .attr("class", itemClass)
-              .attr("text-anchor", "end")
-              .attr("dx", 25)
+              //.attr("text-anchor", "end")
+              .attr("dx", (d, i) => scale_x(d["num_tweets"]) + 12)
               .attr("dy", (d, i) => scale_y(i * 4) + 12 + shift)
               .attr("opacity", (d, i) => i < 12 ? 1 : 0) //only show 12 people
 
@@ -555,10 +555,10 @@ $(window).load(function() {
               .data(data)
               .append("text")
               .text((d) => d["num_tweets"])
-              .attr("fill", "#000")
+              .attr("fill", "#FFF")
               .attr("class", itemClass)
               .attr("text-anchor", "start")
-              .attr("dx", (d, i) => scale_x(d["num_tweets"]) + 12)
+              .attr("dx", 13)
               .attr("dy", (d, i) => scale_y(i * 4) + 11 + shift)
               .attr("opacity", (d, i) => i < 12 ? 1 : 0) //only show 12 people
 
