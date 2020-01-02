@@ -72,6 +72,10 @@
 var loadCircles = false; //switch the hashtags circles at each screen
 let circles; // Reference to the hashtags circles
 var ht_data;
+
+
+
+
 d3.json("./data/hashtags.json",
     function(d) {
         console.log("loaded")
@@ -124,12 +128,12 @@ $(window).load(function() {
 
       let sentiment_color = (tweet) => {
           if (tweet['category'] == 'negative')
-              return "red";
+              return "#f44336";
           if (tweet['category'] == 'neutral')
-              return "gray";
+              return "#91989D";
           if (tweet['category'] == 'positive')
-              return "green";
-          return "#99c125";
+              return "#66bb6a";
+          return "#68DF82";
 
       }
 
@@ -151,18 +155,19 @@ $(window).load(function() {
       let grid = () => {
         loadCircles = false;//switch off the hashtags
         
+        // Text below the graphs (so far it's not being deleted from screen to screen)
         svg
-              .append("text")
-              .text('\uf099 350406 tweets')
-              .attr("fill", "#444")
-              //.attr("text-anchor", "end")
-              .attr("class", "fab")
-              //.attr('font-weight', "900")
-              //.attr('font-size', '40px')
-              //.attr("dy", ".35em")
-              .attr("x", 15)
-              .attr("y", 550)
-              //.attr("opacity", 1) //only show 12 people
+          .append("text")
+          .text('\uf099 350406 tweets')
+          .attr("fill", "#444")
+          //.attr("text-anchor", "end")
+          .attr("class", "fab")
+          //.attr('font-weight', "900")
+          //.attr('font-size', '40px')
+          //.attr("dy", ".35em")
+          .attr("x", 15)
+          .attr("y", 550)
+          //.attr("opacity", 1)
        
         svg.append("text")
           .text('\uf079 2 million retweets')
@@ -170,12 +175,14 @@ $(window).load(function() {
           .attr("class", "fa")
           .attr("x", 190)
           .attr("y", 550)
+
         svg.append("text")
           .text('\uf004 5 million likes')
           .attr("fill", "#444")
           .attr("class", "fa")
           .attr("x", 400)
           .attr("y", 550)
+        
         svg.append("text")
           .text('Each dot represents X tweets. Tweets were collected from Aug to Oct 2019')
           .attr("fill", "#444")
@@ -184,7 +191,7 @@ $(window).load(function() {
           .attr("y", 585)
 
 
-
+        //The semi circles
         rects
             .data(data)
             .transition()
@@ -201,24 +208,9 @@ $(window).load(function() {
       }
 
 
-
-
-      //divide
-      let divide2 = () => {
-
-          const dataUK = data.filter(d => d.country == 'UK');
-          const dataUS = data.filter(d=> d.country == 'US');
-          loadCircles = false;//switch off the hashtags
-          showGridSentiment();
-          //showGrids(dataUS, 'grids', 60);
-          //drawBars(dataUK, 'UK', 200);
-          //.exit().attr("opacity", 0);
-
-      }
-
       function countryGrid(){
 
-        loadCircles = false;//switch off the hashtags
+        loadCircles = false;//switch off the bubble hashtags
 
         let spacing = 10;
         let rows = 50;
@@ -267,7 +259,7 @@ $(window).load(function() {
 
 
       function sentimentGrid(){
-        loadCircles = false;//switch off the hashtags
+        loadCircles = false;//switch off the bubble hashtags
         let sentiment_shift = (tweet) => {
           if (tweet['category'] == 'negative')
               return 20;
@@ -324,30 +316,7 @@ $(window).load(function() {
 
       }
 
-      //divide
-      let randomGrid = () => {
-
-          loadCircles = false;//switch off the hashtags
-
-          rects
-              .data(data)
-              .transition()
-              .delay((d, i) => 3 * i)
-              .duration(300)
-              //.ease("elastic")
-              .attr("width", size)
-              .attr("height", size)
-              .attr("rx", 0)
-              .attr("ry", 0)
-              .attr("x", (d, i) => d['country'] == "US" ? randnum(20, 200) : randnum(240, 460))
-              .attr("y", (d, i) => Math.floor(i / column) % rows * spacing)
-              .attr("fill", (d, i) => country_color(d))
-              .attr("opacity", 1) //only show 12 people
-
-      }
-
-
-      //circle grid
+      //sentiment circle grid (to be deleted)
       let circleGrid = () => {
           loadCircles = false;//switch off the hashtags
           clearText();   
@@ -502,7 +471,7 @@ $(window).load(function() {
                     return xCenter(d.num_tweets);
                 })
                 .style('fill', function(d) {
-                    return country_color(d);
+                    return sentiment_color(d);
                 })
                 .merge(circles)
                 .attr('cx', function(d) {
@@ -586,7 +555,7 @@ $(window).load(function() {
       //bar cart
       let barChart = function(country) {
           loadCircles = false //switch off the hashtags
-
+          switchCircles(false);
           const dataUK = datos.filter(d => d.country == 'UK');
           const dataUS = datos.filter(d=> d.country == 'US');
           
