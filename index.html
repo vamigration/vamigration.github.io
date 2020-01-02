@@ -250,7 +250,7 @@ $(window).load(function() {
                 pos = ukY;
                 ukY++;
               }
-              return 520 - (Math.floor(pos / column) % rows * spacing)
+              return 500 - (Math.floor(pos / column) % rows * spacing)
             })
             .attr("fill", (d, i) => country_color(d))
             .attr("opacity", 1) //only show 12 people
@@ -309,7 +309,7 @@ $(window).load(function() {
                 pos = sentimentUKY[d['category']];
                 sentimentUKY[d['category']]++;
               }
-              return 520 - (Math.floor(pos / column) % rows * spacing)
+              return 500 - (Math.floor(pos / column) % rows * spacing)
             })
             .attr("fill", (d, i) => sentiment_color(d))
             .attr("opacity", 1) //only show 12 people
@@ -401,12 +401,17 @@ $(window).load(function() {
 
 
           //number of tweets
-          d3.selectAll('text.country')
+          d3.selectAll('.country')
               .transition()
               .delay((d, i) => 2 * i)
               .duration(100)
               //.ease('elastic')
-              .attr("dx", -500)
+              .attr("opacity", 0)
+          d3.selectAll('.arrows')
+            .transition()
+            .delay((d,i)=> 2 * i)
+            .duration(100)
+            .attr("opacity", 0)
       }
 
       //force layout
@@ -555,14 +560,66 @@ $(window).load(function() {
       //bar cart
       let barChart = function(country) {
           loadCircles = false //switch off the hashtags
-          switchCircles(false);
+          maytheforce();
           const dataUK = datos.filter(d => d.country == 'UK');
           const dataUS = datos.filter(d=> d.country == 'US');
           
           drawBars(dataUK, 'UK', 250);
           drawBars(dataUS, 'US', 0);
           //drawBars(dataUK, 'UK', 200);
-          //.exit().attr("opacity", 0);
+          //.exit().attr("opacity1", 0);
+
+          
+        //arrow
+        svg.append("svg:defs").append("svg:marker")
+          .attr("id", "triangle")
+          .attr("refX", 6)
+          .attr("refY", 6)
+          .attr("markerWidth", 30)
+          .attr("markerHeight", 30)
+          .attr("markerUnits","userSpaceOnUse")
+          .attr("orient", "auto")
+          .append("path")
+          .attr("d", "M 0 0 12 6 0 12 3 6")
+          .style("fill", "#777");
+    
+        //line              
+        svg.append("line")
+            .attr("x1",  10)
+            .attr("y1", 293)
+            .attr("x2", 650)
+            .attr("y2", 293)
+            .attr("stroke-width", 1)
+            .attr("stroke", "#777")
+            .attr("class", "arrows")
+            .attr("marker-end", "url(#triangle)");
+
+        svg.append("text")
+          .text('Number of tweets')
+          .attr("fill", "#777")
+          .attr("x", 560)
+          .attr("y", 288)
+          .attr("class", "arrows");
+
+        //line              
+        svg.append("line")
+            .attr("x1",  10)
+            .attr("y1", 43)
+            .attr("x2", 650)
+            .attr("y2", 43)
+            .attr("stroke-width", 1)
+            .attr("stroke", "#777")
+            .attr("class", "arrows")
+            .attr("marker-end", "url(#triangle)");
+
+        svg.append("text")
+          .text('Number of tweets')
+          .attr("fill", "#777")
+          .attr("x", 560)
+          .attr("y", 38)
+          .attr("class", "arrows")
+
+          
       }
 
       //waypoints scroll constructor
