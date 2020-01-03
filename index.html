@@ -498,7 +498,7 @@ $(window).load(function() {
                     return xCenter(d.num_tweets);
                 })
                 .style('fill', function(d) {
-                    return sentiment_color(d);
+                    return country_color(d);
                 })
                 .merge(circles)
                 .attr('cx', function(d) {
