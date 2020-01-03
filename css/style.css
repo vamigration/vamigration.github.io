@@ -58,11 +58,11 @@ strong{
 
 /* Style the header */
 .header {
-  padding: 10px 10px;
+  padding: 5px 5px;
   color: #394147;
   z-index:1000;
-  font-family: 'Merriweather';
-  font-size: 2em;
+  font-family: 'Georgia';
+  font-size: 18px;
   background: #f7f5f2;
   border-bottom: 1px solid #e2e2e2;
 
