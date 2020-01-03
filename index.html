@@ -151,19 +151,7 @@ $(window).load(function() {
           return "orange";
       }
 
-
-
-
-
-      // square grid
-      let grid = () => {
-        loadCircles = false;//switch off the hashtags
-        clearText();
-
-        
-
-
-        // Text below the graphs (so far it's not being deleted from screen to screen)
+      // Text below the graphs (so far it's not being deleted from screen to screen)
         svg
           .append("text")
           .text('\uf099 350406 tweets')
@@ -198,6 +186,12 @@ $(window).load(function() {
           .attr("x", 16)
           .attr("y", 592)
 
+
+
+      // square grid
+      let grid = () => {
+        loadCircles = false;//switch off the hashtags
+        clearText();
 
         //The semi circles
         rects
@@ -271,6 +265,7 @@ $(window).load(function() {
       function sentimentGrid(){
         loadCircles = false;//switch off the bubble hashtags
         clearText();
+
         addUSFlag(180, 530)
         addUKFlag(505, 530)
         let sentiment_shift = (tweet) => {
@@ -332,6 +327,7 @@ $(window).load(function() {
       //sentiment circle grid (to be deleted)
       let circleGrid = () => {
           loadCircles = false;//switch off the hashtags
+          clearRects();
           clearText();   
 
           rects
@@ -583,7 +579,7 @@ $(window).load(function() {
       //bar cart
       let barChart = function(country) {
           loadCircles = false //switch off the hashtags
-          maytheforce();
+          clearRects();
           clearText();
           const dataUK = ht_data.filter(d => d.country == 'UK');
           const dataUS = ht_data.filter(d=> d.country == 'US');
