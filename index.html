@@ -79,7 +79,7 @@ var ht_data;
 
 
 
-d3.json("./data/hashtags.json",
+d3.csv("./data/hashtags_d3.csv",
     function(d) {
         console.log("loaded")
         ht_data = d;
@@ -91,10 +91,11 @@ d3.json("./data/hashtags.json",
 
 $(window).load(function() {
   var data;
-  d3.json("./data/hashtagsTidy.json", function(d) {
-      datos = d;
+  d3.csv("./data/tweets_d3.csv", function(d) {
+      data = d;
+      console.log(data)
 
-      data = datos.map((i) => (new Array(i.num_points)).fill(i, 0, i.num_points)).reduce((acc, i) => acc.concat(i));
+      //data = datos.map((i) => (new Array(i.num_points)).fill(i, 0, i.num_points)).reduce((acc, i) => acc.concat(i));
 
       //svg
       let svg = d3.select("svg");
@@ -130,11 +131,11 @@ $(window).load(function() {
 
 
       let sentiment_color = (tweet) => {
-          if (tweet['category'] == 'negative')
+          if (tweet['sentiment'] == 'negative')
               return "#f44336";
-          if (tweet['category'] == 'neutral')
+          if (tweet['sentiment'] == 'neutral')
               return "#91989D";
-          if (tweet['category'] == 'positive')
+          if (tweet['sentiment'] == 'positive')
               return "#66bb6a";
           return "#68DF82";
 
@@ -220,7 +221,7 @@ $(window).load(function() {
         loadCircles = false;//switch off the bubble hashtags
         clearText();
         addUSFlag(180, 530)
-        addUKFlag(500, 530)
+        addUKFlag(505, 530)
         let spacing = 10;
         let rows = 50;
         let column = 18;
@@ -271,13 +272,13 @@ $(window).load(function() {
         loadCircles = false;//switch off the bubble hashtags
         clearText();
         addUSFlag(180, 530)
-        addUKFlag(500, 530)
+        addUKFlag(505, 530)
         let sentiment_shift = (tweet) => {
-          if (tweet['category'] == 'negative')
+          if (tweet['sentiment'] == 'negative')
               return 20;
-          if (tweet['category'] == 'neutral')
+          if (tweet['sentiment'] == 'neutral')
               return 90;
-          if (tweet['category'] == 'positive')
+          if (tweet['sentiment'] == 'positive')
               return 160;
           return 60;
 
@@ -303,23 +304,23 @@ $(window).load(function() {
             .attr("ry", "50%")
             .attr("x", function (d, i) {
               if(d['country'] == 'US'){
-                sentimentUSX[d['category']]++;
-                return ((sentimentUSX[d['category']]-1) % column * spacing) + 35 + sentiment_shift(d)
+                sentimentUSX[d['sentiment']]++;
+                return ((sentimentUSX[d['sentiment']]-1) % column * spacing) + 35 + sentiment_shift(d)
               }
               else{
-                sentimentUKX[d['category']]++;
-                return ((sentimentUKX[d['category']]-1) % column * spacing) + 355 + sentiment_shift(d)
+                sentimentUKX[d['sentiment']]++;
+                return ((sentimentUKX[d['sentiment']]-1) % column * spacing) + 355 + sentiment_shift(d)
               }
             })
             .attr("y", function (d, i) {
               pos = 0;
               if(d['country']=='US'){
-                pos = sentimentUSY[d['category']];
-                sentimentUSY[d['category']]++;
+                pos = sentimentUSY[d['sentiment']];
+                sentimentUSY[d['sentiment']]++;
               }
               else{
-                pos = sentimentUKY[d['category']];
-                sentimentUKY[d['category']]++;
+                pos = sentimentUKY[d['sentiment']];
+                sentimentUKY[d['sentiment']]++;
               }
               return 500 - (Math.floor(pos / column) % rows * spacing)
             })
@@ -464,8 +465,8 @@ $(window).load(function() {
         
 
         var xCenter = d3.scaleLinear()
-            .domain([1, 3230])
-            .range([5, 50]);
+            .domain([1, 1305])
+            .range([10, 50]);
 
         //set up grid spacing
         let spacing = 14;
@@ -520,7 +521,7 @@ $(window).load(function() {
 
       }
 
-      let scale_x = d3.scaleLinear().domain([0, 3221])
+      let scale_x = d3.scaleLinear().domain([0, 1500])
           .range([5, 600]);
 
       let scale_y = d3.scaleLinear().domain([0, 120])
@@ -572,7 +573,7 @@ $(window).load(function() {
               .attr("width", (d, i) => scale_x(d["num_tweets"]))
               .attr("height", (d, i) => 15)
               .attr("fill", (d, i) => country_color(d))
-                //(d['category'] == "negative" ? "#99c125" : "#5b6871"))
+                //(d['sentiment'] == "negative" ? "#99c125" : "#5b6871"))
               .attr("opacity", 1)
               .attr("transform", "translate(0,0) rotate(0)")
               .attr("opacity", (d, i) => i < 12 ? 1 : 0) //only show 12 people
@@ -584,8 +585,8 @@ $(window).load(function() {
           loadCircles = false //switch off the hashtags
           maytheforce();
           clearText();
-          const dataUK = datos.filter(d => d.country == 'UK');
-          const dataUS = datos.filter(d=> d.country == 'US');
+          const dataUK = ht_data.filter(d => d.country == 'UK');
+          const dataUS = ht_data.filter(d=> d.country == 'US');
           
           drawBars(dataUK, 'UK', 250);
           drawBars(dataUS, 'US', 0);
