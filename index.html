@@ -9,7 +9,10 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.js"></script>
+
   <script type="text/javascript" src="https://github.com/flowhub/the-graph/blob/master/the-graph/font-awesome-unicode-map.js"></script>
+
+
   <link rel="stylesheet" type="text/css" href="./css/style.css">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
 </head>
@@ -154,7 +157,11 @@ $(window).load(function() {
       // square grid
       let grid = () => {
         loadCircles = false;//switch off the hashtags
+        clearText();
+
         
+
+
         // Text below the graphs (so far it's not being deleted from screen to screen)
         svg
           .append("text")
@@ -166,7 +173,7 @@ $(window).load(function() {
           //.attr('font-size', '40px')
           //.attr("dy", ".35em")
           .attr("x", 15)
-          .attr("y", 550)
+          .attr("y", 575)
           //.attr("opacity", 1)
        
         svg.append("text")
@@ -174,21 +181,21 @@ $(window).load(function() {
           .attr("fill", "#444")
           .attr("class", "fa")
           .attr("x", 190)
-          .attr("y", 550)
+          .attr("y", 575)
 
         svg.append("text")
           .text('\uf004 5 million likes')
           .attr("fill", "#444")
           .attr("class", "fa")
           .attr("x", 400)
-          .attr("y", 550)
+          .attr("y", 575)
         
         svg.append("text")
           .text('Each dot represents X tweets. Tweets were collected from Aug to Oct 2019')
           .attr("fill", "#444")
           .attr("class", "svg_text")
-          .attr("x", 2)
-          .attr("y", 585)
+          .attr("x", 16)
+          .attr("y", 592)
 
 
         //The semi circles
@@ -202,7 +209,7 @@ $(window).load(function() {
             .attr("rx", 4)
             .attr("ry", 4)
             .attr("x", (d, i) => (i % column * spacing) + 15)
-            .attr("y", (d, i) => (Math.floor(i / column) % rows * spacing) + 50)
+            .attr("y", (d, i) => (Math.floor(i / column) % rows * spacing) + 70)
             .attr("fill", "steelblue")
             .attr("opacity", "1")
       }
@@ -211,7 +218,9 @@ $(window).load(function() {
       function countryGrid(){
 
         loadCircles = false;//switch off the bubble hashtags
-
+        clearText();
+        addUSFlag(180, 530)
+        addUKFlag(500, 530)
         let spacing = 10;
         let rows = 50;
         let column = 18;
@@ -260,6 +269,9 @@ $(window).load(function() {
 
       function sentimentGrid(){
         loadCircles = false;//switch off the bubble hashtags
+        clearText();
+        addUSFlag(180, 530)
+        addUKFlag(500, 530)
         let sentiment_shift = (tweet) => {
           if (tweet['category'] == 'negative')
               return 20;
@@ -375,11 +387,13 @@ $(window).load(function() {
 
       function switchCircles(visible){
         if (visible) {
+      
                 circles
                     .transition()
                     .delay((d, i) => 3 * i)
                     .duration(100)
                     .attr("opacity", 1)
+                
             } else {
                 circles
                     .transition()
@@ -412,6 +426,13 @@ $(window).load(function() {
             .delay((d,i)=> 2 * i)
             .duration(100)
             .attr("opacity", 0)
+
+          d3.selectAll('.flag')
+            .transition()
+            .delay((d,i)=> 2 * i)
+            .duration(100)
+            .attr("opacity", 0)
+      
       }
 
       //force layout
@@ -419,7 +440,8 @@ $(window).load(function() {
 
         clearRects(); // Remove the rects from previous frame
         clearText(); // Clear the text from previous frames
-
+        addUSFlag(160, 320)
+        addUKFlag(530, 320)
         loadCircles = true;
 
         var width = 600,
@@ -502,7 +524,7 @@ $(window).load(function() {
           .range([5, 600]);
 
       let scale_y = d3.scaleLinear().domain([0, 120])
-          .range([50, 600]);
+          .range([60, 600]);
 
 
 
@@ -561,6 +583,7 @@ $(window).load(function() {
       let barChart = function(country) {
           loadCircles = false //switch off the hashtags
           maytheforce();
+          clearText();
           const dataUK = datos.filter(d => d.country == 'UK');
           const dataUS = datos.filter(d=> d.country == 'US');
           
@@ -586,9 +609,9 @@ $(window).load(function() {
         //line              
         svg.append("line")
             .attr("x1",  10)
-            .attr("y1", 293)
+            .attr("y1", 303)
             .attr("x2", 650)
-            .attr("y2", 293)
+            .attr("y2", 303)
             .attr("stroke-width", 1)
             .attr("stroke", "#777")
             .attr("class", "arrows")
@@ -598,15 +621,15 @@ $(window).load(function() {
           .text('Number of tweets')
           .attr("fill", "#777")
           .attr("x", 560)
-          .attr("y", 288)
+          .attr("y", 298)
           .attr("class", "arrows");
 
         //line              
         svg.append("line")
             .attr("x1",  10)
-            .attr("y1", 43)
+            .attr("y1", 53)
             .attr("x2", 650)
-            .attr("y2", 43)
+            .attr("y2", 53)
             .attr("stroke-width", 1)
             .attr("stroke", "#777")
             .attr("class", "arrows")
@@ -616,10 +639,34 @@ $(window).load(function() {
           .text('Number of tweets')
           .attr("fill", "#777")
           .attr("x", 560)
-          .attr("y", 38)
-          .attr("class", "arrows")
+          .attr("y", 48)
+          .attr("class", "arrows");
+          addUSFlag(400, 47);
+          addUKFlag(400, 297);
+      }
 
-          
+      function addUSFlag(x, y){
+        svg.append("text")
+        .attr("font-weight", "bold")
+        .attr("font-size", "25px")
+        .attr("x", x)
+        .attr("y", y)
+        .attr("class", "fa flag")
+        .text('US ' + String.fromCodePoint(parseInt('1f1fa', 16), parseInt('1f1f8', 16)))
+        .attr("font-family", "sans-serif")
+        .attr("text-anchor", "end");
+      }
+
+      function addUKFlag(x, y){
+         svg.append("text")
+        .attr("font-weight", "bold")
+        .attr("font-size", "25px")
+        .attr("x", x)
+        .attr("y", y)
+        .attr("class", "fa flag")
+        .text('UK ' + String.fromCodePoint(parseInt('1f1ec', 16), parseInt('1f1e7', 16)))
+        .attr("font-family", "sans-serif")
+        .attr("text-anchor", "end");
       }
 
       //waypoints scroll constructor
