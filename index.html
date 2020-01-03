@@ -91,7 +91,7 @@ d3.csv("./data/hashtags_d3.csv",
 
 $(window).load(function() {
   var data;
-  d3.csv("./data/tweets_d3.csv", function(d) {
+  d3.csv("./data/tweets_d3_1000.csv", function(d) {
       data = d;
       console.log(data)
 
@@ -101,14 +101,14 @@ $(window).load(function() {
       let svg = d3.select("svg");
 
       //svg width and height
-      svg.attr('width', 800)
+      svg.attr('width', 700)
         .attr('height', 640)
 
       //set up grid spacing
-      let spacing = 14;
-      let rows = 40;
-      let column = 40;
-      let size = 8;
+      let spacing = 8;
+      let rows = 60;
+      let column = 60;
+      let size = 5;
       let randnum = (min, max) => Math.round(Math.random() * (max - min) + min);
 
       //Create an array of objects
@@ -180,11 +180,11 @@ $(window).load(function() {
           .attr("y", 575)
         
         svg.append("text")
-          .text('Each dot represents X tweets. Tweets were collected from Aug to Oct 2019')
+          .text('Each dot represents 100 tweets. Tweets were collected from Aug to Oct 2019')
           .attr("fill", "#444")
           .attr("class", "svg_text")
           .attr("x", 16)
-          .attr("y", 592)
+          .attr("y", 598)
 
 
 
@@ -197,14 +197,14 @@ $(window).load(function() {
         rects
             .data(data)
             .transition()
-            .delay((d, i) => 3 * i)
+            .delay((d, i) => i)
             .duration(300)
             .attr("width", size)
             .attr("height", size)
             .attr("rx", 4)
             .attr("ry", 4)
-            .attr("x", (d, i) => (i % column * spacing) + 15)
-            .attr("y", (d, i) => (Math.floor(i / column) % rows * spacing) + 70)
+            .attr("x", (d, i) => (i % column * spacing) + 45)
+            .attr("y", (d, i) => (Math.floor(i / column) % rows * spacing) + 30)
             .attr("fill", "steelblue")
             .attr("opacity", "1")
       }
@@ -216,10 +216,10 @@ $(window).load(function() {
         clearText();
         addUSFlag(180, 530)
         addUKFlag(505, 530)
-        let spacing = 10;
-        let rows = 50;
-        let column = 18;
-        let size = 7;
+        let spacing = 6;
+        let rows = 90;
+        let column = 30;
+        let size = 5;
         usX = 0;
         ukX = 0;
         usY = 0;
@@ -227,8 +227,8 @@ $(window).load(function() {
 
         rects
             .transition()
-            .delay((d, i) => 3 * i)
-            .duration(300)
+            .delay((d, i) => i)
+            .duration(200)
             //.ease("elastic")
             .attr("width", size)
             .attr("height", size)
@@ -283,15 +283,15 @@ $(window).load(function() {
         sentimentUSY = {'negative': 0, 'neutral': 0, 'positive': 0}
         sentimentUKY = {'negative': 0, 'neutral': 0, 'positive': 0}
 
-        let spacing = 8;
-        let rows = 50;
-        let column = 7;
-        let size = 7;
+        let spacing = 5;
+        let rows = 100;
+        let column = 13;
+        let size = 4;
 
         rects
             .transition()
-            .delay((d, i) => 3 * i)
-            .duration(300)
+            .delay((d, i) => i)
+            .duration(200)
             //.ease("elastic")
             .attr("width", size)
             .attr("height", size)
@@ -333,15 +333,15 @@ $(window).load(function() {
           rects
               .data(data)
               .transition()
-              .delay((d, i) => 3 * i)
-              .duration(300)
+              .delay((d, i) => i)
+              .duration(200)
               //.ease("elastic")
               .attr("width", size)
               .attr("height", size)
               .attr("rx", "50%")
               .attr("ry", "50%")
-              .attr("x", (d, i) => (i % column * spacing) + 15)
-              .attr("y", (d, i) => (Math.floor(i / column) % rows * spacing)+50)
+              .attr("x", (d, i) => (i % column * spacing) + 45)
+              .attr("y", (d, i) => (Math.floor(i / column) % rows * spacing) + 30)
               .attr("fill", (d, i) => (sentiment_color(d)))
               .attr("opacity", "1")
 
@@ -350,7 +350,7 @@ $(window).load(function() {
       function clearRects(){
         rects
             .transition()
-            .delay((d, i) => 2 * i)
+            .delay((d, i) => i)
             .duration(100)
             //.ease("elastic")
             .attr("opacity", "0");
@@ -365,7 +365,7 @@ $(window).load(function() {
 
         svg.selectAll('.UK')
           .transition()
-          .delay((d, i) => 10 * i)
+          .delay((d, i) => i)
           .duration(300)
           //.ease("elastic")
           .attr("opacity", "0")
@@ -373,7 +373,7 @@ $(window).load(function() {
 
         svg.selectAll('.US')
           .transition()
-          .delay((d, i) => 10 * i)
+          .delay((d, i) => i)
           .duration(300)
           //.ease("elastic")
           .attr("opacity", "0")
@@ -387,14 +387,14 @@ $(window).load(function() {
       
                 circles
                     .transition()
-                    .delay((d, i) => 3 * i)
+                    .delay((d, i) => 12 * i)
                     .duration(100)
                     .attr("opacity", 1)
                 
             } else {
                 circles
                     .transition()
-                    .delay((d, i) => 3 * i)
+                    .delay((d, i) => 12 * i)
                     .duration(100)
                     .attr("opacity", 0)
             }
