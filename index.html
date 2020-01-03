@@ -299,8 +299,8 @@ $(window).load(function() {
             //.ease("elastic")
             .attr("width", size)
             .attr("height", size)
-            .attr("rx", 3)
-            .attr("ry", 3)
+            .attr("rx", "50%")
+            .attr("ry", "50%")
             .attr("x", function (d, i) {
               if(d['country'] == 'US'){
                 sentimentUSX[d['category']]++;
