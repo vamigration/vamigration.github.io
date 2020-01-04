@@ -33,8 +33,9 @@
       You can see <strong>3510 circles</strong>, representing nearly 351000 collected tweets during the months of August, September and October 2019.
       <br>
 
-      <h2>Here we present our analysis about <strong>Perception of migration on social media</strong> using Twitter data</h2>
+      <h2>Let's analyze this data to get an idea about the <strong>Perception of migration on social media</strong></h2>
       <br/>
+      <!-- from https://codepen.io/bypavel/pen/jAXpgq -->
       <div id="wrapperArrow">
         <div id="wrapper-innerArrow">
           <div id="scroll-down">
@@ -47,7 +48,6 @@
           </div>
         </div>
       </div>
-
     </div>
 
     <div id="div2">
@@ -238,16 +238,13 @@ $(window).load(function() {
         //The semi circles
         rects
             .data(data)
-            .attr("width", 0)
-            .attr("height", 0)
-
-            .attr("opacity", 0)
+            .attr("opacity", 0.6)
             .transition()
             .attr("width", size)
             .attr("height", size)
             .attr("rx", 4)
             .attr("ry", 4)
-            .delay((d, i) => i*0.7)
+            .delay((d, i) => i)
             .duration(5)
             .attr("x", (d, i) => (i % column * spacing) + 35)
             .attr("y", (d, i) => (Math.floor(i / column) % rows * spacing) + 40)
@@ -259,8 +256,6 @@ $(window).load(function() {
       function countryGrid(){
         loadCircles = false;//switch off the bubble hashtags
         clearText();
-        clearRects();
-
         addUSFlag(150, 530)
         addUKFlag(475, 530)
         //We need different space to give the feeling of barchart
@@ -274,7 +269,7 @@ $(window).load(function() {
         //Now we move the rects to divide the grid
         rects
             .transition()
-            .delay((d, i) => i)
+            .delay((d, i) => i*0.5)
             .duration(200)
             //.ease("elastic")
             .attr("width", size)
@@ -329,7 +324,7 @@ $(window).load(function() {
         //Now we move the rects to divide the grid
         rects
             .transition()
-            .delay((d, i) => i*0.2)
+            .delay((d, i) => i*0.3)
             .duration(100)
             //.ease("elastic")
             .attr("width", size)
@@ -488,14 +483,14 @@ $(window).load(function() {
       function clearRects(){
         rects
           .transition()
-          .delay((d, i) => i*0.7)
+          .delay((d, i) => i*0.5)
           .duration(10)
           //.ease("elastic")
           .attr("opacity", "0");
 
         svg.selectAll('.grids')
           .transition()
-          .delay((d, i) => i*0.7)
+          .delay((d, i) => i)
           .duration(10)
           //.ease("elastic")
           .attr("opacity", "0")
@@ -831,8 +826,6 @@ $(window).load(function() {
       new scrollD('div6', '75%', barChart, maytheforce, 'US');
       //new scroll('div6', '75%', barChart, divide, 'UK');
       //start grid on page load
-
-
   });
 
 });
