@@ -227,7 +227,7 @@ $(window).load(function() {
             .duration(5)
             .attr("x", (d, i) => (i % column * spacing) + 35)
             .attr("y", (d, i) => (Math.floor(i / column) % rows * spacing) + 40)
-            .attr("fill", "steelblue")
+            .attr("fill", "steelblue") 
             .attr("opacity", 1)
       }
 
@@ -284,33 +284,36 @@ $(window).load(function() {
 
       }
 
+      //I replicated the code from country grid because 
+      //I was having problem with the transition. 
+      //Changed the opacity so people see the arrows
       function countryPercentageGrid(){
-
         loadCircles = false;//switch off the bubble hashtags
         clearText();
         clearRects();
+
         addUSFlag(150, 530)
         addUKFlag(475, 530)
-
+        //We need different space to give the feeling of barchart
         let spacing = 6;
         let rows = 90;
         let column = 35;
-        let size = 7;
-        
-        usX = 0; ukX = 0;
-        usY = 0; ukY = 0;
-
+        let size = 5;
+        //Since data is in the same place we count for each country
+        usX = 0;  ukX = 0;
+        usY = 0;  ukY = 0;
+        //Now we move the rects to divide the grid
         rects
             .transition()
-            .delay((d, i) => i)
-            .duration(200)
+            .delay((d, i) => i*0.2)
+            .duration(100)
             //.ease("elastic")
             .attr("width", size)
             .attr("height", size)
-            .attr("rx", 0)
-            .attr("ry", 0)
+            .attr("rx", 3)
+            .attr("ry", 3)
             .attr("x", function (d, i) {
-              if(d['proportion'] == 'US'){
+              if(d['country'] == 'US'){
                 usX++;
                 return ((usX-1) % column * spacing) + 30
               }
@@ -321,7 +324,7 @@ $(window).load(function() {
             })
             .attr("y", function (d, i) {
               pos = 0;
-              if(d['proportion']=='US'){
+              if(d['country']=='US'){
                 pos = usY;
                 usY++;
               }
@@ -331,8 +334,43 @@ $(window).load(function() {
               }
               return 500 - (Math.floor(pos / column) % rows * spacing)
             })
-            .attr("fill", (d, i) => country_color(d, 'proportion'))
-            .attr("opacity", 1) //only show 12 people
+            .attr("fill", (d, i) => country_color(d, 'country'))
+            .attr("opacity", 0.6) 
+
+        //arrow head
+        svg.append("svg:defs").append("svg:marker")
+          .attr("id", "triangle")
+          .attr("refX", 6)
+          .attr("refY", 6)
+          .attr("markerWidth", 30)
+          .attr("markerHeight", 30)
+          .attr("markerUnits","userSpaceOnUse")
+          .attr("orient", "auto")
+          .append("path")
+          .attr("d", "M 0 0 12 6 0 12 3 6")
+          .style("fill", "#333");
+    
+        //line US            
+        svg.append("line")
+            .attr("x1",  270)
+            .attr("y1", 505)
+            .attr("x2", 270)
+            .attr("y2", 300)
+            .attr("stroke-width", 1)
+            .attr("stroke", "#333")
+            .attr("class", "arrows")
+            .attr("marker-end", "url(#triangle)");
+
+          //line UK        
+        svg.append("line")
+            .attr("x1",  585)
+            .attr("y1", 505)
+            .attr("x2", 585)
+            .attr("y2", 100)
+            .attr("stroke-width", 1)
+            .attr("stroke", "#333")
+            .attr("class", "arrows")
+            .attr("marker-end", "url(#triangle)");
 
       }
 
@@ -342,6 +380,8 @@ $(window).load(function() {
         clearText();
         addUSFlag(150, 530)
         addUKFlag(475, 530)
+        //To shift the points some pixels according to the sentiment
+        //to recreate a bar chart
         let sentiment_shift = (tweet) => {
           if (tweet['sentiment'] == 'negative')
               return 20;
@@ -455,6 +495,9 @@ $(window).load(function() {
 
       }
 
+      //The tick event draws the circles
+      //And we just need to say if it is visible or not
+      //For sure there is a better way
       function switchCircles(visible){
         if (visible) {
       
@@ -515,7 +558,7 @@ $(window).load(function() {
       
       }
 
-      //force layout
+      //force layout for hashtags
       let maytheforce = () => {
 
         clearRects(); // Remove the rects from previous frame
