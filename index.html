@@ -350,29 +350,60 @@ $(window).load(function() {
           .attr("d", "M 0 0 12 6 0 12 3 6")
           .style("fill", "#333");
     
+
         //line US            
         svg.append("line")
             .attr("x1",  270)
             .attr("y1", 505)
             .attr("x2", 270)
-            .attr("y2", 300)
+            .attr("y2", 505)
             .attr("stroke-width", 1)
             .attr("stroke", "#333")
             .attr("class", "arrows")
-            .attr("marker-end", "url(#triangle)");
+            .attr("marker-end", "url(#triangle)")
+            .transition()
+            .duration(2000)
+            .attr("x2", 270)
+            .attr("y2", 300);
 
           //line UK        
         svg.append("line")
-            .attr("x1",  585)
+            // .attr({
+            //   x1: 585,
+            //   y1: 505,
+            //   x2: 585,
+            //   y2: 505
+            // })
+            .attr("x1", 585)
             .attr("y1", 505)
             .attr("x2", 585)
-            .attr("y2", 100)
+            .attr("y2", 505)
             .attr("stroke-width", 1)
             .attr("stroke", "#333")
             .attr("class", "arrows")
-            .attr("marker-end", "url(#triangle)");
+            .attr("marker-end", "url(#triangle)")
+            .transition()
+            .duration(4000)
+            .attr("x2", 585)
+            .attr("y2", 100);
 
+        //updateLines(lineUS, lineUK);  
+
+        
       }
+
+      function updateLines(lineUS, lineUK) {
+          lineUS.transition()
+              .ease(d3.easeLinear)
+              .duration(2000)
+              .attr("height",200)
+
+          lineUK.transition()
+              .ease(d3.easeLinear)
+              .duration(4000)
+              //.delay(2000)
+              .attr("height",400)
+      }  
 
       function sentimentGrid(){
         loadCircles = false;//switch off the bubble hashtags
