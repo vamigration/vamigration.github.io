@@ -80,7 +80,7 @@
 
 
   <!-- svg -->
-  <div class="fixed"><svg id="viz" width="100%" height="100%"></svg></div>
+  <div class="fixed"><svg id="viz" width="70%" height="100%"></svg></div>
 
 </div><!-- /graphic -->
   
@@ -91,9 +91,7 @@ var loadCircles = false; //switch the hashtags circles at each screen
 let circles; // Reference to the hashtags circles
 var ht_data;
 
-
-
-
+//Load the hashtag data
 d3.csv("./data/hashtags_d3.csv",
     function(d) {
         console.log("loaded")
@@ -103,36 +101,37 @@ d3.csv("./data/hashtags_d3.csv",
     });
 
 
-
 $(window).load(function() {
   var data;
+  //Callback excecuted once data is downloaded
   d3.csv("./data/tweets_d3_1000.csv", function(d) {
       data = d;
-      console.log(data)
-
+      
+      //To convert to tidy data -> avoid downloading repetitive rows
       //data = datos.map((i) => (new Array(i.num_points)).fill(i, 0, i.num_points)).reduce((acc, i) => acc.concat(i));
 
       //svg
       let svg = d3.select("svg");
 
       //svg width and height
-      svg.attr('width', 700)
-        .attr('height', 640)
+      svg.attr('width', 600)
+        .attr('height', 800)
 
       //set up grid spacing
-      let spacing = 8;
       let rows = 60;
       let column = 60;
+      let spacing = 8;
       let size = 5;
+
       let randnum = (min, max) => Math.round(Math.random() * (max - min) + min);
 
       //Create an array of objects
-      let our_data = d3.range(20).map(i =>
-          ({
-              'device': i < 5 ? 'ios' : 'android',
-              'city': i < 3 ? 'San Diegan' : 'Out of towners',
-              'age': randnum(25, 65)
-          }));
+      // let our_data = d3.range(20).map(i =>
+      //     ({
+      //         'device': i < 5 ? 'ios' : 'android',
+      //         'city': i < 3 ? 'San Diegan' : 'Out of towners',
+      //         'age': randnum(25, 65)
+      //     }));
 
       //create group and join our data to that group
       let group = svg.selectAll('g')
@@ -141,10 +140,13 @@ $(window).load(function() {
           .append("g")
 
 
-      //create rectangles
+      //create rectangles - on the grid they look like circles 
+      //But rects are more flexible
       let rects = group.append("rect")
 
 
+      //Get colors for sentiment
+      //ToDo: Add dark mode
       let sentiment_color = (tweet) => {
           if (tweet['sentiment'] == 'negative')
               return "#f44336";
@@ -156,6 +158,7 @@ $(window).load(function() {
 
       }
 
+      //Colors for country or proportion (field)
       let country_color = (tweet, field) => {
         //var colorScale = ['orange', 'lightblue', '#B19CD9'];
         //"#99c125" : "#394147"
@@ -203,7 +206,7 @@ $(window).load(function() {
 
 
 
-      // square grid
+      // initial square grid
       let grid = () => {
         loadCircles = false;//switch off the hashtags
         clearText();
@@ -221,29 +224,30 @@ $(window).load(function() {
             .attr("rx", 4)
             .attr("ry", 4)
             .delay((d, i) => i)
-            .duration((d, i) => 10)
-            .attr("x", (d, i) => (i % column * spacing) + 45)
-            .attr("y", (d, i) => (Math.floor(i / column) % rows * spacing) + 30)
+            .duration(5)
+            .attr("x", (d, i) => (i % column * spacing) + 35)
+            .attr("y", (d, i) => (Math.floor(i / column) % rows * spacing) + 40)
             .attr("fill", "steelblue")
             .attr("opacity", 1)
       }
 
-
+      //Divides the initial grid according to the country
       function countryGrid(){
-
         loadCircles = false;//switch off the bubble hashtags
         clearText();
-        addUSFlag(180, 530)
-        addUKFlag(505, 530)
+        clearRects();
+
+        addUSFlag(150, 530)
+        addUKFlag(475, 530)
+        //We need different space to give the feeling of barchart
         let spacing = 6;
         let rows = 90;
         let column = 35;
         let size = 5;
-        usX = 0;
-        ukX = 0;
-        usY = 0;
-        ukY = 0;
-
+        //Since data is in the same place we count for each country
+        usX = 0;  ukX = 0;
+        usY = 0;  ukY = 0;
+        //Now we move the rects to divide the grid
         rects
             .transition()
             .delay((d, i) => i)
@@ -256,11 +260,11 @@ $(window).load(function() {
             .attr("x", function (d, i) {
               if(d['country'] == 'US'){
                 usX++;
-                return ((usX-1) % column * spacing) + 60
+                return ((usX-1) % column * spacing) + 30
               }
               else{
                 ukX++;
-                return ((ukX-1) % column * spacing) + 380
+                return ((ukX-1) % column * spacing) + 350
               }
             })
             .attr("y", function (d, i) {
@@ -276,7 +280,7 @@ $(window).load(function() {
               return 500 - (Math.floor(pos / column) % rows * spacing)
             })
             .attr("fill", (d, i) => country_color(d, 'country'))
-            .attr("opacity", 1) //only show 12 people
+            .attr("opacity", 1) 
 
       }
 
@@ -285,16 +289,16 @@ $(window).load(function() {
         loadCircles = false;//switch off the bubble hashtags
         clearText();
         clearRects();
-        addUSFlag(180, 530)
-        addUKFlag(505, 530)
-        let spacing = 4;
+        addUSFlag(150, 530)
+        addUKFlag(475, 530)
+
+        let spacing = 6;
         let rows = 90;
         let column = 35;
-        let size = 5;
-        usX = 0;
-        ukX = 0;
-        usY = 0;
-        ukY = 0;
+        let size = 7;
+        
+        usX = 0; ukX = 0;
+        usY = 0; ukY = 0;
 
         rects
             .transition()
@@ -303,16 +307,16 @@ $(window).load(function() {
             //.ease("elastic")
             .attr("width", size)
             .attr("height", size)
-            .attr("rx", 3)
-            .attr("ry", 3)
+            .attr("rx", 0)
+            .attr("ry", 0)
             .attr("x", function (d, i) {
               if(d['proportion'] == 'US'){
                 usX++;
-                return ((usX-1) % column * spacing) + 60
+                return ((usX-1) % column * spacing) + 30
               }
               else{
                 ukX++;
-                return ((ukX-1) % column * spacing) + 380
+                return ((ukX-1) % column * spacing) + 350
               }
             })
             .attr("y", function (d, i) {
@@ -336,8 +340,8 @@ $(window).load(function() {
         loadCircles = false;//switch off the bubble hashtags
         clearRects();
         clearText();
-        addUSFlag(180, 530)
-        addUKFlag(505, 530)
+        addUSFlag(150, 530)
+        addUKFlag(475, 530)
         let sentiment_shift = (tweet) => {
           if (tweet['sentiment'] == 'negative')
               return 20;
@@ -370,11 +374,11 @@ $(window).load(function() {
             .attr("x", function (d, i) {
               if(d['country'] == 'US'){
                 sentimentUSX[d['sentiment']]++;
-                return ((sentimentUSX[d['sentiment']]-1) % column * spacing) + 35 + sentiment_shift(d)
+                return ((sentimentUSX[d['sentiment']]-1) % column * spacing) + 5 + sentiment_shift(d)
               }
               else{
                 sentimentUKX[d['sentiment']]++;
-                return ((sentimentUKX[d['sentiment']]-1) % column * spacing) + 355 + sentiment_shift(d)
+                return ((sentimentUKX[d['sentiment']]-1) % column * spacing) + 325 + sentiment_shift(d)
               }
             })
             .attr("y", function (d, i) {
@@ -401,29 +405,29 @@ $(window).load(function() {
           clearText();   
 
           rects
-              .data(data)
-              .transition()
-              .delay((d, i) => i)
-              .duration(200)
-              //.ease("elastic")
-              .attr("width", size)
-              .attr("height", size)
-              .attr("rx", "50%")
-              .attr("ry", "50%")
-              .attr("x", (d, i) => (i % column * spacing) + 45)
-              .attr("y", (d, i) => (Math.floor(i / column) % rows * spacing) + 30)
-              .attr("fill", (d, i) => (sentiment_color(d)))
-              .attr("opacity", "1")
+            .data(data)
+            .transition()
+            .delay((d, i) => i)
+            .duration(200)
+            //.ease("elastic")
+            .attr("width", size)
+            .attr("height", size)
+            .attr("rx", "50%")
+            .attr("ry", "50%")
+            .attr("x", (d, i) => (i % column * spacing) + 45)
+            .attr("y", (d, i) => (Math.floor(i / column) % rows * spacing) + 30)
+            .attr("fill", (d, i) => (sentiment_color(d)))
+            .attr("opacity", "1")
 
       }
 
       function clearRects(){
         rects
-            .transition()
-            .delay((d, i) => i)
-            .duration(10)
-            //.ease("elastic")
-            .attr("opacity", "0");
+          .transition()
+          .delay((d, i) => i)
+          .duration(10)
+          //.ease("elastic")
+          .attr("opacity", "0");
 
         svg.selectAll('.grids')
           .transition()
@@ -448,7 +452,6 @@ $(window).load(function() {
           //.ease("elastic")
           .attr("opacity", "0")
           .remove();
-
 
       }
 
@@ -649,8 +652,9 @@ $(window).load(function() {
       //bar cart
       let barChart = function(country) {
           loadCircles = false //switch off the hashtags
-          clearRects();
           clearText();
+          clearRects();
+
           const dataUK = ht_data.filter(d => d.country == 'UK');
           const dataUS = ht_data.filter(d=> d.country == 'US');
           
@@ -677,7 +681,7 @@ $(window).load(function() {
         svg.append("line")
             .attr("x1",  10)
             .attr("y1", 303)
-            .attr("x2", 650)
+            .attr("x2", 580)
             .attr("y2", 303)
             .attr("stroke-width", 1)
             .attr("stroke", "#777")
@@ -687,15 +691,15 @@ $(window).load(function() {
         svg.append("text")
           .text('Number of tweets')
           .attr("fill", "#777")
-          .attr("x", 560)
-          .attr("y", 298)
+          .attr("x", 500)
+          .attr("y", 295)
           .attr("class", "arrows");
 
         //line              
         svg.append("line")
             .attr("x1",  10)
             .attr("y1", 53)
-            .attr("x2", 650)
+            .attr("x2", 580)
             .attr("y2", 53)
             .attr("stroke-width", 1)
             .attr("stroke", "#777")
@@ -705,11 +709,11 @@ $(window).load(function() {
         svg.append("text")
           .text('Number of tweets')
           .attr("fill", "#777")
-          .attr("x", 560)
-          .attr("y", 48)
+          .attr("x", 500)
+          .attr("y", 45)
           .attr("class", "arrows");
-          addUSFlag(400, 47);
-          addUKFlag(400, 297);
+          addUSFlag(300, 47);
+          addUKFlag(300, 297);
       }
 
       function addUSFlag(x, y){
