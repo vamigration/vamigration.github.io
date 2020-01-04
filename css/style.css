@@ -104,3 +104,8 @@ strong{
 .svg_text {
   font-size: 14px;
 }
+.highlight{
+  font-weight: bold;
+  font-color: #000;
+  background: #A4E5A4;
+}

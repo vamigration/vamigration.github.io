@@ -24,32 +24,41 @@
   <div id="graphic">
   <div class="container">
     <div id="div1">
-      <h1>Gathering data</h1>
+      <h1>What are these points?</h1>
       <h2>Each <strong>circle</strong> here represents <strong>100 tweets</strong> talking about <strong>migration</strong>-related topics</strong>. 
       </h2>
-      <h2>We got these data to analyze the <strong>Perception of migration on social media</strong>.</h2>
+      <br>
+      We looked for tweets in English, that were not re-tweets and that contained one of the following words: <strong>'migrant', 'immigrant', 'refugee'</strong> and <strong>'asylum seeker'.</strong>
       <br/>
-      We looked for tweets in English, that were not re-tweets and that contained one of the following words: <strong>‘migrant’, ‘immigrant’, ‘refugee’ and ‘asylum seeker’.</strong>
+      You can see <strong>3510 circles</strong>, representing nearly 351000 collected tweets during the months of August, September and October 2019.
+      <br>
+
+      <h2>Scroll down <span class="highlight" style="text-align: center;">↓</span> to see our analysis about <strong>Perception of migration on social media</strong> using Twitter data.</h2>
       <br/>
-      You can see 3510 circles, representing nearly 351000 collected tweets during the months of August, September and October 2019.
+      
 
     </div>
 
     <div id="div2">
       <h1>Collected data</h1>
 
-      <h2>We got enough data just for <strong>the United States of America (US)</strong> and <strong>United Kingdom (UK)</strong>.</h2>
-      <br/>
-      <p>In total, we got 251294 tweets for the U.S and 110.000 for the U.K. The numbers here are an approximation to properly represent the circles on the screen. However, the real distribution was kept.</p>
+      <h2>For the analysis we just considered <strong>the United States of America (US)</strong> and <strong>the United Kingdom (UK)</strong>.</h2>
+      <br>
+      <!--       <h2>As expected we also got a good amount of tweets from Canada and Australia. However, the topic seems to be relevant in countries like <strong>India, Indonesia, Germany </strong> and <strong> Nigeria</strong> as well, even when we considered just English written tweets.</h2> -->
+      <p>We didn't get significant data from other countries. However we found the topic is also important in countries like Australia, Canada, <strong>India, Indonesia, Germany </strong> and <strong> Nigeria</strong>. </p>
+      <p>In total, we got 251.294 tweets for the U.S and 99.112 for the U.K. The circles here are an approximation to properly represent the real distribution on the screen.</p>
 
-      <h2>It was expected to have a good amount of tweets from Canada and Australia. However, the topic seems to be relevant in countries like <strong>India, Indonesia, Germany </strong> and <strong> Nigeria</strong> as well, even when we considered just English written tweets.</h2>
+      <h2>So we got more <strong>than two times</strong> data in the US than what we collected from the UK. <strong>But there are at least 4 times</strong> more people in the US than in the UK. <strong>What if we take this into account?</strong></h2>
+
     </div>
 
     <div id="div2_1">
       <h1>Engagement</h1>
-      <h2>However, if we analyze it against the number of inhabitants in each country, we get that the United Kingdom has almost two times more engagement than users in the United States.</h2>
+      <h2>If we analyze it against the number of inhabitants in each country, we get that users in the United Kingdom have <strong>almost two times more engagement</strong> than users in the United States.</h2>
       <br>
-      If any detail is required we are going to provide it here. But the info in the title should be enough to understand the graph on the right.
+      On the other hand, the original tweets in the U.S. were <span class="highlight">replicated 1688 times</span>, which means more than 4 million people engaging with the topic in around 3 months. Something similar happens in the UK, where the original tweets were <span class="highlight">retweeted 1132 times</span>.
+      <br>
+      <h2>In any case, all this shows that migration is an important topic and it's reflected on social media engagement. <strong>But, how do people feel about it?</strong></h2>
     </div>
 
     <div id="div3">
@@ -66,15 +75,19 @@
    <div id="div5">
       <h1>Hashtags</h1>
       <h2>5. We looked for tweets in English, that were not re-tweets and that contained one of the following words: <strong>‘migrant’, ‘immigrant’, ‘refugee’ and ‘asylum seeker’.</strong></h2>
-      <h2>This should be the fource layout. Delete all rects and barchart and then display the aggregated hashtags data</h2>
+      <h2>6. Then we talk about hashtags and the general sentiment over them. Highlight the relevant things.</h2>
     </div>
 
     <div id="div6">
-      <h2>6. Then we talk about hashtags and the general sentiment over them. Highlight the relevant things.</h2>
+      <h1>Topics</h1>
+      <h2>Then we talk about the topics and the general sentiment over them. Highlight the relevant words and news.</h2>
+      <span class="highlight">Under construction</span>
     </div>
     
     <div id="div7">
-      <h2>7. And then we present some conclusions</h2>
+     <h1>Conclusions & Ack.</h1>
+      <h2>We present some conclusions and mention the course, our names and tools.</h2>
+      <span class="highlight">Under construction</span>
     </div>
   </div>
 
@@ -223,7 +236,7 @@ $(window).load(function() {
             .attr("height", size)
             .attr("rx", 4)
             .attr("ry", 4)
-            .delay((d, i) => i)
+            .delay((d, i) => i*0.7)
             .duration(5)
             .attr("x", (d, i) => (i % column * spacing) + 35)
             .attr("y", (d, i) => (Math.floor(i / column) % rows * spacing) + 40)
@@ -404,7 +417,7 @@ $(window).load(function() {
 
         rects
             .transition()
-            .delay((d, i) => i)
+            .delay((d, i) => i*0.7)
             .duration(200)
             //.ease("elastic")
             .attr("width", size)
@@ -464,14 +477,14 @@ $(window).load(function() {
       function clearRects(){
         rects
           .transition()
-          .delay((d, i) => i)
+          .delay((d, i) => i*0.7)
           .duration(10)
           //.ease("elastic")
           .attr("opacity", "0");
 
         svg.selectAll('.grids')
           .transition()
-          .delay((d, i) => i)
+          .delay((d, i) => i*0.7)
           .duration(10)
           //.ease("elastic")
           .attr("opacity", "0")
