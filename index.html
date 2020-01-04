@@ -24,14 +24,14 @@
   <div id="graphic">
   <div class="container">
     <div id="div1">
-      <h1>What are these points?</h1>
-      <h2>Each <strong>circle</strong> here represents <strong>100 tweets</strong> talking about <strong>migration</strong>-related topics</strong>. 
-      </h2>
+      <!--><h1>Migration and social media</h1><!-->
+      <h2> <strong>70.8 million</strong> people are forcibly displaced worldwide for reasons such as poverty or war.</h2>
+      <h2>Social media is often a rich source of information to observe and understand the views of the general population
+        towards migrants and refugees: how much the matter concerns them, how they feel about it and what events are perceived
+        as particularly important.
+      </h2> 
       <br>
-      We looked for tweets in English, that were not re-tweets and that contained one of the following words: <strong>'migrant', 'immigrant', 'refugee'</strong> and <strong>'asylum seeker'.</strong>
-      <br/>
-      You can see <strong>3510 circles</strong>, representing nearly 351000 collected tweets during the months of August, September and October 2019.
-      <br>
+      The nearly 351,000 tweets represented as circles shown on the left were collected during the months of August, September and October from the United States and the United Kingdom.
 
       <h2>Let's analyze this data to get an idea about the <strong>Perception of migration on social media</strong></h2>
       <br/>
@@ -51,22 +51,23 @@
     </div>
 
     <div id="div2">
-      <h1>Collected data</h1>
+      <h1>US and UK tweets</h1>
 
-      <h2>For the analysis we just considered <strong>the United States of America (US)</strong> and <strong>the United Kingdom (UK)</strong>.</h2>
-      <br>
-      <!--       <h2>As expected we also got a good amount of tweets from Canada and Australia. However, the topic seems to be relevant in countries like <strong>India, Indonesia, Germany </strong> and <strong> Nigeria</strong> as well, even when we considered just English written tweets.</h2> -->
-      <p>We didn't get significant data from other countries. However we found the topic is also important in countries like Australia, Canada, <strong>India, Indonesia, Germany </strong> and <strong> Nigeria</strong>. </p>
-      <p>In total, we got 251.294 tweets for the U.S and 99.112 for the U.K. The circles here are an approximation to properly represent the real distribution on the screen.</p>
-
-      <h2>So we got more <strong>than two times</strong> data in the US than what we collected from the UK. <strong>But there are at least 4 times</strong> more people in the US than in the UK. <strong>What if we take this into account?</strong></h2>
-
+      <h2>The United States and the United Kingdom are two countries with large foreign populations that have shown
+        strong views regarding migrants and refugees over the years.
+      </h2>
+      
+      <h2>The high engagement of people with the topic of migration in the two countries can be seen from the large number of tweets
+      collected: 251,294 for the US and 99,112 for the UK.</h2>
+    
     </div>
 
     <div id="div2_1">
-      <h1>Engagement</h1>
-      <h2>If we analyze it against the number of inhabitants in each country, we get that users in the United Kingdom have <strong>almost two times more engagement</strong> than users in the United States.</h2>
-      <br>
+      <h1>Topic engagement</h1>
+      <h2>The number of tweets on the matter is around 2.5 times higher in the US than in the UK.</h2>
+      <h2>However, considering the number of inhabitants in each country, we see that the people in the United Kingdom are almost <strong>2 times 
+        more engaged</strong> with the topic than those in the United States.</h2>
+      
       On the other hand, the original tweets in the U.S. were <span class="highlight">replicated 1688 times</span>, which means more than 4 million people engaging with the topic in around 3 months. Something similar happens in the UK, where the original tweets were <span class="highlight">retweeted 1132 times</span>.
       <br>
       <h2>In any case, all this shows that migration is an important topic and it's reflected on social media engagement. <strong>But, how do people feel about it?</strong></h2>
@@ -74,9 +75,13 @@
 
     <div id="div3">
     <h1>Sentiment</h1>
-     <h2>We then estimated the sentiment for all tweets using Vader and some other libraries.
-     Each country has its particularities
+     <h2> The tweets collected can be broken down showing the people's sentiment when discussing 
+       about migrants and refugees: negative, neutral or positive.
      </h2>
+
+     <h2>The migration-related tweets in the US tend to be <strong>more negative</strong> rather than positive 
+       (with more than 50% negatives versus only 33% positives),
+        whereas in the UK they are <strong>evenly balanced</strong> (around 42% for both negative and positive).</h2>
      </div>
 
   <!--   <div id="div4">
@@ -85,10 +90,13 @@
 
    <div id="div5">
       <h1>Hashtags</h1>
-      <h2>5. We looked for tweets in English, that were not re-tweets and that contained one of the following words: <strong>‘migrant’, ‘immigrant’, ‘refugee’ and ‘asylum seeker’.</strong></h2>
-      <h2>6. Then we talk about hashtags and the general sentiment over them. Highlight the relevant things.</h2>
+      <h2>The hashtags have always been a strong representative of movements on Twitter, and looking at the
+          most popular ones gives us an idea about the topics that people feel strong about in the
+          context of migration, such as #refugeeswelcome and #trump in the US, or #brexit and
+          #brokenpromises in the UK.</h2>
     </div>
 
+    <!-- 
     <div id="div6">
       <h1>Topics</h1>
       <h2>Then we talk about the topics and the general sentiment over them. Highlight the relevant words and news.</h2>
@@ -116,7 +124,7 @@ let circles; // Reference to the hashtags circles
 var ht_data;
 
 //Load the hashtag data
-d3.csv("./data/hashtags_d3.csv",
+d3.csv("./data/h_d3.csv",
     function(d) {
         console.log("loaded")
         ht_data = d;
@@ -369,28 +377,37 @@ $(window).load(function() {
           .attr("d", "M 0 0 12 6 0 12 3 6")
           .style("fill", "#333");
     
+
         //line US            
         svg.append("line")
             .attr("x1",  270)
             .attr("y1", 505)
             .attr("x2", 270)
-            .attr("y2", 300)
+            .attr("y2", 505)
             .attr("stroke-width", 1)
             .attr("stroke", "#333")
             .attr("class", "arrows")
-            .attr("marker-end", "url(#triangle)");
+            .attr("marker-end", "url(#triangle)")
+            .transition()
+            .duration(2000)
+            .attr("x2", 270)
+            .attr("y2", 300);
 
           //line UK        
         svg.append("line")
-            .attr("x1",  585)
+            .attr("x1", 585)
             .attr("y1", 505)
             .attr("x2", 585)
-            .attr("y2", 100)
+            .attr("y2", 505)
             .attr("stroke-width", 1)
             .attr("stroke", "#333")
             .attr("class", "arrows")
-            .attr("marker-end", "url(#triangle)");
-
+            .attr("marker-end", "url(#triangle)")
+            .transition()
+            .duration(4000)
+            .attr("x2", 585)
+            .attr("y2", 100);
+       
       }
 
       function sentimentGrid(){
@@ -525,9 +542,19 @@ $(window).load(function() {
                     .delay((d, i) => 12 * i)
                     .duration(100)
                     .attr("opacity", 1)
+                circle_texts
+                    .transition()
+                    .delay((d, i) => 12 * i)
+                    .duration(100)
+                    .attr("opacity", 1)
                 
             } else {
-                circles
+              circles
+                    .transition()
+                    .delay((d, i) => 12 * i)
+                    .duration(100)
+                    .attr("opacity", 0)
+              circle_texts
                     .transition()
                     .delay((d, i) => 12 * i)
                     .duration(100)
@@ -612,7 +639,7 @@ $(window).load(function() {
                 return country_color(d, 'country');
             }))
             .force('collision', d3.forceCollide().radius(function(d) {
-                return xCenter(d.num_tweets);
+                return xCenter(d.num_tweets * 1.35);
             }))
             .on('tick', ticked);
 
@@ -620,14 +647,21 @@ $(window).load(function() {
 
         function ticked() {
 
-            circles = d3.select('svg g')
-                .selectAll('circle')
-                .data(ht_data);
+            // groups = d3.select('svg g')
+            //     .selectAll('g')
+            //     .data(ht_data)
+            //     .enter()
+            //     .append('g')
+            //     .attr("transform", d => `translate(${d.x + 10},${d.y + 10})`);
 
-            circles.enter()
-                .append('circle')
+            circles = d3.select('svg g')
+                 .selectAll('circle')
+                 .data(ht_data);
+                 
+
+            circles.enter().append('circle')
                 .attr('r', function(d) {
-                    return xCenter(d.num_tweets);
+                    return xCenter(d.num_tweets * 1.35);
                 })
                 .style('fill', function(d) {
                     return country_color(d, 'country');
@@ -639,6 +673,47 @@ $(window).load(function() {
                 .attr('cy', function(d) {
                     return d.y;
                 })
+
+            circle_texts = d3.select('svg g')
+                 .selectAll('text')
+                 .data(ht_data);
+
+            circle_texts.enter().append('text')
+                .merge(circle_texts)
+                .attr("x", function(d) {
+                    return d.x - xCenter(d.num_tweets);
+                })
+                .attr("y", function(d) {
+                    return d.y;
+                })
+                //.attr("text-anchor", "middle")
+                .attr("stroke", "#fff")
+                .text(function(d) {
+                    return d.hashtag;
+                });    
+
+
+            // circles = d3.select('svg g')
+            //     .selectAll('circle')
+            //     .data(ht_data);
+
+            // circles.enter()
+            //     .append('circle')
+            //     .attr('r', function(d) {
+            //         return xCenter(d.num_tweets);
+            //     })
+            //     .style('fill', function(d) {
+            //         return country_color(d, 'country');
+            //     })
+            //     .merge(circles)
+            //     .attr('cx', function(d) {
+            //         return d.x;
+            //     })
+            //     .attr('cy', function(d) {
+            //         return d.y;
+            //     })
+
+            
 
             switchCircles(loadCircles);
             //circles.exit().remove();
@@ -823,7 +898,7 @@ $(window).load(function() {
       new scrollD('div3', '75%', sentimentGrid, countryPercentageGrid);
       //new scrollD('div4', '75%', circleGrid, sentimentGrid);
       new scrollD('div5', '75%', maytheforce, sentimentGrid, 'UK');
-      new scrollD('div6', '75%', barChart, maytheforce, 'US');
+      //new scrollD('div6', '75%', barChart, maytheforce, 'US');
       //new scroll('div6', '75%', barChart, divide, 'UK');
       //start grid on page load
   });
