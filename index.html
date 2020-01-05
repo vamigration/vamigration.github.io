@@ -24,7 +24,7 @@
   <div id="graphic">
   <div class="container">
     <div id="div1">
-      <!--><h1>Migration and social media</h1><!-->
+      <!--<h1>Migration and social media</h1>-->
       <h2> <strong>70.8 million</strong> people are forcibly displaced worldwide for reasons such as poverty or war.</h2>
       <h2>Social media is often a rich source of information to observe and understand the views of the general population
         towards migrants and refugees: how much the matter concerns them, how they feel about it and what events are perceived
@@ -211,7 +211,7 @@ $(window).load(function() {
           //.attr('font-weight', "900")
           //.attr('font-size', '40px')
           //.attr("dy", ".35em")
-          .attr("x", 15)
+          .attr("x", 10)
           .attr("y", 575)
           //.attr("opacity", 1)
        
@@ -219,21 +219,21 @@ $(window).load(function() {
           .text('\uf079 2 million retweets')
           .attr("fill", "#444")
           .attr("class", "fa")
-          .attr("x", 190)
+          .attr("x", 185)
           .attr("y", 575)
 
         svg.append("text")
           .text('\uf004 5 million likes')
           .attr("fill", "#444")
           .attr("class", "fa")
-          .attr("x", 400)
+          .attr("x", 395)
           .attr("y", 575)
         
         svg.append("text")
           .text('Each circle represents 100 tweets. Tweets were collected from Aug to Oct 2019')
           .attr("fill", "#444")
           .attr("class", "svg_text")
-          .attr("x", 16)
+          .attr("x", 11)
           .attr("y", 598)
 
 
@@ -254,7 +254,7 @@ $(window).load(function() {
             .attr("ry", 4)
             .delay((d, i) => i)
             .duration(5)
-            .attr("x", (d, i) => (i % column * spacing) + 35)
+            .attr("x", (d, i) => (i % column * spacing) + 5)
             .attr("y", (d, i) => (Math.floor(i / column) % rows * spacing) + 40)
             .attr("fill", "steelblue") 
             .attr("opacity", 1)
@@ -264,8 +264,8 @@ $(window).load(function() {
       function countryGrid(){
         loadCircles = false;//switch off the bubble hashtags
         clearText();
-        addUSFlag(150, 530)
-        addUKFlag(475, 530)
+        addUSFlag(140, 530)
+        addUKFlag(430, 530)
         //We need different space to give the feeling of barchart
         let spacing = 6;
         let rows = 90;
@@ -287,11 +287,11 @@ $(window).load(function() {
             .attr("x", function (d, i) {
               if(d['country'] == 'US'){
                 usX++;
-                return ((usX-1) % column * spacing) + 30
+                return ((usX-1) % column * spacing) + 5
               }
               else{
                 ukX++;
-                return ((ukX-1) % column * spacing) + 350
+                return ((ukX-1) % column * spacing) + 290
               }
             })
             .attr("y", function (d, i) {
@@ -319,8 +319,8 @@ $(window).load(function() {
         clearText();
         clearRects();
 
-        addUSFlag(150, 530)
-        addUKFlag(475, 530)
+        addUSFlag(140, 530)
+        addUKFlag(430, 530)
         //We need different space to give the feeling of barchart
         let spacing = 6;
         let rows = 90;
@@ -342,11 +342,11 @@ $(window).load(function() {
             .attr("x", function (d, i) {
               if(d['country'] == 'US'){
                 usX++;
-                return ((usX-1) % column * spacing) + 30
+                return ((usX-1) % column * spacing) + 5
               }
               else{
                 ukX++;
-                return ((ukX-1) % column * spacing) + 350
+                return ((ukX-1) % column * spacing) + 290
               }
             })
             .attr("y", function (d, i) {
@@ -375,37 +375,37 @@ $(window).load(function() {
           .attr("orient", "auto")
           .append("path")
           .attr("d", "M 0 0 12 6 0 12 3 6")
-          .style("fill", "#333");
+          .style("fill", "#b9491a");
     
 
         //line US            
         svg.append("line")
-            .attr("x1",  270)
+            .attr("x1", 230)
             .attr("y1", 505)
-            .attr("x2", 270)
+            .attr("x2", 230)
             .attr("y2", 505)
-            .attr("stroke-width", 1)
-            .attr("stroke", "#333")
+            .attr("stroke-width", 2)
+            .attr("stroke", "#b9491a")
             .attr("class", "arrows")
             .attr("marker-end", "url(#triangle)")
             .transition()
-            .duration(2000)
-            .attr("x2", 270)
+            .duration(3000)
+            .attr("x2", 230)
             .attr("y2", 300);
 
           //line UK        
         svg.append("line")
-            .attr("x1", 585)
+            .attr("x1", 515)
             .attr("y1", 505)
-            .attr("x2", 585)
+            .attr("x2", 515)
             .attr("y2", 505)
-            .attr("stroke-width", 1)
-            .attr("stroke", "#333")
+            .attr("stroke-width", 2)
+            .attr("stroke", "#b9491a")
             .attr("class", "arrows")
             .attr("marker-end", "url(#triangle)")
             .transition()
-            .duration(4000)
-            .attr("x2", 585)
+            .duration(3000)
+            .attr("x2", 515)
             .attr("y2", 100);
        
       }
@@ -414,17 +414,17 @@ $(window).load(function() {
         loadCircles = false;//switch off the bubble hashtags
         clearRects();
         clearText();
-        addUSFlag(150, 530)
-        addUKFlag(475, 530)
+        addUSFlag(140, 530)
+        addUKFlag(430, 530)
         //To shift the points some pixels according to the sentiment
         //to recreate a bar chart
         let sentiment_shift = (tweet) => {
           if (tweet['sentiment'] == 'negative')
-              return 20;
+              return 15;
           if (tweet['sentiment'] == 'neutral')
-              return 90;
+              return 85;
           if (tweet['sentiment'] == 'positive')
-              return 160;
+              return 155;
           return 60;
 
         }
@@ -450,11 +450,11 @@ $(window).load(function() {
             .attr("x", function (d, i) {
               if(d['country'] == 'US'){
                 sentimentUSX[d['sentiment']]++;
-                return ((sentimentUSX[d['sentiment']]-1) % column * spacing) + 5 + sentiment_shift(d)
+                return ((sentimentUSX[d['sentiment']]-1) % column * spacing) + sentiment_shift(d)
               }
               else{
                 sentimentUKX[d['sentiment']]++;
-                return ((sentimentUKX[d['sentiment']]-1) % column * spacing) + 325 + sentiment_shift(d)
+                return ((sentimentUKX[d['sentiment']]-1) % column * spacing) + 290 + sentiment_shift(d)
               }
             })
             .attr("y", function (d, i) {
@@ -549,11 +549,12 @@ $(window).load(function() {
                     .attr("opacity", 1)
                 
             } else {
-              circles
-                    .transition()
-                    .delay((d, i) => 12 * i)
-                    .duration(100)
-                    .attr("opacity", 0)
+              d3.selectAll('.hashtags')
+              .transition()
+              .delay((d, i) => 12 * i)
+              .duration(100)
+              //.ease('elastic')
+              .attr("opacity", 0)
               circle_texts
                     .transition()
                     .delay((d, i) => 12 * i)
@@ -600,7 +601,7 @@ $(window).load(function() {
         clearRects(); // Remove the rects from previous frame
         clearText(); // Clear the text from previous frames
         addUSFlag(160, 420)
-        addUKFlag(530, 420)
+        addUKFlag(510, 420)
         loadCircles = true;
 
         var width = 600,
@@ -614,7 +615,7 @@ $(window).load(function() {
         };
         var dict = {
             'US': 140,
-            'UK': 500
+            'UK': 480
         };
         var dictY = {
             'US': 280,
@@ -635,9 +636,9 @@ $(window).load(function() {
 
         var simulation = d3.forceSimulation(ht_data)
             .force('charge', d3.forceManyBody().strength(1))
-            .force('x', d3.forceX().x(function(d) {
-                return country_color(d, 'country');
-            }))
+            // .force('x', d3.forceX().x(function(d) {
+            //     return country_color(d, 'country');
+            // }))
             .force('collision', d3.forceCollide().radius(function(d) {
                 return xCenter(d.num_tweets * 1.35);
             }))
@@ -673,6 +674,7 @@ $(window).load(function() {
                 .attr('cy', function(d) {
                     return d.y;
                 })
+                .attr('class', "hashtags")
 
             circle_texts = d3.select('svg g')
                  .selectAll('text')
@@ -712,8 +714,6 @@ $(window).load(function() {
             //     .attr('cy', function(d) {
             //         return d.y;
             //     })
-
-            
 
             switchCircles(loadCircles);
             //circles.exit().remove();
@@ -800,7 +800,6 @@ $(window).load(function() {
           //drawBars(dataUK, 'UK', 200);
           //.exit().attr("opacity1", 0);
 
-          
         //arrow
         svg.append("svg:defs").append("svg:marker")
           .attr("id", "triangle")

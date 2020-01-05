@@ -14,8 +14,8 @@ body{
 }
 h2{
   line-height: 1.25;
-  padding-top: 45px;
-  font-weight: 300;
+  padding-top: 30px;
+  font-weight: 280;
 }
 svg{
   padding: 20px;
@@ -32,17 +32,16 @@ strong{
   position:   relative; 
   height:  100%;
   position:  relative; 
-  padding-top: 112px;
+  padding-top: 80px;
   margin-top: 4px;
 }
 .container {
-  height: 100%;
-  max-width: 440px;
+  max-width: 600px;
   width: 100%;
   position: absolute;
   height: 100%;
   line-height: 1.5;
-  left: 60%;
+  left: 50%;
 
 }
 .container div {
