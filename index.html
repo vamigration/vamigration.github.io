@@ -26,14 +26,16 @@
     <div id="div1">
       <!--<h1>Migration and social media</h1>-->
       <h2> <strong>70.8 million</strong> people are forcibly displaced worldwide for reasons such as poverty or war.</h2>
-      <h2>Social media is often a rich source of information to observe and understand the views of the general population
-        towards migrants and refugees: how much the matter concerns them, how they feel about it and what events are perceived
-        as particularly important.
+      <h2>The nearly <strong>351,000 migration-related tweets</strong> represented here as circles were collected during the months of August, September and October from the United States and the United Kingdom.
+      </h2>
+      
+      <h2>Social media is a rich source of information to observe and understand the views of the general population
+        towards migrants and refugees: <strong> much the matter concerns them, how they feel about it and what events are perceived
+        as particularly important</strong>.
       </h2> 
       <br>
-      The nearly 351,000 tweets represented as circles shown on the left were collected during the months of August, September and October from the United States and the United Kingdom.
-
-      <h2>Let's analyze this data to get an idea about the <strong>Perception of migration on social media</strong></h2>
+       
+      <!-- <h2>Let's analyze this data to get an idea about the <strong>Perception of migration on social media</strong></h2> -->
       <br/>
       <!-- from https://codepen.io/bypavel/pen/jAXpgq -->
       <div id="wrapperArrow">
@@ -68,9 +70,9 @@
       <h2>However, considering the number of inhabitants in each country, we see that the people in the United Kingdom are almost <strong>2 times 
         more engaged</strong> with the topic than those in the United States.</h2>
       
-      On the other hand, the original tweets in the U.S. were <span class="highlight">replicated 1688 times</span>, which means more than 4 million people engaging with the topic in around 3 months. Something similar happens in the UK, where the original tweets were <span class="highlight">retweeted 1132 times</span>.
+      <!-- On the other hand, the original tweets in the U.S. were <span class="highlight">replicated 1688 times</span>, which means more than 4 million people engaging with the topic in around 3 months. Something similar happens in the UK, where the original tweets were <span class="highlight">retweeted 1132 times</span>. -->
       <br>
-      <h2>In any case, all this shows that migration is an important topic and it's reflected on social media engagement. <strong>But, how do people feel about it?</strong></h2>
+      <h2>With the original tweets being replicated thousands of times, the importance of the topic of migration is reflected on social media engagement. <strong>But, how do people feel about it?</strong></h2>
     </div>
 
     <div id="div3">
@@ -91,9 +93,15 @@
    <div id="div5">
       <h1>Hashtags</h1>
       <h2>The hashtags have always been a strong representative of movements on Twitter, and looking at the
-          most popular ones gives us an idea about the topics that people feel strong about in the
-          context of migration, such as #refugeeswelcome and #trump in the US, or #brexit and
-          #brokenpromises in the UK.</h2>
+          most popular ones gives us an idea about the <strong>topics that people feel strong about in the
+          context of migration</strong>. </h2>
+        
+      <h2> Popular hashtags in <strong>both countries</strong> include
+          #refugeeswelcome, #news, #syria and #rohingya. In the US we can see that many
+          hashtags are related to the <strong>politics of Trump regarding immigrants</strong>, such as #maga, #buildthewall,
+           #closethecamps or #humanrights. Meanwhile, in the UK the most common hashtags
+          are related to the <strong>brexit issue</strong> and its impact on migrants, such as #brexit, #brokenpromises,
+          #eu, #europe or #familiestogether.</h2>
     </div>
 
     <!-- 
@@ -264,6 +272,7 @@ $(window).load(function() {
       function countryGrid(){
         loadCircles = false;//switch off the bubble hashtags
         clearText();
+        svg.selectAll(".legend_sent").remove();
         addUSFlag(140, 530)
         addUKFlag(430, 530)
         //We need different space to give the feeling of barchart
@@ -318,7 +327,7 @@ $(window).load(function() {
         loadCircles = false;//switch off the bubble hashtags
         clearText();
         clearRects();
-
+        svg.selectAll(".legend_sent").remove();
         addUSFlag(140, 530)
         addUKFlag(430, 530)
         //We need different space to give the feeling of barchart
@@ -412,6 +421,7 @@ $(window).load(function() {
 
       function sentimentGrid(){
         loadCircles = false;//switch off the bubble hashtags
+        svg.selectAll(".hashtags").remove();
         clearRects();
         clearText();
         addUSFlag(140, 530)
@@ -471,6 +481,14 @@ $(window).load(function() {
             })
             .attr("fill", (d, i) => sentiment_color(d))
             .attr("opacity", 1) //only show 12 people
+      
+    
+      svg.append("circle").attr('class','legend_sent').attr("cx",440).attr("cy",50).attr("r", 6).style("fill", "#f44336")
+      svg.append("circle").attr('class','legend_sent').attr("cx",440).attr("cy",70).attr("r", 6).style("fill", "#91989D")
+      svg.append("circle").attr('class','legend_sent').attr("cx",440).attr("cy",90).attr("r", 6).style("fill", "#66bb6a")
+      svg.append("text").attr('class','legend_sent').attr("x", 452).attr("y", 50).text("Negative").style("font-size", "15px").attr("alignment-baseline","middle")
+      svg.append("text").attr('class','legend_sent').attr("x", 452).attr("y", 70).text("Neutral").style("font-size", "15px").attr("alignment-baseline","middle")
+      svg.append("text").attr('class','legend_sent').attr("x", 452).attr("y", 90).text("Positive").style("font-size", "15px").attr("alignment-baseline","middle")
 
       }
 
@@ -600,6 +618,7 @@ $(window).load(function() {
 
         clearRects(); // Remove the rects from previous frame
         clearText(); // Clear the text from previous frames
+        svg.selectAll(".legend_sent").remove();
         addUSFlag(160, 420)
         addUKFlag(510, 420)
         loadCircles = true;
@@ -681,6 +700,7 @@ $(window).load(function() {
                  .data(ht_data);
 
             circle_texts.enter().append('text')
+                .attr('class','hashtags')
                 .merge(circle_texts)
                 .attr("x", function(d) {
                     return d.x - xCenter(d.num_tweets);
@@ -689,10 +709,14 @@ $(window).load(function() {
                     return d.y;
                 })
                 //.attr("text-anchor", "middle")
-                .attr("stroke", "#fff")
+                //.attr("stroke", "#808080")
+                .attr('fill','#000')
+                .attr('font-size', '50px')
                 .text(function(d) {
                     return d.hashtag;
-                });    
+                })
+                .style("font-size", "12px")
+                .style("font-weight", "bold");    
 
 
             // circles = d3.select('svg g')
@@ -853,6 +877,15 @@ $(window).load(function() {
       }
 
       function addUSFlag(x, y){
+
+        // svg.append("image")
+        // .attr("x", x)
+        // .attr("y", y)
+        // .attr('xlink:href', 'us.png')
+        // .attr('width', 30)
+        // .attr('height', 30)
+        // .attr("text-anchor", "end");
+        
         svg.append("text")
         .attr("font-weight", "bold")
         .attr("font-size", "25px")
@@ -862,6 +895,9 @@ $(window).load(function() {
         .text(String.fromCodePoint(parseInt('1f1fa', 16), parseInt('1f1f8', 16)) + 'US')
         .attr("font-family", "sans-serif")
         .attr("text-anchor", "end");
+
+        
+
       }
 
       function addUKFlag(x, y){
