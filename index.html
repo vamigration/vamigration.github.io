@@ -21,15 +21,18 @@
   <div class="header sticky centered" id="myHeader">
     <h1><strong>Perception of migration on social media - U.S. vs U.K</strong><h1>
     <div class="headerform">
-<!--     <form id="mode">
-      <span style="padding-left: 20px;">
-        <input  type='radio' id="light" name="mode" checked> Light <span class="fas fa-sun">  </span></input>
-      </span>
-      <span style="padding-left: 20px;">
-        <input type='radio' id="dark" name="mode" > Dark <span class="fas fa-moon"></span></input>
-      </span>
-    </form> -->
+    People in the U.S tend to be more negative about migration than people in the U.K
     </div>
+    <!-- <div class="headerform">
+    <form id="mode">
+      <span style="padding-left: 20px;">
+        <input  type='radio' id="light" name="mode" checked value="on"> Light <span class="fas fa-sun">  </span></input>
+      </span>
+      <span style="padding-left: 20px;">
+        <input type='radio' id="dark" name="mode" value="off"> Dark <span class="fas fa-moon"></span></input>
+      </span>
+    </form> 
+    </div>-->
   </div>
   <div id="graphic">
   <div class="container">
@@ -135,6 +138,15 @@
   
   <script>
 
+//   d3.selectAll("input[name='mode']").on("change", function(){
+//     console.log("mode: ", this.value)
+//     if(this.value=='off'){
+//       console.log("back")
+//       d3.select("body").style("background", "#444")
+//       d3.select("div").style("background", "#444")
+//     }
+// });
+
 var loadCircles = false; //switch the hashtags circles at each screen
 let circles; // Reference to the hashtags circles
 var ht_data;
@@ -170,6 +182,9 @@ $(window).load(function() {
       let column = 60;
       let spacing = 8;
       let size = 5;
+
+      let bottomGraph = 530;
+
 
       let randnum = (min, max) => Math.round(Math.random() * (max - min) + min);
 
@@ -280,8 +295,8 @@ $(window).load(function() {
       function countryGrid(){
         loadCircles = false;//switch off the bubble hashtags
         clearText();
-        addUSFlag(140, 530)
-        addUKFlag(430, 530)
+        addUSFlag(140, bottomGraph+22)
+        addUKFlag(430, bottomGraph+22)
         //We need different space to give the feeling of barchart
         let spacing = 6;
         let rows = 90;
@@ -320,7 +335,7 @@ $(window).load(function() {
                 pos = ukY;
                 ukY++;
               }
-              return 500 - (Math.floor(pos / column) % rows * spacing)
+              return bottomGraph - (Math.floor(pos / column) % rows * spacing)
             })
             .attr("fill", (d, i) => country_color(d, 'country'))
             .attr("opacity", 1) 
@@ -334,8 +349,8 @@ $(window).load(function() {
         loadCircles = false;//switch off the bubble hashtags
         clearText();
         clearRects();
-        addUSFlag(140, 530)
-        addUKFlag(430, 530)
+        addUSFlag(140, bottomGraph+22)
+        addUKFlag(430, bottomGraph+22)
         //We need different space to give the feeling of barchart
         let spacing = 6;
         let rows = 90;
@@ -374,7 +389,7 @@ $(window).load(function() {
                 pos = ukY;
                 ukY++;
               }
-              return 500 - (Math.floor(pos / column) % rows * spacing)
+              return bottomGraph - (Math.floor(pos / column) % rows * spacing)
             })
             .attr("fill", (d, i) => country_color(d, 'country'))
             .attr("opacity", 0.5) 
@@ -396,9 +411,9 @@ $(window).load(function() {
         //line US            
         svg.append("line")
             .attr("x1", 230)
-            .attr("y1", 505)
+            .attr("y1", bottomGraph+5)
             .attr("x2", 230)
-            .attr("y2", 505)
+            .attr("y2", bottomGraph+5)
             .attr("stroke-width", 2)
             .attr("stroke", "#b9491a")
             .attr("class", "arrows")
@@ -411,9 +426,9 @@ $(window).load(function() {
           //line UK        
         svg.append("line")
             .attr("x1", 515)
-            .attr("y1", 505)
+            .attr("y1", bottomGraph+5)
             .attr("x2", 515)
-            .attr("y2", 505)
+            .attr("y2", bottomGraph+5)
             .attr("stroke-width", 2)
             .attr("stroke", "#b9491a")
             .attr("class", "arrows")
@@ -430,8 +445,8 @@ $(window).load(function() {
         svg.selectAll(".hashtags").remove();
         clearRects();
         clearText();
-        addUSFlag(140, 530)
-        addUKFlag(430, 530)
+        addUSFlag(140, bottomGraph+22)
+        addUKFlag(430, bottomGraph+22)
         //To shift the points some pixels according to the sentiment
         //to recreate a bar chart
         let sentiment_shift = (tweet) => {
@@ -483,7 +498,7 @@ $(window).load(function() {
                 pos = sentimentUKY[d['sentiment']];
                 sentimentUKY[d['sentiment']]++;
               }
-              return 500 - (Math.floor(pos / column) % rows * spacing)
+              return bottomGraph - (Math.floor(pos / column) % rows * spacing)
             })
             .attr("fill", (d, i) => sentiment_color(d))
             .attr("opacity", 1) //only show 12 people
