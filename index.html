@@ -261,7 +261,7 @@ $(window).load(function() {
           .attr("y", 575)
         
         svg.append("text")
-          .text('Each circle represents 100 tweets. Tweets were collected from Aug to Oct 2019')
+          .text('Each circle represents 100 tweets. Tweets were collected from Aug. to Oct. 2019')
           .attr("fill", "#444")
           .attr("class", "svg_text")
           .attr("x", 11)
@@ -447,6 +447,10 @@ $(window).load(function() {
         clearText();
         addUSFlag(140, bottomGraph+22)
         addUKFlag(430, bottomGraph+22)
+        d3.selectAll('.svg_text')
+            .transition()
+            .duration(600)
+            .attr("opacity", 1)
         //To shift the points some pixels according to the sentiment
         //to recreate a bar chart
         let sentiment_shift = (tweet) => {
@@ -645,6 +649,12 @@ $(window).load(function() {
         clearText(); // Clear the text from previous frames
         addUSFlag(160, 420)
         addUKFlag(510, 420)
+
+        d3.selectAll('.svg_text')
+            .transition()
+            .duration(600)
+            .attr("opacity", 0)
+
         loadCircles = true;
 
         var width = 600,
