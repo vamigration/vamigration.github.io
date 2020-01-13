@@ -61,9 +61,18 @@ strong{
   color: #394147;
   z-index:1000;
   font-family: 'Georgia';
-  font-size: 18px;
+  font-size: 14px;
   background: #f7f5f2;
   border-bottom: 1px solid #e2e2e2;
+
+}
+
+.headerform {
+  color: #394147;
+  z-index:1000;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  background: #f7f5f2;
 
 }
 

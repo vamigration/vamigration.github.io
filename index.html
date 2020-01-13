@@ -20,6 +20,16 @@
 <body>
   <div class="header sticky centered" id="myHeader">
     <h1><strong>Perception of migration on social media - U.S. vs U.K</strong><h1>
+    <div class="headerform">
+<!--     <form id="mode">
+      <span style="padding-left: 20px;">
+        <input  type='radio' id="light" name="mode" checked> Light <span class="fas fa-sun">  </span></input>
+      </span>
+      <span style="padding-left: 20px;">
+        <input type='radio' id="dark" name="mode" > Dark <span class="fas fa-moon"></span></input>
+      </span>
+    </form> -->
+    </div>
   </div>
   <div id="graphic">
   <div class="container">
@@ -29,9 +39,7 @@
       <h2>The nearly <strong>351,000 migration-related tweets</strong> represented here as circles were collected during the months of August, September and October from the United States and the United Kingdom.
       </h2>
       
-      <h2>Social media is a rich source of information to observe and understand the views of the general population
-        towards migrants and refugees: <strong> much the matter concerns them, how they feel about it and what events are perceived
-        as particularly important</strong>.
+      <h2>Social media is a rich source of information to observe and understand the views of the general population towards migrants and refugees: <strong> how much the matter concerns them, how they feel about it and what events are perceived as particularly important</strong>.
       </h2> 
       <br>
        
@@ -254,13 +262,13 @@ $(window).load(function() {
         //The semi circles
         rects
             .data(data)
-            .attr("opacity", 0.6)
+            .attr("opacity", 0.4)
             .transition()
             .attr("width", size)
             .attr("height", size)
             .attr("rx", 4)
             .attr("ry", 4)
-            .delay((d, i) => i)
+            .delay((d, i) => i*0.5)
             .duration(5)
             .attr("x", (d, i) => (i % column * spacing) + 5)
             .attr("y", (d, i) => (Math.floor(i / column) % rows * spacing) + 40)
@@ -272,7 +280,6 @@ $(window).load(function() {
       function countryGrid(){
         loadCircles = false;//switch off the bubble hashtags
         clearText();
-        svg.selectAll(".legend_sent").remove();
         addUSFlag(140, 530)
         addUKFlag(430, 530)
         //We need different space to give the feeling of barchart
@@ -286,7 +293,7 @@ $(window).load(function() {
         //Now we move the rects to divide the grid
         rects
             .transition()
-            .delay((d, i) => i*0.5)
+            .delay((d, i) => i*0.4)
             .duration(200)
             //.ease("elastic")
             .attr("width", size)
@@ -327,7 +334,6 @@ $(window).load(function() {
         loadCircles = false;//switch off the bubble hashtags
         clearText();
         clearRects();
-        svg.selectAll(".legend_sent").remove();
         addUSFlag(140, 530)
         addUKFlag(430, 530)
         //We need different space to give the feeling of barchart
@@ -371,7 +377,7 @@ $(window).load(function() {
               return 500 - (Math.floor(pos / column) % rows * spacing)
             })
             .attr("fill", (d, i) => country_color(d, 'country'))
-            .attr("opacity", 0.6) 
+            .attr("opacity", 0.5) 
 
         //arrow head
         svg.append("svg:defs").append("svg:marker")
@@ -450,7 +456,7 @@ $(window).load(function() {
 
         rects
             .transition()
-            .delay((d, i) => i*0.7)
+            .delay((d, i) => i*0.4)
             .duration(200)
             //.ease("elastic")
             .attr("width", size)
@@ -515,10 +521,13 @@ $(window).load(function() {
 
       }
 
-      function clearRects(){
+      function clearRects(fast=false){
+        let speed = 0.5;
+        if(fast)
+          speed = 0.1;
         rects
           .transition()
-          .delay((d, i) => i*0.5)
+          .delay((d, i) => i*speed)
           .duration(10)
           //.ease("elastic")
           .attr("opacity", "0");
@@ -590,6 +599,7 @@ $(window).load(function() {
               .duration(100)
               //.ease('elastic')
               .attr("dx", -500)
+        svg.selectAll(".legend_sent").remove();
 
 
           //number of tweets
@@ -616,9 +626,8 @@ $(window).load(function() {
       //force layout for hashtags
       let maytheforce = () => {
 
-        clearRects(); // Remove the rects from previous frame
+        clearRects(true);
         clearText(); // Clear the text from previous frames
-        svg.selectAll(".legend_sent").remove();
         addUSFlag(160, 420)
         addUKFlag(510, 420)
         loadCircles = true;
@@ -932,7 +941,7 @@ $(window).load(function() {
       new scrollD('div2_1', '75%', countryPercentageGrid, countryGrid);
       new scrollD('div3', '75%', sentimentGrid, countryPercentageGrid);
       //new scrollD('div4', '75%', circleGrid, sentimentGrid);
-      new scrollD('div5', '75%', maytheforce, sentimentGrid, 'UK');
+      new scrollD('div5', '75%', maytheforce, sentimentGrid);
       //new scrollD('div6', '75%', barChart, maytheforce, 'US');
       //new scroll('div6', '75%', barChart, divide, 'UK');
       //start grid on page load
