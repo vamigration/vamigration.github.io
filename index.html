@@ -791,8 +791,8 @@ var defs = svg.append("defs");
     .attr("id", function(d){ return "gradient-" + d.hashtag; })
     .attr("cx", "50%") //Move the x-center location towards the left
     .attr("cy", "50%") //Move the y-center location towards the top
-    .attr("r", function(d) {return d.neutral.toString()+"%"} ); //Increase the size of the "spread" of the gradient
-
+    .attr("r", function(d) {"100%"});//how spread the gradient is
+    
       //Horizontal gradient
       // hashtagsGradients
       //     .attr("x1", "0%")
@@ -800,22 +800,22 @@ var defs = svg.append("defs");
       //     .attr("x2", "100%")
       //     .attr("y2", "0%")
 
-      // //Set the color for the start (0%)
-      // hashtagsGradients.append("stop")
-      //     .attr("offset", "0%")
-      //     .attr("stop-color", '#401E68'); //light blue
+      //Set the color for the start (0%)
+      hashtagsGradients.append("stop")
+          .attr("offset", "0%")
+          .attr("stop-color", '#ef8a62'); //light blue
 
       // //Set the color for the end (100%)
       // hashtagsGradients.append("stop")
       //     .attr("offset", "100%")
       //     .attr("stop-color", '#F1406C'); //dark blue
 
-       //Add colors to the gradient
+        //Add colors to the gradient
       //First a lighter color in the center
       hashtagsGradients.append("stop")
           .attr("offset", function(d) {
-            console.log(d.negative)
-            return d.negative.toString()+"%"})
+            let pos = parseInt(d.negative)
+            return pos.toString()+"%"})
           .attr("stop-color", function(d) {
               return '#ef8a62';
               //return d3.rgb('#FFF76B').darker(1.75);
@@ -824,7 +824,8 @@ var defs = svg.append("defs");
       //Then the actual color almost halfway
       hashtagsGradients.append("stop")
           .attr("offset", function(d) { 
-            let pos = d.negative + d.neutral
+            let pos = (parseInt(d.negative) + parseInt(d.neutral))
+            console.log(pos)
             return pos.toString()+"%"})
           .attr("stop-color", function(d) {
               //return d3.rgb('lightgray').darker(0.2)
