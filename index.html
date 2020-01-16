@@ -152,7 +152,7 @@ let circles; // Reference to the hashtags circles
 var ht_data;
 
 //Load the hashtag data
-d3.csv("./data/h_d3.csv",
+d3.csv("./data/hashtags_sent.csv",
     function(d) {
         console.log("loaded")
         ht_data = d;
@@ -215,13 +215,14 @@ $(window).load(function() {
       let sentiment_color = (tweet) => {
           if (tweet['sentiment'] == 'negative')
               //return "#f44336";
-              return "#2C5985";
+              return "#ef8a62";//"#2C5985";
           if (tweet['sentiment'] == 'neutral')
-              //return "#91989D";
-              return "#B7D7BB";
+              // return "#91989D";
+              // return "#B7D7BB";
+              return '#A9A9A9';
           if (tweet['sentiment'] == 'positive')
               //return "#66bb6a";
-              return "#71B19B";
+              return "#67a9cf";//"#71B19B";
           return "#68DF82";
 
       }
@@ -526,17 +527,45 @@ $(window).load(function() {
       
       svg.append("text")
           .attr("class", "percentage")
-          .text('20%')
+          .text('16.2%')
           .attr("fill", "#444")
-          .attr("x", 340 + sentiment_shift('neutral'))
-          .attr("y", bottomGraph - ((Math.floor(sentimentUKY['neutral']+3)/ column) % rows * spacing));
+          .attr("x", 335 + sentiment_shift('neutral'))
+          .attr("y", bottomGraph - ((Math.floor(sentimentUKY['neutral']+6)/ column) % rows * spacing));
       
       svg.append("text")
           .attr("class", "percentage")
-          .text('40%')
+          .text('42.2%')
           .attr("fill", "#444")
-          .attr("x", 340 + sentiment_shift('negative'))
-          .attr("y", bottomGraph - ((Math.floor(sentimentUKY['negative']+3)/ column) % rows * spacing))
+          .attr("x", 265 + sentiment_shift('negative'))
+          .attr("y", bottomGraph - ((Math.floor(sentimentUKY['negative']+6)/ column) % rows * spacing))
+
+      svg.append("text")
+          .attr("class", "percentage")
+          .text('41.6%')
+          .attr("fill", "#444")
+          .attr("x", 410 + sentiment_shift('positive'))
+          .attr("y", bottomGraph - ((Math.floor(sentimentUKY['positive']+6)/ column) % rows * spacing))
+
+      svg.append("text")
+          .attr("class", "percentage")
+          .text('17%')
+          .attr("fill", "#444")
+          .attr("x", 50 + sentiment_shift('neutral'))
+          .attr("y", bottomGraph - ((Math.floor(sentimentUSY['neutral']+6)/ column) % rows * spacing));
+      
+      svg.append("text")
+          .attr("class", "percentage")
+          .text('50.2%')
+          .attr("fill", "#444")
+          .attr("x", sentiment_shift('negative') - 20)
+          .attr("y", bottomGraph - ((Math.floor(sentimentUSY['negative']+6)/ column) % rows * spacing))
+
+      svg.append("text")
+          .attr("class", "percentage")
+          .text('32.8%')
+          .attr("fill", "#444")
+          .attr("x", 115 + sentiment_shift('positive'))
+          .attr("y", bottomGraph - ((Math.floor(sentimentUSY['positive']+6)/ column) % rows * spacing))
     
       svg.append("circle").attr('class','legend_sent').attr("cx",440).attr("cy",50).attr("r", 6).style("fill", "#f44336")
       svg.append("circle").attr('class','legend_sent').attr("cx",440).attr("cy",70).attr("r", 6).style("fill", "#91989D")
@@ -652,6 +681,7 @@ $(window).load(function() {
               //.ease('elastic')
               .attr("dx", -500)
         svg.selectAll(".legend_sent").remove();
+        svg.selectAll(".percentage").remove();
 
 
           //number of tweets
@@ -772,13 +802,12 @@ var defs = svg.append("defs");
       //     .attr("offset", "100%")
       //     .attr("stop-color", '#F1406C'); //dark blue
 
-
        //Add colors to the gradient
       //First a lighter color in the center
       hashtagsGradients.append("stop")
           .attr("offset", function(d) {return d.negative.toString()+"%"})
           .attr("stop-color", function(d) {
-              return '#2C5985';
+              return '#ef8a62';
               //return d3.rgb('#FFF76B').darker(1.75);
           });
 
@@ -789,7 +818,7 @@ var defs = svg.append("defs");
             return pos.toString()+"%"})
           .attr("stop-color", function(d) {
               //return d3.rgb('lightgray').darker(0.2)
-              return "#B7D7BB";
+              return "#A9A9A9";
           });
 
       //Finally a darker color at the outside
@@ -797,7 +826,7 @@ var defs = svg.append("defs");
           .attr("offset",  "100%")
           .attr("stop-color", function(d) {
               //return d3.rgb('#F1406C').darker(1.5)
-              return '#71B19B';
+              return '#67a9cf';
           });   
 
 
