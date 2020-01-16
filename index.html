@@ -164,9 +164,9 @@ d3.csv("./data/hashtags_sent.csv",
 $(window).load(function() {
   var data;
   //Callback excecuted once data is downloaded
-  d3.csv("./data/tweets_to_show.csv", function(d) {
-      data = d;
-      
+  d3.text("./data/tweets_to_show.csv", function(d) {
+      data = d3.csvParse(d);
+      console.log(data)
       //To convert to tidy data -> avoid downloading repetitive rows
       //data = datos.map((i) => (new Array(i.num_points)).fill(i, 0, i.num_points)).reduce((acc, i) => acc.concat(i));
 
@@ -215,14 +215,14 @@ $(window).load(function() {
       let sentiment_color = (tweet) => {
           if (tweet['sentiment'] == 'negative')
               //return "#f44336";
-              return "#ef8a62";//"#2C5985";
+              return "#013854";//"#2C5985";
           if (tweet['sentiment'] == 'neutral')
               // return "#91989D";
               // return "#B7D7BB";
               return '#A9A9A9';
           if (tweet['sentiment'] == 'positive')
               //return "#66bb6a";
-              return "#67a9cf";//"#71B19B";
+              return "#EE8B51";//"#71B19B";
           return "#68DF82";
 
       }
