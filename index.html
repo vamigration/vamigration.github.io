@@ -802,18 +802,16 @@ var defs = svg.append("defs");
        //Add colors to the gradient
       //First a lighter color in the center
       hashtagsGradients.append("stop")
-          .attr("offset", function(d) {
-            console.log(d.negative)
-            return d.negative.toString()+"%"})
+          .attr("offset", function(d) {return d.negative.toString()+"%"})
           .attr("stop-color", function(d) {
-              return '#ef8a62';
+              return '#ef8a62 ';
               //return d3.rgb('#FFF76B').darker(1.75);
           });
 
       //Then the actual color almost halfway
       hashtagsGradients.append("stop")
           .attr("offset", function(d) { 
-            let pos = d.negative + d.neutral
+            let pos = d.neutral
             return pos.toString()+"%"})
           .attr("stop-color", function(d) {
               //return d3.rgb('lightgray').darker(0.2)
@@ -825,7 +823,7 @@ var defs = svg.append("defs");
           .attr("offset",  "100%")
           .attr("stop-color", function(d) {
               //return d3.rgb('#F1406C').darker(1.5)
-              return '#67a9cf';
+              return '#ef8a62';
           });   
 
 
