@@ -26,6 +26,48 @@ text{
 strong{
   font-weight: 600;
 }
+
+.tooltip {
+
+  margin-top: 5px;
+  font-family: Helvetica Neue, Helvetica, Arial;
+  font-size:14px;
+  font-weight:normal;
+  text-align: right;
+
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: normal;
+  padding: 5px;
+  font-size:14px;
+  max-width: 400px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #000;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+/*.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  width: 100%;
+  line-height: 1;
+  color: rgba(60, 60, 60, 0.9);
+  content: "\25BC";
+  position: block;
+  text-align: left;
+}*/
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+
 #graphic {
   max-width:  1440px;
   width: 100%;
@@ -106,8 +148,9 @@ strong{
 .fa {
   font-size: 18px;
   font-weight: normal;
-
 }
+
+
 
 .svg_text {
   font-size: 14px;

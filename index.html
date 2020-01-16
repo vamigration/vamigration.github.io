@@ -11,7 +11,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.js"></script>
 
   <script type="text/javascript" src="https://github.com/flowhub/the-graph/blob/master/the-graph/font-awesome-unicode-map.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
 
   <link rel="stylesheet" type="text/css" href="./css/style.css">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
@@ -164,7 +164,7 @@ d3.csv("./data/h_d3.csv",
 $(window).load(function() {
   var data;
   //Callback excecuted once data is downloaded
-  d3.csv("./data/tweets_d3_1000.csv", function(d) {
+  d3.csv("./data/tweets_to_show.csv", function(d) {
       data = d;
       
       //To convert to tidy data -> avoid downloading repetitive rows
@@ -201,6 +201,7 @@ $(window).load(function() {
           .data(data)
           .enter()
           .append("g")
+
 
 
       //create rectangles - on the grid they look like circles 
@@ -270,8 +271,17 @@ $(window).load(function() {
           .attr("class", "svg_text")
           .attr("x", 11)
           .attr("y", 598)
+      
 
+        var tip = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([-10, 0])
+        .html(function(d) {
+  
 
+          return "<strong class='fa'> </strong> <span style='color:#lightblue'>" + d.text + "<br></span><span class='fa tooltip' style='margin-top: 5px;'> \uf004 " + d.favorite_count + " \uf079 " + d.retweet_count + "</span>";
+        })
+        svg.call(tip);
 
       // initial square grid
       let grid = () => {
@@ -281,6 +291,8 @@ $(window).load(function() {
         //The semi circles
         rects
             .data(data)
+            .on('mouseover', tip.show)
+            .on('mouseout', tip.hide)
             .attr("opacity", 0.4)
             .transition()
             .attr("width", size)
@@ -293,6 +305,7 @@ $(window).load(function() {
             .attr("y", (d, i) => (Math.floor(i / column) % rows * spacing) + 40)
             .attr("fill", "steelblue") 
             .attr("opacity", 1)
+
       }
 
       //Divides the initial grid according to the country
