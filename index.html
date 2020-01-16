@@ -240,7 +240,7 @@ $(window).load(function() {
       // Text below the graphs (so far it's not being deleted from screen to screen)
         svg
           .append("text")
-          .text('<i class="fab" style="color:#1DA1F2;">\uf099</i> ≈ 351000 tweets')
+          .text('\uf099 ≈ 351000 tweets')
           .attr("fill", "#444")
           //.attr("text-anchor", "end")
           .attr("class", "fab")
@@ -252,14 +252,14 @@ $(window).load(function() {
           //.attr("opacity", 1)
        
         svg.append("text")
-          .text('<i class="fa" style="color:#25C36B;">\uf079</i> 2 million retweets')
+          .text('\uf079 2 million retweets')
           .attr("fill", "#444")
           .attr("class", "fa")
           .attr("x", 185)
           .attr("y", 575)
 
         svg.append("text")
-          .text('<i class="fa" style="color:#E0245E;">\uf004</i> 5 million likes')
+          .text('\uf004 5 million likes')
           .attr("fill", "#444")
           .attr("class", "fa")
           .attr("x", 395)
@@ -322,7 +322,10 @@ $(window).load(function() {
         usY = 0;  ukY = 0;
         //Now we move the rects to divide the grid
         rects
+            .on('mouseover', tip.show)
+            .on('mouseout', tip.hide)
             .transition()
+
             .delay((d, i) => i*0.4)
             .duration(200)
             //.ease("elastic")
@@ -376,6 +379,8 @@ $(window).load(function() {
         usY = 0;  ukY = 0;
         //Now we move the rects to divide the grid
         rects
+            .on('mouseover', tip.show)
+            .on('mouseout', tip.hide)
             .transition()
             .delay((d, i) => i*0.3)
             .duration(100)
@@ -489,6 +494,8 @@ $(window).load(function() {
         let size = 4;
 
         rects
+            .on('mouseover', tip.show)
+            .on('mouseout', tip.hide)
             .transition()
             .delay((d, i) => i*0.4)
             .duration(200)
@@ -581,6 +588,8 @@ $(window).load(function() {
 
           rects
             .data(data)
+            .on('mouseover', tip.show)
+            .on('mouseout', tip.hide)
             .transition()
             .delay((d, i) => i)
             .duration(200)
@@ -601,6 +610,8 @@ $(window).load(function() {
         if(fast)
           speed = 0.1;
         rects
+          .on('mouseover', function(){})
+          .on('mouseout', function(){})
           .transition()
           .delay((d, i) => i*speed)
           .duration(10)
@@ -802,16 +813,18 @@ var defs = svg.append("defs");
        //Add colors to the gradient
       //First a lighter color in the center
       hashtagsGradients.append("stop")
-          .attr("offset", function(d) {return d.negative.toString()+"%"})
+          .attr("offset", function(d) {
+            console.log(d.negative)
+            return d.negative.toString()+"%"})
           .attr("stop-color", function(d) {
-              return '#ef8a62 ';
+              return '#ef8a62';
               //return d3.rgb('#FFF76B').darker(1.75);
           });
 
       //Then the actual color almost halfway
       hashtagsGradients.append("stop")
           .attr("offset", function(d) { 
-            let pos = d.neutral
+            let pos = d.negative + d.neutral
             return pos.toString()+"%"})
           .attr("stop-color", function(d) {
               //return d3.rgb('lightgray').darker(0.2)
@@ -823,7 +836,7 @@ var defs = svg.append("defs");
           .attr("offset",  "100%")
           .attr("stop-color", function(d) {
               //return d3.rgb('#F1406C').darker(1.5)
-              return '#ef8a62';
+              return '#67a9cf';
           });   
 
 
