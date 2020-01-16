@@ -1,21 +1,21 @@
-hashtag,num_tweets,country
-#refugeeswelcome,1305,US
-#trump,1063,US
-#smartnews,856,US
-#maga,675,US
-#news,608,US
-#rohingya,499,US
-#buildthewall,440,US
-#closethecamps,394,US
-#syria,382,US
-#humanrights,347,US
-#brexit,802,UK
-#brokenpromises,729,UK
-#eu,562,UK
-#refugeeswelcome,498,UK
-#europe,294,UK
-#familiestogether,289,UK
-#news,284,UK
-#syria,278,UK
-#rohingya,255,UK
-#uk,246,UK
+hashtag,num_tweets,country,negative,neutral,positive
+#refugeeswelcome,1305,US, 20, 30, 5
+#trump,1063,US, 20, 80, 50
+#smartnews,856,US, 90, 5, 5
+#maga,675,US, 20, 10, 60
+#news,608,US, 20, 0, 100
+#rohingya,499,US, 50, 40, 60
+#buildthewall,440,US, 20, 20, 60
+#closethecamps,394,US, 20, 40, 60
+#syria,382,US, 20, 40, 60
+#humanrights,347,US, 20, 40, 60
+#brexit,802,UK, 20, 40, 60
+#brokenpromises,729,UK, 20, 40, 60
+#eu,562,UK, 20, 40, 60
+#refugeeswelcome,498,UK, 20, 40, 60
+#europe,294,UK, 20, 40, 60
+#familiestogether,289,UK, 20, 40, 60
+#news,284,UK, 20, 40, 60
+#syria,278,UK, 20, 40, 60
+#rohingya,255,UK, 20, 40, 60
+#uk,246,UK, 20, 40, 60
