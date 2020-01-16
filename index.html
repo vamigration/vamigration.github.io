@@ -166,7 +166,6 @@ $(window).load(function() {
   //Callback excecuted once data is downloaded
   d3.text("./data/tweets_to_show.csv", function(d) {
       data = d3.csvParse(d);
-      console.log(data)
       //To convert to tidy data -> avoid downloading repetitive rows
       //data = datos.map((i) => (new Array(i.num_points)).fill(i, 0, i.num_points)).reduce((acc, i) => acc.concat(i));
 
@@ -241,7 +240,7 @@ $(window).load(function() {
       // Text below the graphs (so far it's not being deleted from screen to screen)
         svg
           .append("text")
-          .text('\uf099 ≈ 351000 tweets')
+          .text('<i class="fab" style="color:#1DA1F2;">\uf099</i> ≈ 351000 tweets')
           .attr("fill", "#444")
           //.attr("text-anchor", "end")
           .attr("class", "fab")
@@ -253,14 +252,14 @@ $(window).load(function() {
           //.attr("opacity", 1)
        
         svg.append("text")
-          .text('\uf079 2 million retweets')
+          .text('<i class="fa" style="color:#25C36B;">\uf079</i> 2 million retweets')
           .attr("fill", "#444")
           .attr("class", "fa")
           .attr("x", 185)
           .attr("y", 575)
 
         svg.append("text")
-          .text('\uf004 5 million likes')
+          .text('<i class="fa" style="color:#E0245E;">\uf004</i> 5 million likes')
           .attr("fill", "#444")
           .attr("class", "fa")
           .attr("x", 395)
@@ -278,9 +277,7 @@ $(window).load(function() {
         .attr('class', 'd3-tip')
         .offset([-10, 0])
         .html(function(d) {
-  
-
-          return "<strong class='fa'> </strong> <span style='color:#lightblue'>" + d.text + "<br></span><span class='fa tooltip' style='margin-top: 5px;'> \uf004 " + d.favorite_count + " \uf079 " + d.retweet_count + "</span>";
+          return "<span class='tooltip'><i class='fab' style='color:#1DA1F2;'>\uf099</i>:</span><span>" + d.text + "<br></span><span class='tooltip'><i class='fa' style='color:#E0245E;'>\uf004</i>: " + d.favorite_count + "\t <i class='fa' style='color:#25C36B;'>\uf079</i>" + d.retweet_count + "</span>";
         })
         svg.call(tip);
 

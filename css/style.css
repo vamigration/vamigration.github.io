@@ -30,7 +30,6 @@ strong{
 .tooltip {
 
   margin-top: 5px;
-  font-family: Helvetica Neue, Helvetica, Arial;
   font-size:14px;
   font-weight:normal;
   text-align: right;
@@ -43,7 +42,8 @@ strong{
   padding: 5px;
   font-size:14px;
   max-width: 400px;
-  background: rgba(255, 255, 255, 0.9);
+  text-align: right;
+  background: rgba(255, 255, 255, 0.95);
   color: #000;
   border-radius: 2px;
 }
