@@ -27,20 +27,13 @@ strong{
   font-weight: 600;
 }
 
-.tooltip {
-
-  margin-top: 5px;
-  font-size:14px;
-  font-weight:normal;
-  text-align: right;
-
-}
 
 .d3-tip {
   line-height: 1;
   font-weight: normal;
   padding: 5px;
   font-size:14px;
+  margin-left: 10px;
   max-width: 400px;
   text-align: right;
   background: rgba(255, 255, 255, 0.95);
@@ -66,7 +59,24 @@ strong{
   top: 100%;
   left: 0;
 }
+.tooltip {
 
+  margin-top: 5px;
+  font-size:14px;
+  font-weight:normal;
+  text-align: right;
+
+}
+
+
+.tooltipbig {
+
+  margin-top: 5px;
+  font-size:20px;
+  font-weight:bold;
+  text-align: right;
+
+}
 
 #graphic {
   max-width:  1440px;
@@ -142,16 +152,37 @@ strong{
 
 .fab  {
   font-size: 18px;
-  font-weight: normal;
+  font-weight: bold;
+  margin-left: 6px;
 }
 
 .fa {
   font-size: 18px;
-  font-weight: normal;
+  font-weight: bold;
+    margin-left: 6px;
+
 }
 
+.far  {
+  font-size: 18px;
+  font-weight: bold;
+    margin-left: 6px;
 
+}
+a {
+  color: #2C5985;
+  text-underline: none; 
+}
+a:visited {
+  color: #777;
+}
+a:hover, a:active, a:focus {
+  color:#1DA1F2;
+}
 
+.svg_annotation {
+  font-size: 14px;
+}
 .svg_text {
   font-size: 14px;
 }

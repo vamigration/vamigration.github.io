@@ -20,9 +20,9 @@
 <body>
   <div class="header sticky centered" id="myHeader">
     <h1><strong>Perception of migration on social media - U.S. vs U.K</strong><h1>
-    <div class="headerform">
+ <!--    <div class="headerform">
     People in the U.S tend to be more negative about migration than people in the U.K
-    </div>
+    </div> -->
     <!-- <div class="headerform">
     <form id="mode">
       <span style="padding-left: 20px;">
@@ -102,7 +102,7 @@
     </div> -->
 
    <div id="div5">
-      <h1>Hashtags</h1>
+      <h1>#Hashtags</h1>
       <h2>The hashtags have always been a strong representative of movements on Twitter, and looking at the
           most popular ones gives us an idea about the <strong>topics that people feel strong about in the
           context of migration</strong>. </h2>
@@ -124,8 +124,19 @@
     
     <div id="div7">
      <h1>Conclusions & Ack.</h1>
-      <h2>We present some conclusions and mention the course, our names and tools.</h2>
-      <span class="highlight">Under construction</span>
+
+        <h2>In the case of the U.S, it was possible to identify topics such as the episode of the continued practice of <a href="https://time.com/5678313/trump-administration-family-separation-lawsuits/"><strong>migrant families separation at the border</strong></a> and the episode when <a href="https://www.bbc.com/news/world-us-canada-49901878"><strong>Trump suggested shooting migrants in the legs.</strong></a></h2>
+        <h2>In the UK the topics pointed to the <strong>European economic migrants</strong> and the <strong><a href="https://www.nbcnews.com/news/world/europe-grapples-distinction-between-refugees-economic-migrants-n965161">refugee crisis</a>.</strong></h2>
+        <span>
+        <a href="https://www.nbcnews.com/news/world/europe-grapples-distinction-between-refugees-economic-migrants-n965161">
+          <img class="centered" src="https://media2.s-nbcnews.com/j/newscms/2019_05/2734431/190130-sea-watch3-mc-13002_95e660605db29c87be508909b5e2a4ed.fit-2000w.JPG" alt="migrants on the ocean" style="width:480px;height:320px;margin-top: 10px;">
+        </a>
+        </span>
+      
+      <br>
+      <span>Visual Analytics Project. Course by <strong><a href="https://www.aviz.fr/TeachingVA2019/VisualAnalytics">Petra Isenberg</a></strong> at CentraleSupelec.</span>
+      <br/>
+      <span>Developed by <strong>Eugen Patrascu</strong> and <strong>René Gómez.</strong></span>
     </div>
   </div>
 
@@ -211,18 +222,36 @@ $(window).load(function() {
       //Get colors for sentiment
       //ToDo: Add dark mode
       //2C5985   B7D7BB  71B19B
-      let sentiment_color = (tweet) => {
+      //ef8a62 A9A9A9 67a9cf
+
+      let tweet_color = (tweet) => {
+
           if (tweet['sentiment'] == 'negative')
               //return "#f44336";
-              return "#013854";//"#2C5985";
+              return "#ef8a62";//"#2C5985";
           if (tweet['sentiment'] == 'neutral')
               // return "#91989D";
               // return "#B7D7BB";
               return '#A9A9A9';
           if (tweet['sentiment'] == 'positive')
               //return "#66bb6a";
-              return "#EE8B51";//"#71B19B";
-          return "#68DF82";
+              return "#67a9cf";//"#71B19B";
+          return "#2C5985";
+
+      }
+      let sentiment_color = (sentiment) => {
+
+          if (sentiment == 'negative')
+              //return "#f44336";
+              return "#ef8a62";//"#2C5985";
+          if (sentiment == 'neutral')
+              // return "#91989D";
+              // return "#B7D7BB";
+              return '#A9A9A9';
+          if (sentiment == 'positive')
+              //return "#66bb6a";
+              return "#67a9cf";//"#71B19B";
+          return "#2C5985";
 
       }
 
@@ -275,11 +304,32 @@ $(window).load(function() {
 
         var tip = d3.tip()
         .attr('class', 'd3-tip')
-        .offset([-10, 0])
+        .offset([120, 150])
         .html(function(d) {
-          return "<span class='tooltip'><i class='fab' style='color:#1DA1F2;'>\uf099</i>:</span><span>" + d.text + "<br></span><span class='tooltip'><i class='fa' style='color:#E0245E;'>\uf004</i>: " + d.favorite_count + "\t <i class='fa' style='color:#25C36B;'>\uf079</i>" + d.retweet_count + "</span>";
+          return "<span class='tooltip'><i class='fab' style='color:#1DA1F2;'>\uf099</i>: </span><span>" 
+                + d.text 
+                + "<br></span><span class='tooltip'><i class='fa' style='color:#E0245E;'>\uf004</i>: " 
+                + d.favorite_count 
+                + "\t <i class='fa' style='color:#25C36B;'>\uf079</i>" 
+                + d.retweet_count + "</span>";
         })
         svg.call(tip);
+
+        var tipHT = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([-5, 40])
+        //ef8a62 A9A9A9 67a9cf
+        .html(function(d) {
+          return "<span class='tooltipbig'><i class='fas' style='color:#1DA1F2;'>\uf292:</i></span><span>" + d.hashtag 
+            + " </span><span class='tooltip'><i class='far inverse' style='color:#ef8a62;'> \uf556</i>: " 
+            + d.negative 
+            + "% <i class='far reverse' style='color:#A9A9A9;'>\uf11a</i>" 
+            + d.neutral 
+            + "%</span>"
+            + "\t <i class='far reverse' style='color:#67a9cf;'>\uf118</i>" 
+            + d.positive + "%</span>";
+        })
+        svg.call(tipHT);
 
       // initial square grid
       let grid = () => {
@@ -291,7 +341,7 @@ $(window).load(function() {
             .data(data)
             .on('mouseover', tip.show)
             .on('mouseout', tip.hide)
-            .attr("opacity", 0.4)
+            .attr("opacity", 0.3)
             .transition()
             .attr("width", size)
             .attr("height", size)
@@ -358,15 +408,41 @@ $(window).load(function() {
             .attr("fill", (d, i) => country_color(d, 'country'))
             .attr("opacity", 1) 
 
+
+          svg.append("text")
+          .attr("class", "percentage")
+          .text('251.294 tweets')
+          .attr("fill", "#444")
+          .attr("x", 75)
+          .attr("y", bottomGraph - ((Math.floor(usY+12)/ column) % rows * spacing))
+          svg.append("text")
+          .attr("class", "percentage")
+          .text('99.112 tweets')
+          .attr("fill", "#444")
+          .attr("x", 365)
+          .attr("y", bottomGraph - ((Math.floor(ukY+12)/ column) % rows * spacing))
+
       }
 
       //I replicated the code from country grid because 
       //I was having problem with the transition. 
       //Changed the opacity so people see the arrows
       function countryPercentageGrid(){
+
+
         loadCircles = false;//switch off the bubble hashtags
         clearText();
         clearRects();
+        svg.append("text")
+          .attr("opacity", 0)
+          .text('In proportion, 2 times more engagement in the U.K.')
+          .attr("fill", "#000")
+          .attr("class", "svg_annotation")
+          .attr("x", 204)
+          .attr("y", 88)
+          .transition()
+          .duration(1200)
+          .attr("opacity", 1)
         addUSFlag(140, bottomGraph+22)
         addUKFlag(430, bottomGraph+22)
         //We need different space to give the feeling of barchart
@@ -426,7 +502,7 @@ $(window).load(function() {
           .append("path")
           .attr("d", "M 0 0 12 6 0 12 3 6")
           .style("fill", "#b9491a");
-    
+
 
         //line US            
         svg.append("line")
@@ -439,7 +515,7 @@ $(window).load(function() {
             .attr("class", "arrows")
             .attr("marker-end", "url(#triangle)")
             .transition()
-            .duration(3000)
+            .duration(2000)
             .attr("x2", 230)
             .attr("y2", 300);
 
@@ -454,7 +530,7 @@ $(window).load(function() {
             .attr("class", "arrows")
             .attr("marker-end", "url(#triangle)")
             .transition()
-            .duration(3000)
+            .duration(2000)
             .attr("x2", 515)
             .attr("y2", 100);
        
@@ -526,7 +602,7 @@ $(window).load(function() {
               }
               return bottomGraph - (Math.floor(pos / column) % rows * spacing)
             })
-            .attr("fill", (d, i) => sentiment_color(d))
+            .attr("fill", (d, i) => tweet_color(d))
             .attr("opacity", 1) //only show 12 people
       
       svg.append("text")
@@ -571,9 +647,9 @@ $(window).load(function() {
           .attr("x", 115 + sentiment_shift('positive'))
           .attr("y", bottomGraph - ((Math.floor(sentimentUSY['positive']+6)/ column) % rows * spacing))
     
-      svg.append("circle").attr('class','legend_sent').attr("cx",440).attr("cy",50).attr("r", 6).style("fill", "#f44336")
-      svg.append("circle").attr('class','legend_sent').attr("cx",440).attr("cy",70).attr("r", 6).style("fill", "#91989D")
-      svg.append("circle").attr('class','legend_sent').attr("cx",440).attr("cy",90).attr("r", 6).style("fill", "#66bb6a")
+      svg.append("circle").attr('class','legend_sent').attr("cx",440).attr("cy",50).attr("r", 6).style("fill", sentiment_color('negative'))
+      svg.append("circle").attr('class','legend_sent').attr("cx",440).attr("cy",70).attr("r", 6).style("fill", sentiment_color('neutral'))
+      svg.append("circle").attr('class','legend_sent').attr("cx",440).attr("cy",90).attr("r", 6).style("fill", sentiment_color('positive'))
       svg.append("text").attr('class','legend_sent').attr("x", 452).attr("y", 50).text("Negative").style("font-size", "15px").attr("alignment-baseline","middle")
       svg.append("text").attr('class','legend_sent').attr("x", 452).attr("y", 70).text("Neutral").style("font-size", "15px").attr("alignment-baseline","middle")
       svg.append("text").attr('class','legend_sent').attr("x", 452).attr("y", 90).text("Positive").style("font-size", "15px").attr("alignment-baseline","middle")
@@ -600,7 +676,7 @@ $(window).load(function() {
             .attr("ry", "50%")
             .attr("x", (d, i) => (i % column * spacing) + 45)
             .attr("y", (d, i) => (Math.floor(i / column) % rows * spacing) + 30)
-            .attr("fill", (d, i) => (sentiment_color(d)))
+            .attr("fill", (d, i) => (tweet_color(d)))
             .attr("opacity", 1)
 
       }
@@ -651,10 +727,17 @@ $(window).load(function() {
         if (visible) {
       
                 circles
+                    .on('mouseover', tipHT.show)
+                    .on('mouseout', tipHT.hide)
                     .transition()
                     .delay((d, i) => 12 * i)
                     .duration(100)
-                    .attr("opacity", 0.7)
+                    .attr('cx', function(d) {
+                    return d.x;
+                    })
+                    .attr('cy', function(d) {
+                    return d.y;
+                    })
 
 
                 circle_texts
@@ -665,11 +748,18 @@ $(window).load(function() {
                 
             } else {
               d3.selectAll('.hashtags')
+              .on('mouseover', function(){})
+              .on('mouseout', function(){})  
               .transition()
               .delay((d, i) => 12 * i)
               .duration(100)
               //.ease('elastic')
-              .attr("opacity", 0)
+              .attr('cx', function(d) {
+                    return d.x-800;
+                })
+                .attr('cy', function(d) {
+                    return d.y-800;
+                })
 
               circle_texts
                     .transition()
@@ -690,7 +780,7 @@ $(window).load(function() {
               .attr("dx", -500)
         svg.selectAll(".legend_sent").remove();
         svg.selectAll(".percentage").remove();
-
+        svg.selectAll(".svg_annotation").remove();
 
           //number of tweets
           d3.selectAll('.country')
@@ -772,17 +862,6 @@ $(window).load(function() {
 var defs = svg.append("defs");
 
 
-// var hashtagsGradients = svg.append("defs").selectAll("linearGradient")
-//     .data(ht_data)
-//     .enter().append("linearGradientR")
-//     .attr("id", function(d){ return "gradient-" + d.hashtag; })
-    
-
-//Append a linearGradient element to the defs and give it a unique id
-// var linearGradient = defs.append("linearGradient")
-//     .attr("id", "linear-gradient")
-
-
     //Create a radial gradient for each of the planets
     var hashtagsGradients = svg.append("defs").selectAll("radialGradient")
     .data(ht_data)
@@ -793,12 +872,7 @@ var defs = svg.append("defs");
     .attr("cy", "50%") //Move the y-center location towards the top
     .attr("r", function(d) {"100%"});//how spread the gradient is
     
-      //Horizontal gradient
-      // hashtagsGradients
-      //     .attr("x1", "0%")
-      //     .attr("y1", "0%")
-      //     .attr("x2", "100%")
-      //     .attr("y2", "0%")
+
 
       //Set the color for the start (0%)
       hashtagsGradients.append("stop")
@@ -840,7 +914,6 @@ var defs = svg.append("defs");
               return '#67a9cf';
           });   
 
-
       //Draw the rectangle and fill with gradient
       // svg
       //   .selectAll('.senti')
@@ -859,12 +932,7 @@ var defs = svg.append("defs");
 
         function ticked() {
 
-            // groups = d3.select('svg g')
-            //     .selectAll('g')
-            //     .data(ht_data)
-            //     .enter()
-            //     .append('g')
-            //     .attr("transform", d => `translate(${d.x + 10},${d.y + 10})`);
+      
 
             circles = d3.select('svg g')
                  .selectAll('circle')
@@ -889,7 +957,7 @@ var defs = svg.append("defs");
                     return d.y;
                 })
                 .attr('class', "hashtags")
-                .attr('opacity', 0.7)
+                .attr('opacity', 0.9)
 
             circle_texts = d3.select('svg g')
                  .selectAll('text')
@@ -913,27 +981,6 @@ var defs = svg.append("defs");
                 })
                 .style("font-size", "12px")
                 .style("font-weight", "bold");    
-
-
-            // circles = d3.select('svg g')
-            //     .selectAll('circle')
-            //     .data(ht_data);
-
-            // circles.enter()
-            //     .append('circle')
-            //     .attr('r', function(d) {
-            //         return xCenter(d.num_tweets);
-            //     })
-            //     .style('fill', function(d) {
-            //         return country_color(d, 'country');
-            //     })
-            //     .merge(circles)
-            //     .attr('cx', function(d) {
-            //         return d.x;
-            //     })
-            //     .attr('cy', function(d) {
-            //         return d.y;
-            //     })
 
             switchCircles(loadCircles);
             //circles.exit().remove();
@@ -959,7 +1006,68 @@ var defs = svg.append("defs");
 
         loadCircles = false;//switch off the hashtags
         //create rectangles
+
         let bars = group.append("rect")
+
+
+
+bars
+              .data(data)
+              .transition()
+              .delay((d, i) => 10 * i)
+              .duration(800)
+              //.ease('elastic')//linear, quad, cubic, sin, exp, circle, elastic, back, bounce
+              .attr("class", itemClass)
+              .attr("x", (d, i) => 10)
+              .attr("y", (d, i) => scale_y(i * 4) + shift)
+              .attr("width", (d, i) => scale_x(d["num_tweets"]))
+              .attr("height", (d, i) => 15)
+              .style("fill", function(d) {
+                    return "url(#gradientBar" + itemClass + d.hashtag + ")";
+                })
+              //(d['sentiment'] == "negative" ? "#99c125" : "#5b6871"))
+              .attr("opacity", 1)
+              .attr("transform", "translate(0,0) rotate(0)")
+              .attr("opacity", (d, i) => i < 10 ? 1 : 0) //only show 12 people
+        //Append a defs (for definition) element to your SVG
+        console.log(ht_data)
+
+        var barGradients = svg.append("defs").selectAll(".barGradients")
+          .data(data)
+          .enter().append("linearGradient")
+          .attr("class", "barGradients")
+          .attr("id", function(d){ return "gradientBar" + itemClass + d.hashtag; })
+
+          //Horizontal gradient
+barGradients
+    .attr("x1", "0%")
+    .attr("y1", "0%")
+    .attr("x2", "100%")
+    .attr("y2", "0%");
+
+
+    //ef8a62 A9A9A9 67a9cf
+    
+        //Set the color for the start (0%)
+        barGradients.append("stop")
+          .attr("offset", function(d) { 
+            let pos = (parseInt(d.negative))
+            console.log(pos)
+            return pos.toString()+"%"})
+          .attr("stop-color", "#ef8a62"); //light blue
+
+                  //Set the color for the start (0%)
+        barGradients.append("stop")
+          .attr("offset", function(d) { 
+            let pos = (parseInt(d.negative) + parseInt(d.neutral))
+            console.log(pos)
+            return pos.toString()+"%"})
+          .attr("stop-color", "#A9A9A9"); //light blue
+         
+        //Set the color for the end (100%)
+        barGradients.append("stop")
+            .attr("offset", "100%")
+            .attr("stop-color", "#67a9cf"); //dark blue
 
           //country name
           d3.selectAll('g')
@@ -971,7 +1079,7 @@ var defs = svg.append("defs");
               //.attr("text-anchor", "end")
               .attr("dx", (d, i) => scale_x(d["num_tweets"]) + 12)
               .attr("dy", (d, i) => scale_y(i * 4) + 12 + shift)
-              .attr("opacity", (d, i) => i < 12 ? 1 : 0) //only show 12 people
+              .attr("opacity", (d, i) => i < 10 ? 1 : 0) //only show 12 people
 
           //number of tweets data
           d3.selectAll('g')
@@ -983,26 +1091,9 @@ var defs = svg.append("defs");
               .attr("text-anchor", "start")
               .attr("dx", 13)
               .attr("dy", (d, i) => scale_y(i * 4) + 11 + shift)
-              .attr("opacity", (d, i) => i < 12 ? 1 : 0) //only show 12 people
+              .attr("opacity", (d, i) => i < 10 ? 1 : 0) //only show 12 people
 
-          bars
-              .data(data)
-              .transition()
-              .delay((d, i) => 10 * i)
-              .duration(800)
-              //.ease('elastic')//linear, quad, cubic, sin, exp, circle, elastic, back, bounce
-              .attr("class", itemClass)
-              .attr("rx", 0)
-              .attr("ry", 0)
-              .attr("x", (d, i) => 10)
-              .attr("y", (d, i) => scale_y(i * 4) + shift)
-              .attr("width", (d, i) => scale_x(d["num_tweets"]))
-              .attr("height", (d, i) => 15)
-              .attr("fill", (d, i) => country_color(d, 'country'))
-                //(d['sentiment'] == "negative" ? "#99c125" : "#5b6871"))
-              .attr("opacity", 1)
-              .attr("transform", "translate(0,0) rotate(0)")
-              .attr("opacity", (d, i) => i < 12 ? 1 : 0) //only show 12 people
+          
 
       }
 
@@ -1019,6 +1110,7 @@ var defs = svg.append("defs");
           drawBars(dataUS, 'US', 0);
           //drawBars(dataUK, 'UK', 200);
           //.exit().attr("opacity1", 0);
+
 
         //arrow
         svg.append("svg:defs").append("svg:marker")
@@ -1081,7 +1173,6 @@ var defs = svg.append("defs");
         // .attr('width', 30)
         // .attr('height', 30)
         // .attr("text-anchor", "end");
-        
         svg.append("text")
         .attr("font-weight", "bold")
         .attr("font-size", "25px")
@@ -1129,7 +1220,7 @@ var defs = svg.append("defs");
       new scrollD('div3', '75%', sentimentGrid, countryPercentageGrid);
       //new scrollD('div4', '75%', circleGrid, sentimentGrid);
       new scrollD('div5', '75%', maytheforce, sentimentGrid);
-      //new scrollD('div6', '75%', barChart, maytheforce, 'US');
+      //new scrollD('div7', '75%', barChart, maytheforce);
       //new scroll('div6', '75%', barChart, divide, 'UK');
       //start grid on page load
   });
