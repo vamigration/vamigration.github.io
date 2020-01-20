@@ -145,128 +145,127 @@
   <div class="fixed"><svg id="viz" width="70%" height="100%"></svg></div>
 
 </div><!-- /graphic -->
-  
-  
-  <script>
+<script>
+  //   d3.selectAll("input[name='mode']").on("change", function(){
+  //     console.log("mode: ", this.value)
+  //     if(this.value=='off'){
+  //       console.log("back")
+  //       d3.select("body").style("background", "#444")
+  //       d3.select("div").style("background", "#444")
+  //     }
+  // });
+  var loadCircles = false; //switch the hashtags circles at each screen
+  let circles; // Reference to the hashtags circles
+  var ht_data;
 
-//   d3.selectAll("input[name='mode']").on("change", function(){
-//     console.log("mode: ", this.value)
-//     if(this.value=='off'){
-//       console.log("back")
-//       d3.select("body").style("background", "#444")
-//       d3.select("div").style("background", "#444")
-//     }
-// });
-
-var loadCircles = false; //switch the hashtags circles at each screen
-let circles; // Reference to the hashtags circles
-var ht_data;
-
-//Load the hashtag data
-d3.csv("./data/hashtags_sent.csv",
+  //Load the hashtag data
+  d3.csv("./data/hashtags_sent.csv",
     function(d) {
-        console.log("loaded")
-        ht_data = d;
+      console.log("loaded")
+      ht_data = d;
 
-        ht_data = ht_data.map((i) => (new Array(i.num_points)).fill(i, 0, i.num_points)).reduce((acc, i) => acc.concat(i))
+      ht_data = ht_data.map((i) => (new Array(i.num_points))
+          .fill(i, 0, i.num_points))
+        .reduce((acc, i) => acc.concat(i))
     });
 
 
-$(window).load(function() {
-  var data;
-  //Callback excecuted once data is downloaded
-  d3.text("./data/tweets_to_show.csv", function(d) {
-      data = d3.csvParse(d);
-      //To convert to tidy data -> avoid downloading repetitive rows
-      //data = datos.map((i) => (new Array(i.num_points)).fill(i, 0, i.num_points)).reduce((acc, i) => acc.concat(i));
+  $(window)
+    .load(function() {
+      var data;
+      //Callback excecuted once data is downloaded
+      d3.text("./data/tweets_to_show.csv", function(d) {
+        data = d3.csvParse(d);
+        //To convert to tidy data -> avoid downloading repetitive rows
+        //data = datos.map((i) => (new Array(i.num_points)).fill(i, 0, i.num_points)).reduce((acc, i) => acc.concat(i));
 
-      //svg
-      let svg = d3.select("svg");
+        //svg
+        let svg = d3.select("svg");
 
-      //svg width and height
-      svg.attr('width', 600)
-        .attr('height', 800)
+        //svg width and height
+        svg.attr('width', 600)
+          .attr('height', 800)
 
-      //set up grid spacing
-      let rows = 60;
-      let column = 60;
-      let spacing = 8;
-      let size = 5;
+        //set up grid spacing
+        let rows = 60;
+        let column = 60;
+        let spacing = 8;
+        let size = 5;
 
-      let bottomGraph = 530;
+        let bottomGraph = 530;
 
 
-      let randnum = (min, max) => Math.round(Math.random() * (max - min) + min);
+        let randnum = (min, max) => Math.round(Math.random() * (max - min) + min);
 
-      //Create an array of objects
-      // let our_data = d3.range(20).map(i =>
-      //     ({
-      //         'device': i < 5 ? 'ios' : 'android',
-      //         'city': i < 3 ? 'San Diegan' : 'Out of towners',
-      //         'age': randnum(25, 65)
-      //     }));
+        //Create an array of objects
+        // let our_data = d3.range(20).map(i =>
+        //     ({
+        //         'device': i < 5 ? 'ios' : 'android',
+        //         'city': i < 3 ? 'San Diegan' : 'Out of towners',
+        //         'age': randnum(25, 65)
+        //     }));
 
-      //create group and join our data to that group
-      let group = svg.selectAll('g')
+        //create group and join our data to that group
+        let group = svg.selectAll('g')
           .data(data)
           .enter()
           .append("g")
 
 
 
-      //create rectangles - on the grid they look like circles 
-      //But rects are more flexible
-      let rects = group.append("rect")
+        //create rectangles - on the grid they look like circles 
+        //But rects are more flexible
+        let rects = group.append("rect")
 
 
-      //Get colors for sentiment
-      //ToDo: Add dark mode
-      //2C5985   B7D7BB  71B19B
-      //ef8a62 A9A9A9 67a9cf
+        //Get colors for sentiment
+        //ToDo: Add dark mode
+        //2C5985   B7D7BB  71B19B
+        //ef8a62 A9A9A9 67a9cf
 
-      let tweet_color = (tweet) => {
+        let tweet_color = (tweet) => {
 
           if (tweet['sentiment'] == 'negative')
-              //return "#f44336";
-              return "#ef8a62";//"#2C5985";
+            //return "#f44336";
+            return "#ef8a62"; //"#2C5985";
           if (tweet['sentiment'] == 'neutral')
-              // return "#91989D";
-              // return "#B7D7BB";
-              return '#A9A9A9';
+            // return "#91989D";
+            // return "#B7D7BB";
+            return '#A9A9A9';
           if (tweet['sentiment'] == 'positive')
-              //return "#66bb6a";
-              return "#67a9cf";//"#71B19B";
+            //return "#66bb6a";
+            return "#67a9cf"; //"#71B19B";
           return "#2C5985";
 
-      }
-      let sentiment_color = (sentiment) => {
+        }
+        let sentiment_color = (sentiment) => {
 
           if (sentiment == 'negative')
-              //return "#f44336";
-              return "#ef8a62";//"#2C5985";
+            //return "#f44336";
+            return "#ef8a62"; //"#2C5985";
           if (sentiment == 'neutral')
-              // return "#91989D";
-              // return "#B7D7BB";
-              return '#A9A9A9';
+            // return "#91989D";
+            // return "#B7D7BB";
+            return '#A9A9A9';
           if (sentiment == 'positive')
-              //return "#66bb6a";
-              return "#67a9cf";//"#71B19B";
+            //return "#66bb6a";
+            return "#67a9cf"; //"#71B19B";
           return "#2C5985";
 
-      }
+        }
 
-      //Colors for country or proportion (field)
-      let country_color = (tweet, field) => {
-        //var colorScale = ['orange', 'lightblue', '#B19CD9'];
-        //"#99c125" : "#394147"
+        //Colors for country or proportion (field)
+        let country_color = (tweet, field) => {
+          //var colorScale = ['orange', 'lightblue', '#B19CD9'];
+          //"#99c125" : "#394147"
           if (tweet[field] == 'US')
-              return "#5b6871";
+            return "#5b6871";
           if (tweet[field] == 'UK')
-              return "#67a9cf";
+            return "#67a9cf";
           return "orange";
-      }
+        }
 
-      // Text below the graphs (so far it's not being deleted from screen to screen)
+        // Text below the graphs (so far it's not being deleted from screen to screen)
         svg
           .append("text")
           .text('\uf099 ≈ 351000 tweets')
@@ -278,8 +277,8 @@ $(window).load(function() {
           //.attr("dy", ".35em")
           .attr("x", 10)
           .attr("y", 575)
-          //.attr("opacity", 1)
-       
+        //.attr("opacity", 1)
+
         svg.append("text")
           .text('\uf079 2 million retweets')
           .attr("fill", "#444")
@@ -293,51 +292,51 @@ $(window).load(function() {
           .attr("class", "fa")
           .attr("x", 395)
           .attr("y", 575)
-        
+
         svg.append("text")
           .text('Each circle represents 100 tweets. Tweets were collected from Aug. to Oct. 2019')
           .attr("fill", "#444")
           .attr("class", "svg_text")
           .attr("x", 11)
           .attr("y", 598)
-      
+
 
         var tip = d3.tip()
-        .attr('class', 'd3-tip')
-        .offset([120, 150])
-        .html(function(d) {
-          return "<span class='tooltip'><i class='fab' style='color:#1DA1F2;'>\uf099</i>: </span><span>" 
-                + d.text 
-                + "<br></span><span class='tooltip'><i class='fa' style='color:#E0245E;'>\uf004</i>: " 
-                + d.favorite_count 
-                + "\t <i class='fa' style='color:#25C36B;'>\uf079</i>" 
-                + d.retweet_count + "</span>";
-        })
+          .attr('class', 'd3-tip')
+          .offset([120, 150])
+          .html(function(d) {
+            return "<span class='tooltip'><i class='fab' style='color:#1DA1F2;'>\uf099</i>: </span><span>" +
+              d.text +
+              "<br></span><span class='tooltip'><i class='fa' style='color:#E0245E;'>\uf004</i>: " +
+              d.favorite_count +
+              "\t <i class='fa' style='color:#25C36B;'>\uf079</i>" +
+              d.retweet_count + "</span>";
+          })
         svg.call(tip);
 
         var tipHT = d3.tip()
-        .attr('class', 'd3-tip')
-        .offset([-5, 40])
-        //ef8a62 A9A9A9 67a9cf
-        .html(function(d) {
-          return "<span class='tooltipbig'><i class='fas' style='color:#1DA1F2;'>\uf292:</i></span><span>" + d.hashtag 
-            + " </span><span class='tooltip'><i class='far inverse' style='color:#ef8a62;'> \uf556</i>: " 
-            + d.negative 
-            + "% <i class='far reverse' style='color:#A9A9A9;'>\uf11a</i>" 
-            + d.neutral 
-            + "%</span>"
-            + "\t <i class='far reverse' style='color:#67a9cf;'>\uf118</i>" 
-            + d.positive + "%</span>";
-        })
+          .attr('class', 'd3-tip')
+          .offset([-5, 40])
+          //ef8a62 A9A9A9 67a9cf
+          .html(function(d) {
+            return "<span class='tooltipbig'><i class='fas' style='color:#1DA1F2;'>\uf292:</i></span><span>" + d.hashtag +
+              " </span><span class='tooltip'><i class='far inverse' style='color:#ef8a62;'> \uf556</i>: " +
+              d.negative +
+              "% <i class='far reverse' style='color:#A9A9A9;'>\uf11a</i>" +
+              d.neutral +
+              "%</span>" +
+              "\t <i class='far reverse' style='color:#67a9cf;'>\uf118</i>" +
+              d.positive + "%</span>";
+          })
         svg.call(tipHT);
 
-      // initial square grid
-      let grid = () => {
-        loadCircles = false;//switch off the hashtags
-        clearText();
+        // initial square grid
+        let grid = () => {
+          loadCircles = false; //switch off the hashtags
+          clearText();
 
-        //The semi circles
-        rects
+          //The semi circles
+          rects
             .data(data)
             .on('mouseover', tip.show)
             .on('mouseout', tip.hide)
@@ -347,169 +346,170 @@ $(window).load(function() {
             .attr("height", size)
             .attr("rx", 4)
             .attr("ry", 4)
-            .delay((d, i) => i*0.5)
+            .delay((d, i) => i * 0.5)
             .duration(5)
             .attr("x", (d, i) => (i % column * spacing) + 5)
             .attr("y", (d, i) => (Math.floor(i / column) % rows * spacing) + 40)
-            .attr("fill", "steelblue") 
+            .attr("fill", "steelblue")
             .attr("opacity", 1)
 
-      }
+        }
 
-      //Divides the initial grid according to the country
-      function countryGrid(){
-        loadCircles = false;//switch off the bubble hashtags
-        clearText();
-        addUSFlag(140, bottomGraph+22)
-        addUKFlag(430, bottomGraph+22)
-        //We need different space to give the feeling of barchart
-        let spacing = 6;
-        let rows = 90;
-        let column = 35;
-        let size = 5;
-        //Since data is in the same place we count for each country
-        usX = 0;  ukX = 0;
-        usY = 0;  ukY = 0;
-        //Now we move the rects to divide the grid
-        rects
+        //Divides the initial grid according to the country
+        function countryGrid() {
+          loadCircles = false; //switch off the bubble hashtags
+          clearText();
+          addUSFlag(140, bottomGraph + 22)
+          addUKFlag(430, bottomGraph + 22)
+          //We need different space to give the feeling of barchart
+          let spacing = 6;
+          let rows = 90;
+          let column = 35;
+          let size = 5;
+          //Since data is in the same place we count for each country
+          usX = 0;
+          ukX = 0;
+          usY = 0;
+          ukY = 0;
+          //Now we move the rects to divide the grid
+          rects
             .on('mouseover', tip.show)
             .on('mouseout', tip.hide)
             .transition()
 
-            .delay((d, i) => i*0.4)
+            .delay((d, i) => i * 0.4)
             .duration(200)
             //.ease("elastic")
             .attr("width", size)
             .attr("height", size)
             .attr("rx", 3)
             .attr("ry", 3)
-            .attr("x", function (d, i) {
-              if(d['country'] == 'US'){
+            .attr("x", function(d, i) {
+              if (d['country'] == 'US') {
                 usX++;
-                return ((usX-1) % column * spacing) + 5
-              }
-              else{
+                return ((usX - 1) % column * spacing) + 5
+              } else {
                 ukX++;
-                return ((ukX-1) % column * spacing) + 290
+                return ((ukX - 1) % column * spacing) + 290
               }
             })
-            .attr("y", function (d, i) {
+            .attr("y", function(d, i) {
               pos = 0;
-              if(d['country']=='US'){
+              if (d['country'] == 'US') {
                 pos = usY;
                 usY++;
-              }
-              else{
+              } else {
                 pos = ukY;
                 ukY++;
               }
               return bottomGraph - (Math.floor(pos / column) % rows * spacing)
             })
             .attr("fill", (d, i) => country_color(d, 'country'))
-            .attr("opacity", 1) 
+            .attr("opacity", 1)
 
 
           svg.append("text")
-          .attr("class", "percentage")
-          .text('251.294 tweets')
-          .attr("fill", "#444")
-          .attr("x", 75)
-          .attr("y", bottomGraph - ((Math.floor(usY+12)/ column) % rows * spacing))
+            .attr("class", "percentage")
+            .text('251.294 tweets')
+            .attr("fill", "#444")
+            .attr("x", 75)
+            .attr("y", bottomGraph - ((Math.floor(usY + 12) / column) % rows * spacing))
           svg.append("text")
-          .attr("class", "percentage")
-          .text('99.112 tweets')
-          .attr("fill", "#444")
-          .attr("x", 365)
-          .attr("y", bottomGraph - ((Math.floor(ukY+12)/ column) % rows * spacing))
+            .attr("class", "percentage")
+            .text('99.112 tweets')
+            .attr("fill", "#444")
+            .attr("x", 365)
+            .attr("y", bottomGraph - ((Math.floor(ukY + 12) / column) % rows * spacing))
 
-      }
+        }
 
-      //I replicated the code from country grid because 
-      //I was having problem with the transition. 
-      //Changed the opacity so people see the arrows
-      function countryPercentageGrid(){
+        //I replicated the code from country grid because 
+        //I was having problem with the transition. 
+        //Changed the opacity so people see the arrows
+        function countryPercentageGrid() {
 
 
-        loadCircles = false;//switch off the bubble hashtags
-        clearText();
-        clearRects();
-        svg.append("text")
-          .attr("opacity", 0)
-          .text('In proportion, 2 times more engagement in the U.K.')
-          .attr("fill", "#000")
-          .attr("class", "svg_annotation")
-          .attr("x", 204)
-          .attr("y", 88)
-          .transition()
-          .duration(1200)
-          .attr("opacity", 1)
-        addUSFlag(140, bottomGraph+22)
-        addUKFlag(430, bottomGraph+22)
-        //We need different space to give the feeling of barchart
-        let spacing = 6;
-        let rows = 90;
-        let column = 35;
-        let size = 5;
-        //Since data is in the same place we count for each country
-        usX = 0;  ukX = 0;
-        usY = 0;  ukY = 0;
-        //Now we move the rects to divide the grid
-        rects
+          loadCircles = false; //switch off the bubble hashtags
+          clearText();
+          clearRects();
+          svg.append("text")
+            .attr("opacity", 0)
+            .text('In proportion, 2 times more engagement in the U.K.')
+            .attr("fill", "#000")
+            .attr("class", "svg_annotation")
+            .attr("x", 204)
+            .attr("y", 88)
+            .transition()
+            .duration(1200)
+            .attr("opacity", 1)
+          addUSFlag(140, bottomGraph + 22)
+          addUKFlag(430, bottomGraph + 22)
+          //We need different space to give the feeling of barchart
+          let spacing = 6;
+          let rows = 90;
+          let column = 35;
+          let size = 5;
+          //Since data is in the same place we count for each country
+          usX = 0;
+          ukX = 0;
+          usY = 0;
+          ukY = 0;
+          //Now we move the rects to divide the grid
+          rects
             .on('mouseover', tip.show)
             .on('mouseout', tip.hide)
             .transition()
-            .delay((d, i) => i*0.3)
+            .delay((d, i) => i * 0.3)
             .duration(100)
             //.ease("elastic")
             .attr("width", size)
             .attr("height", size)
             .attr("rx", 3)
             .attr("ry", 3)
-            .attr("x", function (d, i) {
-              if(d['country'] == 'US'){
+            .attr("x", function(d, i) {
+              if (d['country'] == 'US') {
                 usX++;
-                return ((usX-1) % column * spacing) + 5
-              }
-              else{
+                return ((usX - 1) % column * spacing) + 5
+              } else {
                 ukX++;
-                return ((ukX-1) % column * spacing) + 290
+                return ((ukX - 1) % column * spacing) + 290
               }
             })
-            .attr("y", function (d, i) {
+            .attr("y", function(d, i) {
               pos = 0;
-              if(d['country']=='US'){
+              if (d['country'] == 'US') {
                 pos = usY;
                 usY++;
-              }
-              else{
+              } else {
                 pos = ukY;
                 ukY++;
               }
               return bottomGraph - (Math.floor(pos / column) % rows * spacing)
             })
             .attr("fill", (d, i) => country_color(d, 'country'))
-            .attr("opacity", 0.5) 
+            .attr("opacity", 0.5)
 
-        //arrow head
-        svg.append("svg:defs").append("svg:marker")
-          .attr("id", "triangle")
-          .attr("refX", 6)
-          .attr("refY", 6)
-          .attr("markerWidth", 30)
-          .attr("markerHeight", 30)
-          .attr("markerUnits","userSpaceOnUse")
-          .attr("orient", "auto")
-          .append("path")
-          .attr("d", "M 0 0 12 6 0 12 3 6")
-          .style("fill", "#b9491a");
+          //arrow head
+          svg.append("svg:defs")
+            .append("svg:marker")
+            .attr("id", "triangle")
+            .attr("refX", 6)
+            .attr("refY", 6)
+            .attr("markerWidth", 30)
+            .attr("markerHeight", 30)
+            .attr("markerUnits", "userSpaceOnUse")
+            .attr("orient", "auto")
+            .append("path")
+            .attr("d", "M 0 0 12 6 0 12 3 6")
+            .style("fill", "#b9491a");
 
 
-        //line US            
-        svg.append("line")
+          //line US            
+          svg.append("line")
             .attr("x1", 230)
-            .attr("y1", bottomGraph+5)
+            .attr("y1", bottomGraph + 5)
             .attr("x2", 230)
-            .attr("y2", bottomGraph+5)
+            .attr("y2", bottomGraph + 5)
             .attr("stroke-width", 2)
             .attr("stroke", "#b9491a")
             .attr("class", "arrows")
@@ -520,11 +520,11 @@ $(window).load(function() {
             .attr("y2", 300);
 
           //line UK        
-        svg.append("line")
+          svg.append("line")
             .attr("x1", 515)
-            .attr("y1", bottomGraph+5)
+            .attr("y1", bottomGraph + 5)
             .attr("x2", 515)
-            .attr("y2", bottomGraph+5)
+            .attr("y2", bottomGraph + 5)
             .attr("stroke-width", 2)
             .attr("stroke", "#b9491a")
             .attr("class", "arrows")
@@ -533,70 +533,85 @@ $(window).load(function() {
             .duration(2000)
             .attr("x2", 515)
             .attr("y2", 100);
-       
-      }
 
-      function sentimentGrid(){
-        loadCircles = false;//switch off the bubble hashtags
-        svg.selectAll(".hashtags").remove();
-        clearRects();
-        clearText();
-        addUSFlag(140, bottomGraph+22)
-        addUKFlag(430, bottomGraph+22)
-        d3.selectAll('.svg_text')
+        }
+
+        function sentimentGrid() {
+          loadCircles = false; //switch off the bubble hashtags
+          svg.selectAll(".hashtags")
+            .remove();
+          clearRects();
+          clearText();
+          addUSFlag(140, bottomGraph + 22)
+          addUKFlag(430, bottomGraph + 22)
+          d3.selectAll('.svg_text')
             .transition()
             .duration(600)
             .attr("opacity", 1)
-        //To shift the points some pixels according to the sentiment
-        //to recreate a bar chart
-        let sentiment_shift = (tweet) => {
-          if (tweet['sentiment'] == 'negative')
+          //To shift the points some pixels according to the sentiment
+          //to recreate a bar chart
+          let sentiment_shift = (tweet) => {
+            if (tweet['sentiment'] == 'negative')
               return 15;
-          if (tweet['sentiment'] == 'neutral')
+            if (tweet['sentiment'] == 'neutral')
               return 85;
-          if (tweet['sentiment'] == 'positive')
+            if (tweet['sentiment'] == 'positive')
               return 155;
-          return 60;
+            return 60;
 
-        }
-        sentimentUSX = {'negative': 0, 'neutral': 0, 'positive': 0}
-        sentimentUKX = {'negative': 0, 'neutral': 0, 'positive': 0}
-        sentimentUSY = {'negative': 0, 'neutral': 0, 'positive': 0}
-        sentimentUKY = {'negative': 0, 'neutral': 0, 'positive': 0}
+          }
+          sentimentUSX = {
+            'negative': 0,
+            'neutral': 0,
+            'positive': 0
+          }
+          sentimentUKX = {
+            'negative': 0,
+            'neutral': 0,
+            'positive': 0
+          }
+          sentimentUSY = {
+            'negative': 0,
+            'neutral': 0,
+            'positive': 0
+          }
+          sentimentUKY = {
+            'negative': 0,
+            'neutral': 0,
+            'positive': 0
+          }
 
-        let spacing = 5;
-        let rows = 100;
-        let column = 13;
-        let size = 4;
+          let spacing = 5;
+          let rows = 100;
+          let column = 13;
+          let size = 4;
 
-        rects
+          rects
             .on('mouseover', tip.show)
             .on('mouseout', tip.hide)
             .transition()
-            .delay((d, i) => i*0.4)
+            .delay((d, i) => i * 0.4)
             .duration(200)
             //.ease("elastic")
             .attr("width", size)
             .attr("height", size)
             .attr("rx", "50%")
             .attr("ry", "50%")
-            .attr("x", function (d, i) {
-              if(d['country'] == 'US'){
+            .attr("x", function(d, i) {
+              if (d['country'] == 'US') {
                 sentimentUSX[d['sentiment']]++;
-                return ((sentimentUSX[d['sentiment']]-1) % column * spacing) + sentiment_shift(d)
-              }
-              else{
+                return ((sentimentUSX[d['sentiment']] - 1) % column * spacing) + sentiment_shift(d)
+              } else {
                 sentimentUKX[d['sentiment']]++;
-                return ((sentimentUKX[d['sentiment']]-1) % column * spacing) + 290 + sentiment_shift(d)
+                return ((sentimentUKX[d['sentiment']] - 1) % column * spacing) + 290 + sentiment_shift(d)
               }
             })
-            .attr("y", function (d, i) {
+            .attr("y", function(d, i) {
               pos = 0;
-              if(d['country']=='US'){
+              if (d['country'] == 'US') {
                 pos = sentimentUSY[d['sentiment']];
                 sentimentUSY[d['sentiment']]++;
-              }
-              else{
+              } else {
                 pos = sentimentUKY[d['sentiment']];
                 sentimentUKY[d['sentiment']]++;
               }
@@ -604,63 +619,96 @@ $(window).load(function() {
             })
             .attr("fill", (d, i) => tweet_color(d))
             .attr("opacity", 1) //only show 12 people
-      
-      svg.append("text")
-          .attr("class", "percentage")
-          .text('16.2%')
-          .attr("fill", "#444")
-          .attr("x", 335 + sentiment_shift('neutral'))
-          .attr("y", bottomGraph - ((Math.floor(sentimentUKY['neutral']+6)/ column) % rows * spacing));
-      
-      svg.append("text")
-          .attr("class", "percentage")
-          .text('42.2%')
-          .attr("fill", "#444")
-          .attr("x", 265 + sentiment_shift('negative'))
-          .attr("y", bottomGraph - ((Math.floor(sentimentUKY['negative']+6)/ column) % rows * spacing))
 
-      svg.append("text")
-          .attr("class", "percentage")
-          .text('41.6%')
-          .attr("fill", "#444")
-          .attr("x", 410 + sentiment_shift('positive'))
-          .attr("y", bottomGraph - ((Math.floor(sentimentUKY['positive']+6)/ column) % rows * spacing))
+          svg.append("text")
+            .attr("class", "percentage")
+            .text('16.2%')
+            .attr("fill", "#444")
+            .attr("x", 335 + sentiment_shift('neutral'))
+            .attr("y", bottomGraph - ((Math.floor(sentimentUKY['neutral'] + 6) / column) % rows * spacing));
 
-      svg.append("text")
-          .attr("class", "percentage")
-          .text('17%')
-          .attr("fill", "#444")
-          .attr("x", 50 + sentiment_shift('neutral'))
-          .attr("y", bottomGraph - ((Math.floor(sentimentUSY['neutral']+6)/ column) % rows * spacing));
-      
-      svg.append("text")
-          .attr("class", "percentage")
-          .text('50.2%')
-          .attr("fill", "#444")
-          .attr("x", sentiment_shift('negative') - 20)
-          .attr("y", bottomGraph - ((Math.floor(sentimentUSY['negative']+6)/ column) % rows * spacing))
+          svg.append("text")
+            .attr("class", "percentage")
+            .text('42.2%')
+            .attr("fill", "#444")
+            .attr("x", 265 + sentiment_shift('negative'))
+            .attr("y", bottomGraph - ((Math.floor(sentimentUKY['negative'] + 6) / column) % rows * spacing))
 
-      svg.append("text")
-          .attr("class", "percentage")
-          .text('32.8%')
-          .attr("fill", "#444")
-          .attr("x", 115 + sentiment_shift('positive'))
-          .attr("y", bottomGraph - ((Math.floor(sentimentUSY['positive']+6)/ column) % rows * spacing))
-    
-      svg.append("circle").attr('class','legend_sent').attr("cx",440).attr("cy",50).attr("r", 6).style("fill", sentiment_color('negative'))
-      svg.append("circle").attr('class','legend_sent').attr("cx",440).attr("cy",70).attr("r", 6).style("fill", sentiment_color('neutral'))
-      svg.append("circle").attr('class','legend_sent').attr("cx",440).attr("cy",90).attr("r", 6).style("fill", sentiment_color('positive'))
-      svg.append("text").attr('class','legend_sent').attr("x", 452).attr("y", 50).text("Negative").style("font-size", "15px").attr("alignment-baseline","middle")
-      svg.append("text").attr('class','legend_sent').attr("x", 452).attr("y", 70).text("Neutral").style("font-size", "15px").attr("alignment-baseline","middle")
-      svg.append("text").attr('class','legend_sent').attr("x", 452).attr("y", 90).text("Positive").style("font-size", "15px").attr("alignment-baseline","middle")
+          svg.append("text")
+            .attr("class", "percentage")
+            .text('41.6%')
+            .attr("fill", "#444")
+            .attr("x", 410 + sentiment_shift('positive'))
+            .attr("y", bottomGraph - ((Math.floor(sentimentUKY['positive'] + 6) / column) % rows * spacing))
 
-      }
+          svg.append("text")
+            .attr("class", "percentage")
+            .text('17%')
+            .attr("fill", "#444")
+            .attr("x", 50 + sentiment_shift('neutral'))
+            .attr("y", bottomGraph - ((Math.floor(sentimentUSY['neutral'] + 6) / column) % rows * spacing));
 
-      //sentiment circle grid (to be deleted)
-      let circleGrid = () => {
-          loadCircles = false;//switch off the hashtags
+          svg.append("text")
+            .attr("class", "percentage")
+            .text('50.2%')
+            .attr("fill", "#444")
+            .attr("x", sentiment_shift('negative') - 20)
+            .attr("y", bottomGraph - ((Math.floor(sentimentUSY['negative'] + 6) / column) % rows * spacing))
+
+          svg.append("text")
+            .attr("class", "percentage")
+            .text('32.8%')
+            .attr("fill", "#444")
+            .attr("x", 115 + sentiment_shift('positive'))
+            .attr("y", bottomGraph - ((Math.floor(sentimentUSY['positive'] + 6) / column) % rows * spacing))
+
+          svg.append("circle")
+            .attr('class', 'legend_sent')
+            .attr("cx", 440)
+            .attr("cy", 50)
+            .attr("r", 6)
+            .style("fill", sentiment_color('negative'))
+          svg.append("circle")
+            .attr('class', 'legend_sent')
+            .attr("cx", 440)
+            .attr("cy", 70)
+            .attr("r", 6)
+            .style("fill", sentiment_color('neutral'))
+          svg.append("circle")
+            .attr('class', 'legend_sent')
+            .attr("cx", 440)
+            .attr("cy", 90)
+            .attr("r", 6)
+            .style("fill", sentiment_color('positive'))
+          svg.append("text")
+            .attr('class', 'legend_sent')
+            .attr("x", 452)
+            .attr("y", 50)
+            .text("Negative")
+            .style("font-size", "15px")
+            .attr("alignment-baseline", "middle")
+          svg.append("text")
+            .attr('class', 'legend_sent')
+            .attr("x", 452)
+            .attr("y", 70)
+            .text("Neutral")
+            .style("font-size", "15px")
+            .attr("alignment-baseline", "middle")
+          svg.append("text")
+            .attr('class', 'legend_sent')
+            .attr("x", 452)
+            .attr("y", 90)
+            .text("Positive")
+            .style("font-size", "15px")
+            .attr("alignment-baseline", "middle")
+
+        }
+
+        //sentiment circle grid (to be deleted)
+        let circleGrid = () => {
+          loadCircles = false; //switch off the hashtags
           clearRects();
-          clearText();   
+          clearText();
 
           rects
             .data(data)
@@ -679,455 +727,481 @@ $(window).load(function() {
             .attr("fill", (d, i) => (tweet_color(d)))
             .attr("opacity", 1)
 
-      }
+        }
 
-      function clearRects(fast=false){
-        let speed = 0.5;
-        if(fast)
-          speed = 0.1;
-        rects
-          .on('mouseover', function(){})
-          .on('mouseout', function(){})
-          .transition()
-          .delay((d, i) => i*speed)
-          .duration(10)
-          //.ease("elastic")
-          .attr("opacity", "0");
+        function clearRects(fast = false) {
+          let speed = 0.5;
+          if (fast)
+            speed = 0.1;
+          rects
+            .on('mouseover', function() {})
+            .on('mouseout', function() {})
+            .transition()
+            .delay((d, i) => i * speed)
+            .duration(10)
+            //.ease("elastic")
+            .attr("opacity", "0");
 
-        svg.selectAll('.grids')
-          .transition()
-          .delay((d, i) => i)
-          .duration(10)
-          //.ease("elastic")
-          .attr("opacity", "0")
-          .remove();
+          svg.selectAll('.grids')
+            .transition()
+            .delay((d, i) => i)
+            .duration(10)
+            //.ease("elastic")
+            .attr("opacity", "0")
+            .remove();
 
-        svg.selectAll('.UK')
-          .transition()
-          .delay((d, i) => i)
-          .duration(10)
-          //.ease("elastic")
-          .attr("opacity", "0")
-          .remove();
+          svg.selectAll('.UK')
+            .transition()
+            .delay((d, i) => i)
+            .duration(10)
+            //.ease("elastic")
+            .attr("opacity", "0")
+            .remove();
 
-        svg.selectAll('.US')
-          .transition()
-          .delay((d, i) => i)
-          .duration(10)
-          //.ease("elastic")
-          .attr("opacity", "0")
-          .remove();
+          svg.selectAll('.US')
+            .transition()
+            .delay((d, i) => i)
+            .duration(10)
+            //.ease("elastic")
+            .attr("opacity", "0")
+            .remove();
 
-      }
+        }
 
-      //The tick event draws the circles
-      //And we just need to say if it is visible or not
-      //For sure there is a better way
-      function switchCircles(visible){
-        if (visible) {
-      
-                circles
-                    .on('mouseover', tipHT.show)
-                    .on('mouseout', tipHT.hide)
-                    .transition()
-                    .delay((d, i) => 12 * i)
-                    .duration(100)
-                    .attr('cx', function(d) {
-                    return d.x;
-                    })
-                    .attr('cy', function(d) {
-                    return d.y;
-                    })
+        //The tick event draws the circles
+        //And we just need to say if it is visible or not
+        //For sure there is a better way
+        function switchCircles(visible) {
+          if (visible) {
+
+            circles
+              .on('mouseover', tipHT.show)
+              .on('mouseout', tipHT.hide)
+              .transition()
+              .delay((d, i) => 12 * i)
+              .duration(100)
+              .attr('cx', function(d) {
+                return d.x;
+              })
+              .attr('cy', function(d) {
+                return d.y;
+              })
 
 
-                circle_texts
-                    .transition()
-                    .delay((d, i) => 12 * i)
-                    .duration(100)
-                    .attr("opacity", 1)
-                
-            } else {
-              d3.selectAll('.hashtags')
-              .on('mouseover', function(){})
-              .on('mouseout', function(){})  
+            circle_texts
+              .transition()
+              .delay((d, i) => 12 * i)
+              .duration(100)
+              .attr("opacity", 1)
+
+          } else {
+            d3.selectAll('.hashtags')
+              .on('mouseover', function() {})
+              .on('mouseout', function() {})
               .transition()
               .delay((d, i) => 12 * i)
               .duration(100)
               //.ease('elastic')
               .attr('cx', function(d) {
-                    return d.x-800;
-                })
-                .attr('cy', function(d) {
-                    return d.y-800;
-                })
+                return d.x - 800;
+              })
+              .attr('cy', function(d) {
+                return d.y - 800;
+              })
 
-              circle_texts
-                    .transition()
-                    .delay((d, i) => 12 * i)
-                    .duration(100)
-                    .attr("opacity", 0)
-            }
-
-      }
-
-      function clearText(){
-        //country name
-          d3.selectAll('text.num_tweets')
+            circle_texts
               .transition()
-              .delay((d, i) => 2 * i)
+              .delay((d, i) => 12 * i)
               .duration(100)
-              //.ease('elastic')
-              .attr("dx", -500)
-        svg.selectAll(".legend_sent").remove();
-        svg.selectAll(".percentage").remove();
-        svg.selectAll(".svg_annotation").remove();
+              .attr("opacity", 0)
+          }
+
+        }
+
+        function clearText() {
+          //country name
+          d3.selectAll('text.num_tweets')
+            .transition()
+            .delay((d, i) => 2 * i)
+            .duration(100)
+            //.ease('elastic')
+            .attr("dx", -500)
+          svg.selectAll(".legend_sent")
+            .remove();
+          svg.selectAll(".percentage")
+            .remove();
+          svg.selectAll(".svg_annotation")
+            .remove();
 
           //number of tweets
           d3.selectAll('.country')
-              .transition()
-              .delay((d, i) => 2 * i)
-              .duration(100)
-              //.ease('elastic')
-              .attr("opacity", 0)
+            .transition()
+            .delay((d, i) => 2 * i)
+            .duration(100)
+            //.ease('elastic')
+            .attr("opacity", 0)
           d3.selectAll('.arrows')
             .transition()
-            .delay((d,i)=> 2 * i)
+            .delay((d, i) => 2 * i)
             .duration(100)
             .attr("opacity", 0)
 
           d3.selectAll('.flag')
             .transition()
-            .delay((d,i)=> 2 * i)
+            .delay((d, i) => 2 * i)
             .duration(100)
             .attr("opacity", 0)
-      
-      }
 
-      //force layout for hashtags
-      let maytheforce = () => {
+        }
 
-        clearRects(true);
-        clearText(); // Clear the text from previous frames
-        addUSFlag(160, 420)
-        addUKFlag(510, 420)
+        //force layout for hashtags
+        let maytheforce = () => {
 
-        d3.selectAll('.svg_text')
+          clearRects(true);
+          clearText(); // Clear the text from previous frames
+          addUSFlag(160, 420)
+          addUKFlag(510, 420)
+
+          d3.selectAll('.svg_text')
             .transition()
             .duration(600)
             .attr("opacity", 0)
 
-        loadCircles = true;
+          loadCircles = true;
 
-        var width = 600,
+          var width = 600,
             height = 400;
 
 
-        var colorScale = ['orange', 'lightblue', '#B19CD9'];
-        //var xCenter = [10, 200, 400]
-        var dictColor = {
+          var colorScale = ['orange', 'lightblue', '#B19CD9'];
+          //var xCenter = [10, 200, 400]
+          var dictColor = {
             'US': '#5b6871',
             'UK': 'lightblue'
-        };
-        var dict = {
+          };
+          var dict = {
             'US': 140,
             'UK': 480
-        };
-        var dictY = {
+          };
+          var dictY = {
             'US': 280,
             'UK': 280
-        };
-        
+          };
 
-        var xCenter = d3.scaleLinear()
+
+          var xCenter = d3.scaleLinear()
             .domain([1, 1305])
             .range([10, 50]);
 
-        //set up grid spacing
-        let spacing = 14;
-        let rows = 40;
-        let column = 40;
-        let size = 8;
-        let randnum = (min, max) => Math.round(Math.random() * (max - min) + min);
+          //set up grid spacing
+          let spacing = 14;
+          let rows = 40;
+          let column = 40;
+          let size = 8;
+          let randnum = (min, max) => Math.round(Math.random() * (max - min) + min);
 
-        var simulation = d3.forceSimulation(ht_data)
-            .force('charge', d3.forceManyBody().strength(1))
+          var simulation = d3.forceSimulation(ht_data)
+            .force('charge', d3.forceManyBody()
+              .strength(1))
             // .force('x', d3.forceX().x(function(d) {
             //     return country_color(d, 'country');
             // }))
-            .force('collision', d3.forceCollide().radius(function(d) {
+            .force('collision', d3.forceCollide()
+              .radius(function(d) {
                 return xCenter(d.num_tweets * 1.35);
-            }))
+              }))
             .on('tick', ticked);
-  //Append a defs (for definition) element to your SVG
-var defs = svg.append("defs");
+          //Append a defs (for definition) element to your SVG
+          var defs = svg.append("defs");
 
 
-    //Create a radial gradient for each of the planets
-    var hashtagsGradients = svg.append("defs").selectAll("radialGradient")
-    .data(ht_data)
-    .enter().append("radialGradient")
-    //Create a unique id per "planet"
-    .attr("id", function(d){ return "gradient-" + d.hashtag; })
-    .attr("cx", "50%") //Move the x-center location towards the left
-    .attr("cy", "50%") //Move the y-center location towards the top
-    .attr("r", function(d) {"100%"});//how spread the gradient is
-    
+          //Create a radial gradient for each of the planets
+          var hashtagsGradients = svg.append("defs")
+            .selectAll("radialGradient")
+            .data(ht_data)
+            .enter()
+            .append("radialGradient")
+            //Create a unique id per "planet"
+            .attr("id", function(d) {
+              return "gradient-" + d.hashtag;
+            })
+            .attr("cx", "50%") //Move the x-center location towards the left
+            .attr("cy", "50%") //Move the y-center location towards the top
+            .attr("r", function(d) {
+              "100%"
+            }); //how spread the gradient is
 
 
-      //Set the color for the start (0%)
-      hashtagsGradients.append("stop")
-          .attr("offset", "0%")
-          .attr("stop-color", '#ef8a62'); //light blue
 
-      // //Set the color for the end (100%)
-      // hashtagsGradients.append("stop")
-      //     .attr("offset", "100%")
-      //     .attr("stop-color", '#F1406C'); //dark blue
+          //Set the color for the start (0%)
+          hashtagsGradients.append("stop")
+            .attr("offset", "0%")
+            .attr("stop-color", '#ef8a62'); //light blue
 
-        //Add colors to the gradient
-      //First a lighter color in the center
-      hashtagsGradients.append("stop")
-          .attr("offset", function(d) {
-            let pos = parseInt(d.negative)
-            return pos.toString()+"%"})
-          .attr("stop-color", function(d) {
+          // //Set the color for the end (100%)
+          // hashtagsGradients.append("stop")
+          //     .attr("offset", "100%")
+          //     .attr("stop-color", '#F1406C'); //dark blue
+
+          //Add colors to the gradient
+          //First a lighter color in the center
+          hashtagsGradients.append("stop")
+            .attr("offset", function(d) {
+              let pos = parseInt(d.negative)
+              return pos.toString() + "%"
+            })
+            .attr("stop-color", function(d) {
               return '#ef8a62';
               //return d3.rgb('#FFF76B').darker(1.75);
-          });
+            });
 
-      //Then the actual color almost halfway
-      hashtagsGradients.append("stop")
-          .attr("offset", function(d) { 
-            let pos = (parseInt(d.negative) + parseInt(d.neutral))
-            console.log(pos)
-            return pos.toString()+"%"})
-          .attr("stop-color", function(d) {
+          //Then the actual color almost halfway
+          hashtagsGradients.append("stop")
+            .attr("offset", function(d) {
+              let pos = (parseInt(d.negative) + parseInt(d.neutral))
+              console.log(pos)
+              return pos.toString() + "%"
+            })
+            .attr("stop-color", function(d) {
               //return d3.rgb('lightgray').darker(0.2)
               return "#A9A9A9";
-          });
+            });
 
-      //Finally a darker color at the outside
-      hashtagsGradients.append("stop")
-          .attr("offset",  "100%")
-          .attr("stop-color", function(d) {
+          //Finally a darker color at the outside
+          hashtagsGradients.append("stop")
+            .attr("offset", "100%")
+            .attr("stop-color", function(d) {
               //return d3.rgb('#F1406C').darker(1.5)
               return '#67a9cf';
-          });   
+            });
 
-      //Draw the rectangle and fill with gradient
-      // svg
-      //   .selectAll('.senti')
-      //   .data(ht_data)
-      //   .enter()
-      //   .append('circle')
-      //   .attr("class", "senti")
-      //   .attr("cx", function(d, i){ return 10*i})
-      //   .attr("cy", function(d, i){ return 10*i})
-      //   .attr("r", 50)
-      //   .style("fill", function(d) {
-      //       return "url(#gradient-" + d.hashtag + ")";
-      //   })
-        //.style("fill", "url(#linear-gradient)");
+          //Draw the rectangle and fill with gradient
+          // svg
+          //   .selectAll('.senti')
+          //   .data(ht_data)
+          //   .enter()
+          //   .append('circle')
+          //   .attr("class", "senti")
+          //   .attr("cx", function(d, i){ return 10*i})
+          //   .attr("cy", function(d, i){ return 10*i})
+          //   .attr("r", 50)
+          //   .style("fill", function(d) {
+          //       return "url(#gradient-" + d.hashtag + ")";
+          //   })
+          //.style("fill", "url(#linear-gradient)");
 
 
-        function ticked() {
+          function ticked() {
 
-      
+
 
             circles = d3.select('svg g')
-                 .selectAll('circle')
-                 .data(ht_data);
-                 
+              .selectAll('circle')
+              .data(ht_data);
 
-            circles.enter().append('circle')
-                .attr('r', function(d) {
-                    return xCenter(d.num_tweets * 1.35);
-                })
-                //.style('fill', function(d) {
-                //    return 'lightgray';
-                //})
-                .style("fill", function(d) {
-                    return "url(#gradient-" + d.hashtag + ")";
-                })
-                .merge(circles)
-                .attr('cx', function(d) {
-                    return d.x;
-                })
-                .attr('cy', function(d) {
-                    return d.y;
-                })
-                .attr('class', "hashtags")
-                .attr('opacity', 0.9)
+
+            circles.enter()
+              .append('circle')
+              .attr('r', function(d) {
+                return xCenter(d.num_tweets * 1.35);
+              })
+              //.style('fill', function(d) {
+              //    return 'lightgray';
+              //})
+              .style("fill", function(d) {
+                return "url(#gradient-" + d.hashtag + ")";
+              })
+              .merge(circles)
+              .attr('cx', function(d) {
+                return d.x;
+              })
+              .attr('cy', function(d) {
+                return d.y;
+              })
+              .attr('class', "hashtags")
+              .attr('opacity', 0.9)
 
             circle_texts = d3.select('svg g')
-                 .selectAll('text')
-                 .data(ht_data);
+              .selectAll('text')
+              .data(ht_data);
 
-            circle_texts.enter().append('text')
-                .attr('class','hashtags')
-                .merge(circle_texts)
-                .attr("x", function(d) {
-                    return d.x - xCenter(d.num_tweets);
-                })
-                .attr("y", function(d) {
-                    return d.y;
-                })
-                //.attr("text-anchor", "middle")
-                //.attr("stroke", "#808080")
-                //.attr('fill','#000')
-                .attr('font-size', '50px')
-                .text(function(d) {
-                    return d.hashtag;
-                })
-                .style("font-size", "12px")
-                .style("font-weight", "bold");    
+            circle_texts.enter()
+              .append('text')
+              .attr('class', 'hashtags')
+              .merge(circle_texts)
+              .attr("x", function(d) {
+                return d.x - xCenter(d.num_tweets);
+              })
+              .attr("y", function(d) {
+                return d.y;
+              })
+              //.attr("text-anchor", "middle")
+              //.attr("stroke", "#808080")
+              //.attr('fill','#000')
+              .attr('font-size', '50px')
+              .text(function(d) {
+                return d.hashtag;
+              })
+              .style("font-size", "12px")
+              .style("font-weight", "bold");
 
             switchCircles(loadCircles);
             //circles.exit().remove();
           }
-          simulation.force('x', d3.forceX().x(function(d) {
+          simulation.force('x', d3.forceX()
+            .x(function(d) {
               return dict[d.country];
-          }));
-          simulation.force('y', d3.forceY().y(function(d) {
+            }));
+          simulation.force('y', d3.forceY()
+            .y(function(d) {
               return dictY[d.country];
-          }));
+            }));
 
-      }
+        }
 
-      let scale_x = d3.scaleLinear().domain([0, 1500])
+        let scale_x = d3.scaleLinear()
+          .domain([0, 1500])
           .range([5, 600]);
 
-      let scale_y = d3.scaleLinear().domain([0, 120])
+        let scale_y = d3.scaleLinear()
+          .domain([0, 120])
           .range([60, 600]);
 
 
 
-      function drawBars(data, itemClass, shift){
+        function drawBars(data, itemClass, shift) {
 
-        loadCircles = false;//switch off the hashtags
-        //create rectangles
+          loadCircles = false; //switch off the hashtags
+          //create rectangles
 
-        let bars = group.append("rect")
+          let bars = group.append("rect")
 
 
 
-bars
-              .data(data)
-              .transition()
-              .delay((d, i) => 10 * i)
-              .duration(800)
-              //.ease('elastic')//linear, quad, cubic, sin, exp, circle, elastic, back, bounce
-              .attr("class", itemClass)
-              .attr("x", (d, i) => 10)
-              .attr("y", (d, i) => scale_y(i * 4) + shift)
-              .attr("width", (d, i) => scale_x(d["num_tweets"]))
-              .attr("height", (d, i) => 15)
-              .style("fill", function(d) {
-                    return "url(#gradientBar" + itemClass + d.hashtag + ")";
-                })
-              //(d['sentiment'] == "negative" ? "#99c125" : "#5b6871"))
-              .attr("opacity", 1)
-              .attr("transform", "translate(0,0) rotate(0)")
-              .attr("opacity", (d, i) => i < 10 ? 1 : 0) //only show 12 people
-        //Append a defs (for definition) element to your SVG
-        console.log(ht_data)
+          bars
+            .data(data)
+            .transition()
+            .delay((d, i) => 10 * i)
+            .duration(800)
+            //.ease('elastic')//linear, quad, cubic, sin, exp, circle, elastic, back, bounce
+            .attr("class", itemClass)
+            .attr("x", (d, i) => 10)
+            .attr("y", (d, i) => scale_y(i * 4) + shift)
+            .attr("width", (d, i) => scale_x(d["num_tweets"]))
+            .attr("height", (d, i) => 15)
+            .style("fill", function(d) {
+              return "url(#gradientBar" + itemClass + d.hashtag + ")";
+            })
+            //(d['sentiment'] == "negative" ? "#99c125" : "#5b6871"))
+            .attr("opacity", 1)
+            .attr("transform", "translate(0,0) rotate(0)")
+            .attr("opacity", (d, i) => i < 10 ? 1 : 0) //only show 12 people
+          //Append a defs (for definition) element to your SVG
+          console.log(ht_data)
 
-        var barGradients = svg.append("defs").selectAll(".barGradients")
-          .data(data)
-          .enter().append("linearGradient")
-          .attr("class", "barGradients")
-          .attr("id", function(d){ return "gradientBar" + itemClass + d.hashtag; })
+          var barGradients = svg.append("defs")
+            .selectAll(".barGradients")
+            .data(data)
+            .enter()
+            .append("linearGradient")
+            .attr("class", "barGradients")
+            .attr("id", function(d) {
+              return "gradientBar" + itemClass + d.hashtag;
+            })
 
           //Horizontal gradient
-barGradients
-    .attr("x1", "0%")
-    .attr("y1", "0%")
-    .attr("x2", "100%")
-    .attr("y2", "0%");
+          barGradients
+            .attr("x1", "0%")
+            .attr("y1", "0%")
+            .attr("x2", "100%")
+            .attr("y2", "0%");
 
 
-    //ef8a62 A9A9A9 67a9cf
-    
-        //Set the color for the start (0%)
-        barGradients.append("stop")
-          .attr("offset", function(d) { 
-            let pos = (parseInt(d.negative))
-            console.log(pos)
-            return pos.toString()+"%"})
-          .attr("stop-color", "#ef8a62"); //light blue
+          //ef8a62 A9A9A9 67a9cf
 
-                  //Set the color for the start (0%)
-        barGradients.append("stop")
-          .attr("offset", function(d) { 
-            let pos = (parseInt(d.negative) + parseInt(d.neutral))
-            console.log(pos)
-            return pos.toString()+"%"})
-          .attr("stop-color", "#A9A9A9"); //light blue
-         
-        //Set the color for the end (100%)
-        barGradients.append("stop")
+          //Set the color for the start (0%)
+          barGradients.append("stop")
+            .attr("offset", function(d) {
+              let pos = (parseInt(d.negative))
+              console.log(pos)
+              return pos.toString() + "%"
+            })
+            .attr("stop-color", "#ef8a62"); //light blue
+
+          //Set the color for the start (0%)
+          barGradients.append("stop")
+            .attr("offset", function(d) {
+              let pos = (parseInt(d.negative) + parseInt(d.neutral))
+              console.log(pos)
+              return pos.toString() + "%"
+            })
+            .attr("stop-color", "#A9A9A9"); //light blue
+
+          //Set the color for the end (100%)
+          barGradients.append("stop")
             .attr("offset", "100%")
             .attr("stop-color", "#67a9cf"); //dark blue
 
           //country name
           d3.selectAll('g')
-              .data(data)
-              .append("text")
-              .text((d) => d["hashtag"])
-              .attr("fill", "#000")
-              .attr("class", itemClass)
-              //.attr("text-anchor", "end")
-              .attr("dx", (d, i) => scale_x(d["num_tweets"]) + 12)
-              .attr("dy", (d, i) => scale_y(i * 4) + 12 + shift)
-              .attr("opacity", (d, i) => i < 10 ? 1 : 0) //only show 12 people
+            .data(data)
+            .append("text")
+            .text((d) => d["hashtag"])
+            .attr("fill", "#000")
+            .attr("class", itemClass)
+            //.attr("text-anchor", "end")
+            .attr("dx", (d, i) => scale_x(d["num_tweets"]) + 12)
+            .attr("dy", (d, i) => scale_y(i * 4) + 12 + shift)
+            .attr("opacity", (d, i) => i < 10 ? 1 : 0) //only show 12 people
 
           //number of tweets data
           d3.selectAll('g')
-              .data(data)
-              .append("text")
-              .text((d) => d["num_tweets"])
-              .attr("fill", "#FFF")
-              .attr("class", itemClass)
-              .attr("text-anchor", "start")
-              .attr("dx", 13)
-              .attr("dy", (d, i) => scale_y(i * 4) + 11 + shift)
-              .attr("opacity", (d, i) => i < 10 ? 1 : 0) //only show 12 people
+            .data(data)
+            .append("text")
+            .text((d) => d["num_tweets"])
+            .attr("fill", "#FFF")
+            .attr("class", itemClass)
+            .attr("text-anchor", "start")
+            .attr("dx", 13)
+            .attr("dy", (d, i) => scale_y(i * 4) + 11 + shift)
+            .attr("opacity", (d, i) => i < 10 ? 1 : 0) //only show 12 people
 
-          
 
-      }
 
-      //bar cart
-      let barChart = function(country) {
+        }
+
+        //bar cart
+        let barChart = function(country) {
           loadCircles = false //switch off the hashtags
           clearText();
           clearRects();
 
           const dataUK = ht_data.filter(d => d.country == 'UK');
-          const dataUS = ht_data.filter(d=> d.country == 'US');
-          
+          const dataUS = ht_data.filter(d => d.country == 'US');
+
           drawBars(dataUK, 'UK', 250);
           drawBars(dataUS, 'US', 0);
           //drawBars(dataUK, 'UK', 200);
           //.exit().attr("opacity1", 0);
 
 
-        //arrow
-        svg.append("svg:defs").append("svg:marker")
-          .attr("id", "triangle")
-          .attr("refX", 6)
-          .attr("refY", 6)
-          .attr("markerWidth", 30)
-          .attr("markerHeight", 30)
-          .attr("markerUnits","userSpaceOnUse")
-          .attr("orient", "auto")
-          .append("path")
-          .attr("d", "M 0 0 12 6 0 12 3 6")
-          .style("fill", "#777");
-    
-        //line              
-        svg.append("line")
-            .attr("x1",  10)
+          //arrow
+          svg.append("svg:defs")
+            .append("svg:marker")
+            .attr("id", "triangle")
+            .attr("refX", 6)
+            .attr("refY", 6)
+            .attr("markerWidth", 30)
+            .attr("markerHeight", 30)
+            .attr("markerUnits", "userSpaceOnUse")
+            .attr("orient", "auto")
+            .append("path")
+            .attr("d", "M 0 0 12 6 0 12 3 6")
+            .style("fill", "#777");
+
+          //line              
+          svg.append("line")
+            .attr("x1", 10)
             .attr("y1", 303)
             .attr("x2", 580)
             .attr("y2", 303)
@@ -1136,16 +1210,16 @@ barGradients
             .attr("class", "arrows")
             .attr("marker-end", "url(#triangle)");
 
-        svg.append("text")
-          .text('Number of tweets')
-          .attr("fill", "#777")
-          .attr("x", 500)
-          .attr("y", 295)
-          .attr("class", "arrows");
+          svg.append("text")
+            .text('Number of tweets')
+            .attr("fill", "#777")
+            .attr("x", 500)
+            .attr("y", 295)
+            .attr("class", "arrows");
 
-        //line              
-        svg.append("line")
-            .attr("x1",  10)
+          //line              
+          svg.append("line")
+            .attr("x1", 10)
             .attr("y1", 53)
             .attr("x2", 580)
             .attr("y2", 53)
@@ -1154,78 +1228,78 @@ barGradients
             .attr("class", "arrows")
             .attr("marker-end", "url(#triangle)");
 
-        svg.append("text")
-          .text('Number of tweets')
-          .attr("fill", "#777")
-          .attr("x", 500)
-          .attr("y", 45)
-          .attr("class", "arrows");
+          svg.append("text")
+            .text('Number of tweets')
+            .attr("fill", "#777")
+            .attr("x", 500)
+            .attr("y", 45)
+            .attr("class", "arrows");
           addUSFlag(300, 47);
           addUKFlag(300, 297);
-      }
+        }
 
-      function addUSFlag(x, y){
+        function addUSFlag(x, y) {
 
-        // svg.append("image")
-        // .attr("x", x)
-        // .attr("y", y)
-        // .attr('xlink:href', 'us.png')
-        // .attr('width', 30)
-        // .attr('height', 30)
-        // .attr("text-anchor", "end");
-        svg.append("text")
-        .attr("font-weight", "bold")
-        .attr("font-size", "25px")
-        .attr("x", x)
-        .attr("y", y)
-        .attr("class", "fa flag")
-        .text(String.fromCodePoint(parseInt('1f1fa', 16), parseInt('1f1f8', 16)) + 'US')
-        .attr("font-family", "sans-serif")
-        .attr("text-anchor", "end");
+          // svg.append("image")
+          // .attr("x", x)
+          // .attr("y", y)
+          // .attr('xlink:href', 'us.png')
+          // .attr('width', 30)
+          // .attr('height', 30)
+          // .attr("text-anchor", "end");
+          svg.append("text")
+            .attr("font-weight", "bold")
+            .attr("font-size", "25px")
+            .attr("x", x)
+            .attr("y", y)
+            .attr("class", "fa flag")
+            .text(String.fromCodePoint(parseInt('1f1fa', 16), parseInt('1f1f8', 16)) + 'US')
+            .attr("font-family", "sans-serif")
+            .attr("text-anchor", "end");
 
-        
 
-      }
 
-      function addUKFlag(x, y){
-         svg.append("text")
-        .attr("font-weight", "bold")
-        .attr("font-size", "25px")
-        .attr("x", x)
-        .attr("y", y)
-        .attr("class", "fa flag")
-        .text(String.fromCodePoint(parseInt('1f1ec', 16), parseInt('1f1e7', 16)) + 'UK')
-        .attr("font-family", "sans-serif")
-        .attr("text-anchor", "end");
-      }
+        }
 
-      //waypoints scroll constructor
-      function scrollD(n, offset, func1, func2, param) {
+        function addUKFlag(x, y) {
+          svg.append("text")
+            .attr("font-weight", "bold")
+            .attr("font-size", "25px")
+            .attr("x", x)
+            .attr("y", y)
+            .attr("class", "fa flag")
+            .text(String.fromCodePoint(parseInt('1f1ec', 16), parseInt('1f1e7', 16)) + 'UK')
+            .attr("font-family", "sans-serif")
+            .attr("text-anchor", "end");
+        }
+
+        //waypoints scroll constructor
+        function scrollD(n, offset, func1, func2, param) {
 
           return new Waypoint({
-              element: document.getElementById(n),
-              handler: function(direction) {
-                  direction == 'down' ? func1(param) : func2(param);
-              },
-              //start 75% from the top of the div
-              offset: offset
+            element: document.getElementById(n),
+            handler: function(direction) {
+              direction == 'down' ? func1(param) : func2(param);
+            },
+            //start 75% from the top of the div
+            offset: offset
           });
-      };
+        };
 
-      //triger these functions on page scroll
-      //new scroll('div1', '75%', grid, maytheforce);
-      new scrollD('div1', '75%', grid, grid);
-      new scrollD('div2', '75%', countryGrid, grid);
-      new scrollD('div2_1', '75%', countryPercentageGrid, countryGrid);
-      new scrollD('div3', '75%', sentimentGrid, countryPercentageGrid);
-      //new scrollD('div4', '75%', circleGrid, sentimentGrid);
-      new scrollD('div5', '75%', maytheforce, sentimentGrid);
-      //new scrollD('div7', '75%', barChart, maytheforce);
-      //new scroll('div6', '75%', barChart, divide, 'UK');
-      //start grid on page load
-  });
+        //triger these functions on page scroll
+        //new scroll('div1', '75%', grid, maytheforce);
+        new scrollD('div1', '75%', grid, grid);
+        new scrollD('div2', '75%', countryGrid, grid);
+        new scrollD('div2_1', '75%', countryPercentageGrid, countryGrid);
+        new scrollD('div3', '75%', sentimentGrid, countryPercentageGrid);
+        //new scrollD('div4', '75%', circleGrid, sentimentGrid);
+        new scrollD('div5', '75%', maytheforce, sentimentGrid);
+        //new scrollD('div7', '75%', barChart, maytheforce);
+        //new scroll('div6', '75%', barChart, divide, 'UK');
+        //start grid on page load
+      });
 
-});
+    });
 
-  </script>
+</script>
 </body>
